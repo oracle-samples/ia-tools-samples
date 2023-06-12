@@ -1,0 +1,20 @@
+{
+  "name": "ia-migrator-js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/sax": "^1.2.4",
+    "decompress-unzip": "^4.0.1",
+    "esbuild": "^0.17.10",
+    "jsonc-parser": "^3.2.0",
+    "sax": "^1.2.4",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.1",
+    "typescript": "^4.9.4"
+  },
+  "scripts": {
+    "build": "esbuild --bundle --platform=node --target=es2017 --outfile=build/migrate.js src/main.ts --main-fields=module,main"
+  }
+}

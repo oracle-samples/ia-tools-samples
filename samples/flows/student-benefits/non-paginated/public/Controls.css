@@ -1,0 +1,115 @@
+/* Copyright (c) 2021, 2023, Oracle and/or its affiliates. Licensed under The Universal Permissive License (UPL), Version 1.0 as shown at https://oss.oracle.com/licenses/upl/ */
+body {
+    font-family: system-ui, Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+}
+
+.page {
+    max-width: 1024px;
+    margin: auto;
+    padding: 0 1em;
+}
+
+.startup-error {
+    color: red;
+}
+
+.text-field label, .select-field label, .textarea-field label {
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    padding-bottom: 4px;
+    line-height: 1rem;
+}
+
+fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: initial;
+    font: inherit;
+    font-size: 100%;
+}
+
+legend {
+    font-size: 14px;
+    font-weight: 600;
+    padding-inline-end: 0;
+    padding-inline-start: 0;
+    display: block;
+    padding-bottom: 4px;
+    line-height: 1rem;
+}
+
+.text-field input {
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0.4em 0.8em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.textarea-field textarea {
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0.4em 0.8em;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.select-field select {
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0.4em 0.8em;
+    width: 100%;
+}
+
+.radio-option {
+    margin-right: 0.5em;
+}
+
+.checkset-option {
+    display: block;
+}
+
+.record-instance {
+    margin: 1em 0;
+}
+
+.page h1 {
+    padding: 0;
+    margin:1em 0;
+    font-size: 24px;
+    font-weight:bold;
+}
+
+button {
+    padding: 0.4em 0.8em;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+.row {
+    display: flex;
+    align-items: flex-start;
+    margin: 0 -0.5em ;
+}
+
+.error-label {
+    color: #e00000;
+    font-size: 12px;
+}
+
+.size-1 { box-sizing: border-box; padding: 0.5em; flex: 0 1 8.3333333333333% }
+.size-2 { box-sizing: border-box; padding: 0.5em; flex: 0 1 16.6666666666666% }
+.size-3 { box-sizing: border-box; padding: 0.5em; flex: 0 1 25% }
+.size-4 { box-sizing: border-box; padding: 0.5em; flex: 0 1 33.3333333333333% }
+.size-5 { box-sizing: border-box; padding: 0.5em; flex: 0 1 41.6666666666666% }
+.size-6 { box-sizing: border-box; padding: 0.5em; flex: 0 1 50% }
+.size-7 { box-sizing: border-box; padding: 0.5em; flex: 0 1 58.3333333333333% }
+.size-8 { box-sizing: border-box; padding: 0.5em; flex: 0 1 66.6666666666666% }
+.size-9 { box-sizing: border-box; padding: 0.5em; flex: 0 1 75% }
+.size-10 { box-sizing: border-box; padding: 0.5em; flex: 0 1 83.3333333333333% }
+.size-11 { box-sizing: border-box; padding: 0.5em; flex: 0 1 91.6666666666666% }
+.size-12 { box-sizing: border-box; padding: 0.5em; flex: 0 1 100% }

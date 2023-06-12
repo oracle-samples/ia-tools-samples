@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "outDir": "./build/",
+        "module": "commonjs",
+        "downlevelIteration": true,
+        "target":"ES2017",  // prevent downleveling async
+        "resolveJsonModule": true,
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "baseUrl": ".",
+        "paths": {
+            "ia-public/*":["../ia-public-js/src/*"]
+        }
+    },
+    "ts-node":{
+        "require": ["tsconfig-paths/register"]
+    }
+}
