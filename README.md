@@ -25,6 +25,12 @@ This project welcomes contributions from the community. Before submitting a pull
 
 Please consult the [security guide](./SECURITY.md) for our responsible security vulnerability disclosure process
 
+## Redistribution
+
+Developers choosing to distribute a binary implementation of any code in this repository are responsible for obtaining and
+providing  all required licenses and copyright notices for the third-party code used in order to ensure compliance with their 
+respective open source licenses.
+
 ## License
 
 Copyright (c) 2023 Oracle and/or its affiliates.
