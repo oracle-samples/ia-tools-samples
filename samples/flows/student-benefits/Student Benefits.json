@@ -1,0 +1,1961 @@
+{
+    "version": 1,
+    "flow": {
+        "kind": "section",
+        "text": "Main section",
+        "uid": "2fdkaurkliu",
+        "schemeId": "",
+        "goals": [
+            {
+                "uid": "zux9menbwoi",
+                "goal": "the student satisfies the basic eligibility requirements for student aid"
+            }
+        ],
+        "schemeDataMapping": {
+            "uid": "58yor5l5zph",
+            "$currentDate": "",
+            "$incident-id": "",
+            "$incident-ref-number": "",
+            "$existing-student-id": "the existing student's ID",
+            "_genders": {
+                "uid": "73qyi9gn6ty",
+                "$Female": "Femaley",
+                "$Male": "Male-ish"
+            },
+            "$genders": "",
+            "_defined-genders": {
+                "uid": "0q32vga52fpk",
+                "$gender-text": "",
+                "$text": "gender display text"
+            },
+            "$defined-genders": "Defined genders",
+            "_defined-citizenship-status": {
+                "uid": "mrhr23b3kba",
+                "$text": "citizenship/immigration status display text"
+            },
+            "$defined-citizenship-status": "",
+            "_defined-citizenship-statuses": {
+                "uid": "m4eog7e4mtl",
+                "$text": "citizenship/immigration status display text"
+            },
+            "$defined-citizenship-statuses": "Defined citizenship/immigration statuses",
+            "_defined-enrollment-statuses": {
+                "uid": "xx9oeuvwpee",
+                "$text": "enrollment status display text"
+            },
+            "$defined-enrollment-statuses": "Defined enrollment statuses"
+        },
+        "rows": [
+            {
+                "kind": "flowItemGroup",
+                "schemeId": "page-group",
+                "listName": "",
+                "uid": "1ybc9b7owd7",
+                "visible": true,
+                "readOnly": false,
+                "text": "Eligibility",
+                "optionFilter": true,
+                "rows": [
+                    {
+                        "kind": "page",
+                        "schemeId": "page",
+                        "visible": true,
+                        "readOnly": false,
+                        "text": "Eligibility for Student Aid",
+                        "uid": "f0ee2vs5qmq",
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "7m6rtbmt59h",
+                                "controls": [
+                                    {
+                                        "uid": "j2qwsb8p25r",
+                                        "schemeId": "comment",
+                                        "kind": "comment",
+                                        "text": "The data action below should only be sent if the global input value for \"the existing student's ID\" was set"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "jgi1lhkulu",
+                                "controls": [
+                                    {
+                                        "kind": "dataAction",
+                                        "uid": "zmizvjnnikl",
+                                        "schemeId": "get-student",
+                                        "visible": true,
+                                        "text": "Load existing student details",
+                                        "inputMapping": {
+                                            "uid": "vnbt8rttl5n",
+                                            "$id": "the existing student's ID"
+                                        },
+                                        "outputMapping": {
+                                            "uid": "7yeb6okb4kg",
+                                            "$name": "the existing student's name",
+                                            "$gender": "the existing student's gender",
+                                            "$citizenship-status": "the existing student's citizenship/immigration status",
+                                            "$enrollment-status": "the existing student's enrollment status"
+                                        },
+                                        "requireValidData": true,
+                                        "visibleCondition": "the existing student's ID = null",
+                                        "visibleIf": "unless"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "8byrveu64zd",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "krv9v986tfj",
+                                        "schemeId": "label",
+                                        "text": "Hi&#160;<code>the existing student's name</code>",
+                                        "visible": true,
+                                        "width": 12,
+                                        "visibleCondition": "the existing student's name = null",
+                                        "visibleIf": "unless"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "rpemie5ogvd",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "7xldxj64y3k",
+                                        "schemeId": "label",
+                                        "text": "There are many grants, scholarships, loans and work-study programs available to help students throughout their university studies.",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "zpziiqle5l",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "0n6fych206",
+                                        "schemeId": "label",
+                                        "text": "This interview will help you determine whether any of these resources may be appropriate for you. ",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "kind": "flowItemGroup",
+                "schemeId": "page-group",
+                "listName": "",
+                "uid": "zkpbuhssg5p",
+                "visible": true,
+                "readOnly": false,
+                "text": "Student Details",
+                "optionFilter": true,
+                "rows": [
+                    {
+                        "kind": "page",
+                        "uid": "dmgfib04igd",
+                        "schemeId": "page",
+                        "text": "Basic Information",
+                        "visible": true,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "sp4w46p2mg",
+                                "controls": [
+                                    {
+                                        "uid": "y7igxu8ybj",
+                                        "schemeId": "comment",
+                                        "kind": "comment",
+                                        "text": "The values on this screen will be populated from loaded student details if the custom data action on the previous screen executed"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "jysrvnbsq2",
+                                "controls": [
+                                    {
+                                        "uid": "t2zj56vcfhk",
+                                        "schemeId": "text",
+                                        "kind": "input",
+                                        "dataType": "text",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "textBox",
+                                        "question": "Name:",
+                                        "fieldName": "the student's name",
+                                        "value": "the existing student's name",
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "z40p4ze8vms",
+                                "controls": [
+                                    {
+                                        "uid": "cqemjy4d8tv",
+                                        "schemeId": "reference-radio",
+                                        "kind": "referenceInput",
+                                        "dataType": "Defined genders",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "displayField": "gender display text",
+                                        "inputStyle": "radioButtons",
+                                        "question": "",
+                                        "fieldName": "the student's gender",
+                                        "value": "the existing student's gender",
+                                        "inlineOptions": [
+                                            {
+                                                "uid": "2du61h7mxg9",
+                                                "text": "Male",
+                                                "value": "male",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "4vca1n7vfak",
+                                                "text": "Female",
+                                                "value": "female",
+                                                "visible": true
+                                            }
+                                        ],
+                                        "width": 12,
+                                        "optionFilter": true,
+                                        "validationRules": []
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "a2yvlswpg6s",
+                                "controls": [
+                                    {
+                                        "uid": "ti0u2ewjeer",
+                                        "schemeId": "reference-dropdown",
+                                        "kind": "referenceInput",
+                                        "dataType": "Defined citizenship/immigration statuses",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "displayField": "citizenship/immigration status display text",
+                                        "inputStyle": "dropDown",
+                                        "question": "Citizenship/immigration status:",
+                                        "fieldName": "the student's citizenship/immigration status",
+                                        "value": "the existing student's citizenship/immigration status",
+                                        "inlineOptions": [
+                                            {
+                                                "uid": "b7gohb2lk2g",
+                                                "text": "Citizen",
+                                                "value": "Citizen",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "odiqzp92018",
+                                                "text": "National",
+                                                "value": "National",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "ojzi80heonp",
+                                                "text": "Permanent Resident",
+                                                "value": "Permanent Resident",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "kfeym91dxc",
+                                                "text": "Other",
+                                                "value": "Other",
+                                                "visible": true
+                                            }
+                                        ],
+                                        "width": 12,
+                                        "optionFilter": true,
+                                        "validationRules": []
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "imt6gdv1egk",
+                                "controls": [
+                                    {
+                                        "uid": "235jj28ydxh",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Do you have a Social Security Number?",
+                                        "fieldName": "the student has a valid Social Security Number",
+                                        "value": "true",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "44l1kvdgewl",
+                                "controls": [
+                                    {
+                                        "uid": "d9y9ph5bjc7",
+                                        "schemeId": "reference-dropdown",
+                                        "kind": "referenceInput",
+                                        "dataType": "Defined enrollment statuses",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "displayField": "enrollment status display text",
+                                        "inputStyle": "dropDown",
+                                        "question": "Enrollment status:",
+                                        "fieldName": "the student's enrollment status",
+                                        "value": "the existing student's enrollment status",
+                                        "inlineOptions": [
+                                            {
+                                                "uid": "qg27v6tobs",
+                                                "text": "Enrolled",
+                                                "value": "Enrolled",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "0q0of0j97bw",
+                                                "text": "Accepted for enrollment",
+                                                "value": "Accepted for enrollment",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "2yz8ibmyt5k",
+                                                "text": "Not enrolled",
+                                                "value": "Not enrolled",
+                                                "visible": true
+                                            }
+                                        ],
+                                        "width": 12,
+                                        "optionFilter": true
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "kind": "page",
+                        "uid": "azchnfaot1o",
+                        "schemeId": "page",
+                        "text": "SSN Exceptions",
+                        "visible": true,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "fulz81twrq8",
+                                "controls": [
+                                    {
+                                        "uid": "2rptdhixkfi",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Are you from the Republic of the Marshall Islands?",
+                                        "fieldName": "the student is from the Republic of the Marshall Islands",
+                                        "value": "false",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "dfz00d35xv5",
+                                "controls": [
+                                    {
+                                        "uid": "ekjj9w998is",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Are you from the Federated States of Micronesia?",
+                                        "fieldName": "the student is from the Federated States of Micronesia",
+                                        "value": "false",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "t1rbg0evae",
+                                "controls": [
+                                    {
+                                        "uid": "vt3lqa5hdd9",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Are you from the Republic of Palau?",
+                                        "fieldName": "the student is from the Republic of Palau",
+                                        "value": "false",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "relevant"
+                    },
+                    {
+                        "kind": "page",
+                        "uid": "ki1bw7vxwvn",
+                        "schemeId": "page",
+                        "text": "Family",
+                        "visible": true,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "vxf9jg3p40l",
+                                "controls": [
+                                    {
+                                        "uid": "95wmrk1rorm",
+                                        "schemeId": "number-general",
+                                        "kind": "input",
+                                        "dataType": "number",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "textBox",
+                                        "question": "How many people are in your family?",
+                                        "fieldName": "the number of people in the student's family",
+                                        "value": "",
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "yttxfshv6k",
+                                "controls": [
+                                    {
+                                        "uid": "62t23x598bs",
+                                        "schemeId": "number-currency",
+                                        "kind": "input",
+                                        "dataType": "number",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "textBox",
+                                        "question": "What is your annual family income?",
+                                        "fieldName": "the student's annual family income",
+                                        "value": "",
+                                        "width": 12
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "relevant"
+                    }
+                ]
+            },
+            {
+                "kind": "flowItemGroup",
+                "schemeId": "page-group",
+                "listName": "",
+                "uid": "sla9elvuxi",
+                "visible": true,
+                "readOnly": false,
+                "text": "Immigration Status",
+                "optionFilter": true,
+                "rows": [
+                    {
+                        "kind": "page",
+                        "uid": "2f63mftsg9r",
+                        "schemeId": "page",
+                        "text": "I-94 Status",
+                        "visible": true,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "la9aq9xl5s",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "aklvdg8gfyv",
+                                        "schemeId": "label",
+                                        "text": "<em>You have indicated that you are not a US citizen, US National or US permanent resident, therefore you need to provide further information about your immigration status.</em>",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "ss7vcz800gi",
+                                "controls": [
+                                    {
+                                        "uid": "j6r233f78u",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Do you have an Arrival-Departure Record (I-94) from US Citizenship and Immigration Services (USCIS)?",
+                                        "fieldName": "the student has an Arrival-Departure Record _I-94_ from US Citizenship and Immigration Services _USCIS_",
+                                        "value": "true",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "relevant"
+                    },
+                    {
+                        "kind": "page",
+                        "uid": "swgynvefdio",
+                        "schemeId": "page",
+                        "text": "Designation",
+                        "visible": true,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "xwzwg5dczl",
+                                "controls": [
+                                    {
+                                        "uid": "393aioohpjv",
+                                        "schemeId": "reference-dropdown",
+                                        "kind": "referenceInput",
+                                        "dataType": "",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "displayField": "text",
+                                        "inputStyle": "dropDown",
+                                        "question": "What is the designation on your Arrival-Departure Record (I-94) from US Citizenship and Immigration Services (USCIS)?",
+                                        "fieldName": "the designation on the student's Arrival-Departure Record _I-94_ from US Citizenship and Immigration Services _USCIS_",
+                                        "value": "",
+                                        "inlineOptions": [
+                                            {
+                                                "uid": "ro2it5w07di",
+                                                "text": "Refugee",
+                                                "value": "Refugee",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "krkjt0lla1p",
+                                                "text": "Asylum Grant",
+                                                "value": "Asylum Grant",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "pjhilnfz2ut",
+                                                "text": "Cuban-Haitian Entrant (Status Pending)",
+                                                "value": "Cuban-Haitian Entrant _Status Pending_",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "x28w356ym7",
+                                                "text": "Conditional Entrant",
+                                                "value": "Conditional Entrant",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "ow1z9kxexp8",
+                                                "text": "Victim of human trafficking, T-visa (T-2, T-3, T-4)",
+                                                "value": "Victim of human trafficking, T-visa _T-2, T-3, T-4_",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "37p1kixmxoo",
+                                                "text": "Parolee",
+                                                "value": "Parolee",
+                                                "visible": true
+                                            },
+                                            {
+                                                "uid": "lj2w89w7gv",
+                                                "text": "(None of the above)",
+                                                "value": "(None of the above)",
+                                                "visible": true
+                                            }
+                                        ],
+                                        "width": 12,
+                                        "optionFilter": true
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "x276r932ot",
+                                "controls": [
+                                    {
+                                        "uid": "9ygeyo5mpui",
+                                        "schemeId": "comment",
+                                        "kind": "comment",
+                                        "text": "SCOTT - The value of the (None of the above) item above still has the (brackets) in it, because that value isn't needed in rules, and I want to ensure brackets are OK in a value when rules aren't depending on it."
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "relevant"
+                    },
+                    {
+                        "kind": "page",
+                        "uid": "pqs5qwdehu",
+                        "schemeId": "page",
+                        "text": "Issuance Date of Arrival-Departure Record (I-94)",
+                        "visible": true,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "usf4pp3e5l",
+                                "controls": [
+                                    {
+                                        "uid": "2fxc4dni475",
+                                        "schemeId": "date-general",
+                                        "kind": "input",
+                                        "dataType": "date",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "textBox",
+                                        "question": "What is the issue date of your Arrival-Departure Record (I-94) from US Citizenship and Immigration Services (USCIS)?",
+                                        "fieldName": "the issue date of the student's Arrival-Departure Record _I-94_ from US Citizenship and Immigration Services _USCIS_",
+                                        "value": "",
+                                        "width": 12
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "relevant"
+                    },
+                    {
+                        "kind": "page",
+                        "uid": "pou1cup6m9",
+                        "schemeId": "page",
+                        "text": "Parolees",
+                        "visible": true,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "du6is1754xg",
+                                "controls": [
+                                    {
+                                        "uid": "j1wjedc09rl",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Is the student paroled into the US for at least one year?",
+                                        "fieldName": "the student is paroled into the US for at least one year",
+                                        "value": "true",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "rfv926jpdso",
+                                "controls": [
+                                    {
+                                        "uid": "5k2kumm734f",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Is the student able to provide evidence from the USCIS that the student is in the US for other than a temporary purpose?",
+                                        "fieldName": "the student is able to provide evidence from the USCIS that the student is in the US for other than a temporary purpose",
+                                        "value": "true",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "sv1dhq1zx8h",
+                                "controls": [
+                                    {
+                                        "uid": "0ag3ucxmd6jv",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Does the student intend to become a US citizen or permanent resident?",
+                                        "fieldName": "the student intends to become a US citizen or permanent resident",
+                                        "value": "true",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "relevant"
+                    }
+                ]
+            },
+            {
+                "kind": "flowItemGroup",
+                "schemeId": "page-group",
+                "listName": "",
+                "uid": "sw68ca1wefd",
+                "visible": true,
+                "readOnly": false,
+                "text": "Education",
+                "optionFilter": true,
+                "rows": [
+                    {
+                        "kind": "page",
+                        "uid": "36289b90p5z",
+                        "schemeId": "page",
+                        "text": "Satisfactory Academic Progress",
+                        "visible": true,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "zeyoixqsljs",
+                                "controls": [
+                                    {
+                                        "uid": "aliqk3qy1xt",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Have you maintained satisfactory academic progress in college or career school?",
+                                        "fieldName": "the student has maintained satisfactory academic progress in college or career school",
+                                        "value": "true",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "e1144040f55",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "s3kh7bd0dvj",
+                                        "schemeId": "label",
+                                        "text": "Note: Satisfactory academic progress is a school's standards for satisfactory academic progress toward a degree or certificate offered by that institution. Check with your school to find out its standards.",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "relevant"
+                    },
+                    {
+                        "kind": "page",
+                        "uid": "dzajphthcem",
+                        "schemeId": "page",
+                        "text": "Previous Education",
+                        "visible": true,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "9cwdvapmgvr",
+                                "controls": [
+                                    {
+                                        "uid": "xmnrzjkxdhh",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Do you have a high school diploma?",
+                                        "fieldName": "the student has a high school diploma",
+                                        "value": "true",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "vavej32ok6q",
+                                "controls": [
+                                    {
+                                        "uid": "yqakrxip9gs",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Do you have a General Educational Development (GED) certificate?",
+                                        "fieldName": "the student has a General Educational Development _GED_ certificate",
+                                        "value": "false",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "rf00vob9hb",
+                                "controls": [
+                                    {
+                                        "uid": "hu8pyyt8o9",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "Have you completed a high school education in a state-approved home schooling setting?",
+                                        "fieldName": "the student has completed a high school education in a state-approved home school setting",
+                                        "value": "false",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "relevant"
+                    }
+                ]
+            },
+            {
+                "kind": "flowItemGroup",
+                "schemeId": "page-group",
+                "listName": "",
+                "uid": "h05q6f3uudq",
+                "visible": true,
+                "readOnly": false,
+                "text": "Declarations",
+                "optionFilter": true,
+                "rows": [
+                    {
+                        "kind": "page",
+                        "uid": "p0lt1ila5xg",
+                        "schemeId": "page",
+                        "text": "Declarations",
+                        "visible": true,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "3cyd21vfqqn",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "8cyd5ssz3qx",
+                                        "schemeId": "label",
+                                        "text": "Great. Just a couple of final checks. Can you confirm:",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "n9hg7p2c3",
+                                "controls": [
+                                    {
+                                        "uid": "yn2gn80cgm",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "- that you are not in default on a federal student loan?",
+                                        "fieldName": "the student has signed a declaration that the student is not in default on a federal student loan",
+                                        "value": "true",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "ay03t46kb2w",
+                                "controls": [
+                                    {
+                                        "uid": "rh80zdy4bsb",
+                                        "schemeId": "boolean-radio",
+                                        "kind": "input",
+                                        "dataType": "boolean",
+                                        "visible": true,
+                                        "readOnly": false,
+                                        "required": true,
+                                        "inputStyle": "radioButtons",
+                                        "question": "- that you will use the federal student aid for educational purposes only?",
+                                        "fieldName": "the student has signed a declaration that the student will use the federal student aid for educational purposes only",
+                                        "value": "true",
+                                        "width": 12,
+                                        "trueCaption": "Yes",
+                                        "falseCaption": "No"
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "relevant"
+                    }
+                ]
+            },
+            {
+                "kind": "flowItemGroup",
+                "schemeId": "page-group",
+                "listName": "",
+                "uid": "1akn39h4wqm",
+                "visible": true,
+                "readOnly": false,
+                "text": "Conclusion",
+                "optionFilter": true,
+                "rows": [
+                    {
+                        "kind": "page",
+                        "uid": "zxz3zwwxqm9",
+                        "schemeId": "page",
+                        "text": "Congratulations you are Eligible for Student Aid",
+                        "visible": false,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "uid": "4mcpbrc5u4e",
+                                "kind": "row",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "1c69436dd3c",
+                                        "schemeId": "heading",
+                                        "text": "Different Types of Student Aid",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$header-level": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "iq4rxiwe4u",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "0e5dpoym3eio",
+                                        "schemeId": "heading",
+                                        "text": "Grants and Scholarships",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$header-level": "3"
+                                    }
+                                ]
+                            },
+                            {
+                                "uid": "2k7mnhaokzp",
+                                "kind": "row",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "vurc79sjet",
+                                        "schemeId": "html",
+                                        "text": "Grants and scholarships are financial aid which does not have to be repaid (unless you withdraw from school). Grants are generally needs-based, whereas scholarships are generally merit-based. For more information, visit the &lt;a href=\"https://studentaid.gov/understand-aid/types/grantshttps://studentaid.gov/understand-aid/types/scholarships\" target=\"_blank\"&gt;Grants&lt;/a&gt; or &lt;a href=\"https://studentaid.gov/understand-aid/types/scholarships\" target=\"_blank\"&gt;Scholarships&lt;/a&gt; websites.",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$Do not add label class to parent div": true
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "vwp3hdnovsl",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "9zl6mscjpb6",
+                                        "schemeId": "heading",
+                                        "text": "Loans",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$header-level": "3"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "enba64fupoe",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "go2s17otq7o",
+                                        "schemeId": "html",
+                                        "text": "Loans are where you borrow money for your education. Loans must be repaid, with interest. For more information, visit the &lt;a href=\"https://studentaid.gov/understand-aid/types/loans\" target=\"_blank\"&gt;Loans&lt;/a&gt; website.",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "zgdrsabmjv",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "ls0eorwrl4f",
+                                        "schemeId": "heading",
+                                        "text": "Work-Study Program",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$header-level": "3"
+                                    }
+                                ]
+                            },
+                            {
+                                "uid": "zs8rhqodqis",
+                                "kind": "row",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "gjtvtwnh3fv",
+                                        "schemeId": "label",
+                                        "text": "Under the Work-Study Program, you can work part-time to earn money for your education. This program is administered by the schools participating in the program.&#160;",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "562k8olpfgd",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "jm94dt68sbk",
+                                        "schemeId": "heading",
+                                        "text": "Other Financial Assistance for Education",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$header-level": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "v3igzk9ovei",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "d5o6dqnrkp",
+                                        "schemeId": "heading",
+                                        "text": "Tax Benefits for Education",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$header-level": "3"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "5jtzd0z7wqw",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "el6nhzfmpwc",
+                                        "schemeId": "html",
+                                        "text": "Aside from general student aid, there are also various other avenues for financial assistance. For example, there are tax credits, deductions and savings plans which can help taxpayers with expenses associated with higher education. For more information, see the &lt;a href=\"https://www.irs.gov/newsroom/tax-benefits-for-education-information-center\" target=\"_blank\"&gt;IRS Tax Benefits for Education Information Center&lt;/a&gt;.",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "mv0da3t089",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "pwohmoi01zb",
+                                        "schemeId": "heading",
+                                        "text": "Student Aid for Military Families",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$header-level": "3"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "ras30wj06a",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "8lpzs1dacnw",
+                                        "schemeId": "label",
+                                        "text": "There are also financial aid programs for individuals serving in the military, as well as their spouses and children.",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "i61mwe1jbfb",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "eput8o2mfri",
+                                        "schemeId": "label",
+                                        "text": "",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "xh7y83qjtam",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "xfg4kwjjpu",
+                                        "schemeId": "label",
+                                        "text": "<em><strong>Clicking Next will submit your benefit request for processing!</strong></em>",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "if",
+                        "visibleCondition": "the student satisfies the basic eligibility requirements for student aid"
+                    },
+                    {
+                        "kind": "page",
+                        "uid": "tgy3wm18v6o",
+                        "schemeId": "page",
+                        "text": "Details Saved",
+                        "visible": false,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "9tlpl2hd2es",
+                                "controls": [
+                                    {
+                                        "kind": "dataAction",
+                                        "uid": "qjd2i0mdim",
+                                        "schemeId": "save-student-benefit-request",
+                                        "visible": true,
+                                        "text": "Save student benefit request",
+                                        "inputMapping": {
+                                            "uid": "ifyo0a0pjd",
+                                            "$existing-student-id": "the existing student's ID",
+                                            "$student-name": "the student's name",
+                                            "$gender": "the student's gender",
+                                            "$citizenship-status": "the student's citizenship/immigration status",
+                                            "$enrollment-status": "the student's enrollment status"
+                                        },
+                                        "outputMapping": {
+                                            "uid": "nnm2qx9p70k",
+                                            "$request-reference-number": "the benefit request's reference number",
+                                            "$failure-message": "the benefit request's failure message"
+                                        },
+                                        "requireValidData": true
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "7p8rv3ibh4x",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "j7gqgmhxtxm",
+                                        "schemeId": "label",
+                                        "text": "Saving your benefit request",
+                                        "visible": true,
+                                        "width": 12,
+                                        "visibleIf": "if",
+                                        "visibleCondition": "The benefit request is being submitted"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "rg97ks9exb",
+                                "controls": [
+                                    {
+                                        "uid": "rgnc3gi795",
+                                        "schemeId": "comment",
+                                        "kind": "comment",
+                                        "text": "The message above should be visible while the save-student-benefit-request transacton is processed. After that the below controls will become visible if successful, otherwise only the final control will be displayed."
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "c9g1b55pzpw",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "jcph7qmf7t",
+                                        "schemeId": "label",
+                                        "text": "Thanks&#160;<code>the student's name</code>",
+                                        "visible": true,
+                                        "width": 12,
+                                        "visibleIf": "if",
+                                        "visibleCondition": "The benefit request has been successfully submitted"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "1cj1ewrdtulj",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "xupfaui9d5q",
+                                        "schemeId": "label",
+                                        "text": "Your request's Reference Number is&#160;<code>the benefit request's reference number</code>",
+                                        "visible": false,
+                                        "width": 12,
+                                        "visibleIf": "if",
+                                        "visibleCondition": "the benefit request's reference number<> null"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "za3boyts89d",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "728ssi7hp27",
+                                        "schemeId": "label",
+                                        "text": "Your details have been saved",
+                                        "visible": true,
+                                        "width": 12,
+                                        "visibleIf": "if",
+                                        "visibleCondition": "The benefit request has been successfully submitted"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "q1a5c2ig0y",
+                                "controls": [
+                                    {
+                                        "uid": "1iyf0b60y0a",
+                                        "schemeId": "comment",
+                                        "kind": "comment",
+                                        "text": "The following messages may be displayed if an error was encountered with the above data action"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "89d4l4u6s1u",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "w3oovucol8",
+                                        "schemeId": "label",
+                                        "text": "Unfortunately there was a problem saving your details: <code>the benefit request's failure message</code>",
+                                        "visible": false,
+                                        "width": 12,
+                                        "visibleIf": "if",
+                                        "visibleCondition": "The benefit request has failed to be submitted"
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "if",
+                        "visibleCondition": "the student satisfies the basic eligibility requirements for student aid"
+                    },
+                    {
+                        "kind": "page",
+                        "uid": "yh1v1msir9c",
+                        "schemeId": "page",
+                        "text": "Not Eligible for Student Aid",
+                        "visible": true,
+                        "readOnly": false,
+                        "rows": [
+                            {
+                                "kind": "row",
+                                "uid": "0jbasmh6vkeu",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "vwnc7b9psh",
+                                        "schemeId": "heading",
+                                        "text": "Decision",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$header-level": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "sgjjn5lvbob",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "wzwtwqeh0c",
+                                        "schemeId": "label",
+                                        "text": "Sorry&#160;<code>the student's name</code>.",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "n3apdfckqzd",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "yaw9u8dmude",
+                                        "schemeId": "label",
+                                        "text": "You are not eligible for student aid.",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "w0it0flcg0n",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "cu3hhyj2j0u",
+                                        "schemeId": "heading",
+                                        "text": "Other Financial Assistance for Education",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$header-level": "2"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "yu6zauqrcl",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "b3z5sh8y7vn",
+                                        "schemeId": "heading",
+                                        "text": "Tax Benefits for Education",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$header-level": "3"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "mm9xq6r1qxg",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "6vvvypfdfn9",
+                                        "schemeId": "html",
+                                        "text": "Aside from general student aid, there are also various other avenues for financial assistance. For example, there are tax credits, deductions and savings plans which can help taxpayers with expenses associated with higher education. For more information, see the &lt;a href=\"https://www.irs.gov/newsroom/tax-benefits-for-education-information-center\" target=\"_blank\"&gt;IRS Tax Benefits for Education Information Center&lt;/a&gt;.",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "sruvedevufh",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "f73nva13tb",
+                                        "schemeId": "heading",
+                                        "text": "Student Aid for Military Families",
+                                        "visible": true,
+                                        "width": 12,
+                                        "$header-level": "3"
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "row",
+                                "uid": "jgw8z1xqkdq",
+                                "controls": [
+                                    {
+                                        "kind": "label",
+                                        "uid": "oobt6ig5cng",
+                                        "schemeId": "label",
+                                        "text": "There are also financial aid programs for individuals serving in the military, as well as their spouses and children.",
+                                        "visible": true,
+                                        "width": 12
+                                    }
+                                ]
+                            }
+                        ],
+                        "visibleIf": "unless",
+                        "visibleCondition": "the student satisfies the basic eligibility requirements for student aid"
+                    }
+                ]
+            }
+        ]
+    },
+    "rules": {
+        "rules": [
+            {
+                "text": "Basic Eligibility Rules",
+                "style": "heading1"
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "High level eligibility",
+                "style": "heading2"
+            },
+            {
+                "type": "rule-block",
+                "lines": [
+                    {
+                        "text": "the student satisfies the basic eligibility requirements for student aid if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student satisfies the financial need requirement and",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student satisfies the citizenship/immigration status criteria and",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student satisfies the Social Security Number criteria and",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student satisfies the education criteria and",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student has signed the required declarations for student aid",
+                        "level": 1
+                    }
+                ]
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "Financial Need",
+                "style": "heading2"
+            },
+            {
+                "type": "rule-block",
+                "lines": [
+                    {
+                        "text": "the student satisfies the financial need requirement if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student's annual family income < the income threshold for the family size",
+                        "level": 1
+                    },
+                    {
+                        "type": "table",
+                        "columns": [
+                            {
+                                "type": "condition",
+                                "text": "the number of people in the student's family"
+                            },
+                            {
+                                "type": "conclusion",
+                                "text": "the income threshold for the family size"
+                            }
+                        ],
+                        "rows": [
+                            [
+                                "1",
+                                "22340"
+                            ],
+                            [
+                                "2",
+                                "30260"
+                            ],
+                            [
+                                "3",
+                                "38180"
+                            ],
+                            [
+                                "4",
+                                "46100"
+                            ],
+                            [
+                                "5",
+                                "54020"
+                            ],
+                            [
+                                "6",
+                                "61940"
+                            ],
+                            [
+                                "7",
+                                "69860"
+                            ],
+                            [
+                                "8",
+                                "77780"
+                            ],
+                            [
+                                "",
+                                "77780 + (7920  * (the number of people in the student's family - 8))"
+                            ]
+                        ]
+                    }
+                ]
+            },
+            {
+                "text": "",
+                "style": "heading2"
+            },
+            {
+                "text": "Education Criteria",
+                "style": "heading2"
+            },
+            {
+                "type": "rule-block",
+                "lines": [
+                    {
+                        "text": "the student satisfies the education criteria if",
+                        "level": 0
+                    },
+                    {
+                        "text": "any",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student is enrolled as a regular student in an eligible degree or certification program or",
+                        "level": 2
+                    },
+                    {
+                        "text": "the student is accepted for enrollment as a regular student in an eligible degree or certification program",
+                        "level": 2
+                    },
+                    {
+                        "text": "and",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student has maintained satisfactory academic progress in college or career school and",
+                        "level": 1
+                    },
+                    {
+                        "text": "any",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student has a high school diploma or",
+                        "level": 2
+                    },
+                    {
+                        "text": "the student has a General Educational Development _GED_ certificate or",
+                        "level": 2
+                    },
+                    {
+                        "text": "the student has completed a high school education in a state-approved home school setting",
+                        "level": 2
+                    }
+                ]
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "Citizenship/Immigration Status",
+                "style": "heading2"
+            },
+            {
+                "type": "rule-block",
+                "lines": [
+                    {
+                        "text": "the student satisfies the citizenship/immigration status criteria if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student is a US citizen or",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student is an eligible non-citizen",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student is an eligible non-citizen if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student is a US National or",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student is a US permanent resident or",
+                        "level": 1
+                    },
+                    {
+                        "text": "all",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student has an Arrival-Departure Record _I-94_ from US Citizenship and Immigration Services _USCIS_ and",
+                        "level": 2
+                    },
+                    {
+                        "text": "any",
+                        "level": 2
+                    },
+                    {
+                        "text": "the designation on the student's Arrival-Departure Record _I-94_ from US Citizenship and Immigration Services _USCIS_ = Refugee or",
+                        "level": 3
+                    },
+                    {
+                        "text": "the designation on the student's Arrival-Departure Record _I-94_ from US Citizenship and Immigration Services _USCIS_ = Asylum Grant or",
+                        "level": 3
+                    },
+                    {
+                        "text": "the designation on the student's Arrival-Departure Record _I-94_ from US Citizenship and Immigration Services _USCIS_ = Cuban-Haitian Entrant _Status Pending_ or",
+                        "level": 3
+                    },
+                    {
+                        "text": "all",
+                        "level": 3
+                    },
+                    {
+                        "text": "the designation on the student's Arrival-Departure Record _I-94_ from US Citizenship and Immigration Services _USCIS_ = Conditional Entrant and",
+                        "level": 4
+                    },
+                    {
+                        "text": "the issue date of the student's Arrival-Departure Record _I-94_ from US Citizenship and Immigration Services _USCIS_ < 1980-04-01",
+                        "level": 4
+                    },
+                    {
+                        "text": "or",
+                        "level": 3
+                    },
+                    {
+                        "text": "the designation on the student's Arrival-Departure Record _I-94_ from US Citizenship and Immigration Services _USCIS_ = Victim of human trafficking, T-visa _T-2, T-3, T-4_ or",
+                        "level": 3
+                    },
+                    {
+                        "text": "all",
+                        "level": 3
+                    },
+                    {
+                        "text": "the designation on the student's Arrival-Departure Record _I-94_ from US Citizenship and Immigration Services _USCIS_ = Parolee and",
+                        "level": 4
+                    },
+                    {
+                        "text": "the student is paroled into the US for at least one year and",
+                        "level": 4
+                    },
+                    {
+                        "text": "the student is able to provide evidence from the USCIS that the student is in the US for other than a temporary purpose and",
+                        "level": 4
+                    },
+                    {
+                        "text": "the student intends to become a US citizen or permanent resident",
+                        "level": 4
+                    }
+                ]
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "Social Security Number",
+                "style": "heading2"
+            },
+            {
+                "type": "rule-block",
+                "lines": [
+                    {
+                        "text": "the student satisfies the Social Security Number criteria if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student has a valid Social Security Number or",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student satisfies an exception to the Social Security Number criteria",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student satisfies an exception to the Social Security Number criteria if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student is from the Republic of the Marshall Islands or",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student is from the Federated States of Micronesia or",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student is from the Republic of Palau",
+                        "level": 1
+                    }
+                ]
+            },
+            {
+                "text": "",
+                "style": "heading2"
+            },
+            {
+                "text": "Declarations",
+                "style": "heading2"
+            },
+            {
+                "type": "rule-block",
+                "lines": [
+                    {
+                        "text": "the student has signed the required declarations for student aid if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student has signed a declaration that the student is not in default on a federal student loan and",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student has signed a declaration that the student will use the federal student aid for educational purposes only",
+                        "level": 1
+                    }
+                ]
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "=================================================================================================",
+                "style": "normal"
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "Interpretative Rules",
+                "style": "heading1"
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "Citizenship/Immigration Status",
+                "style": "heading2"
+            },
+            {
+                "type": "rule-block",
+                "lines": [
+                    {
+                        "text": "the student is a US citizen if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student's citizenship/immigration status = citizen",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student is a US National if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student's citizenship/immigration status = national",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student is a US permanent resident if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student's citizenship/immigration status = permanent resident",
+                        "level": 1
+                    }
+                ]
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "Enrollment",
+                "style": "heading2"
+            },
+            {
+                "type": "rule-block",
+                "lines": [
+                    {
+                        "text": "the student is enrolled as a regular student in an eligible degree or certification program if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student's enrollment status = enrolled",
+                        "level": 1
+                    },
+                    {
+                        "text": "the student is accepted for enrollment as a regular student in an eligible degree or certification program if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the student's enrollment status = accepted",
+                        "level": 1
+                    }
+                ]
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "=================================================================================================",
+                "style": "normal"
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "",
+                "style": "normal"
+            },
+            {
+                "text": "Visibility Rules",
+                "style": "heading1"
+            },
+            {
+                "type": "rule-block",
+                "lines": [
+                    {
+                        "text": "The benefit request is being submitted if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the benefit request's reference number = null and",
+                        "level": 1
+                    },
+                    {
+                        "text": "the benefit request's failure message = null",
+                        "level": 1
+                    },
+                    {
+                        "text": "The benefit request has been successfully submitted if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the benefit request's reference number <> null",
+                        "level": 1
+                    },
+                    {
+                        "text": "The benefit request has failed to be submitted if",
+                        "level": 0
+                    },
+                    {
+                        "text": "the benefit request's reference number = null and",
+                        "level": 1
+                    },
+                    {
+                        "text": "the benefit request's failure message <> null",
+                        "level": 1
+                    }
+                ]
+            },
+            {
+                "text": "",
+                "style": "heading2"
+            },
+            {
+                "text": "",
+                "style": "normal"
+            }
+        ]
+    },
+    "scheme": "Scheme for Student Benefits"
+}

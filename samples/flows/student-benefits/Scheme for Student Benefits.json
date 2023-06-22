@@ -1,0 +1,522 @@
+{
+    "kind": "flowScheme",
+    "version": 1,
+    "runtime": "custom",
+    "formatters": [
+        {
+            "kind": "number",
+            "name": "Currency",
+            "format": {
+                "zeroPadFractional": true,
+                "negativeStyle": "leadingMinus",
+                "groupingSymbols": [
+                    ","
+                ],
+                "groupingStyle": "thirds",
+                "decimalSymbol": ".",
+                "maxDecimalPlaces": 2,
+                "minDecimalPlaces": 2,
+                "zeroPadMinDecimalPlaces": true,
+                "currencySymbol": "$",
+                "precision": 13,
+                "currencySymbolLocation": "beforeNumber"
+            }
+        },
+        {
+            "kind": "number",
+            "name": "Currency unformatted",
+            "format": {
+                "zeroPadFractional": true,
+                "zeroPadMinDecimalPlaces": true,
+                "negativeStyle": "leadingMinus",
+                "groupingSymbols": [
+                    ","
+                ],
+                "groupingStyle": "thirds",
+                "decimalSymbol": ".",
+                "maxDecimalPlaces": 2,
+                "precision": 13,
+                "currencySymbolLocation": "beforeNumber",
+                "currencySymbol": "$"
+            }
+        },
+        {
+            "kind": "date",
+            "name": "Locale date",
+            "format": [
+                {
+                    "kind": "month2Digit"
+                },
+                "/",
+                {
+                    "kind": "day2Digit"
+                },
+                "/",
+                {
+                    "kind": "year4Digit"
+                }
+            ]
+        },
+        {
+            "kind": "number",
+            "name": "Number",
+            "format": {
+                "zeroPadFractional": true,
+                "zeroPadMinDecimalPlaces": true,
+                "negativeStyle": "leadingMinus",
+                "groupingSymbols": [
+                    ","
+                ],
+                "groupingStyle": "thirds",
+                "decimalSymbol": ".",
+                "maxDecimalPlaces": 4
+            }
+        },
+        {
+            "name": "Year-month-day digits",
+            "kind": "date",
+            "format": [
+                {
+                    "kind": "year4Digit"
+                },
+                "-",
+                {
+                    "kind": "month2Digit"
+                },
+                "-",
+                {
+                    "kind": "day2Digit"
+                }
+            ]
+        }
+    ],
+    "defaultFormatters": {
+        "numberInput": [
+            "Number"
+        ],
+        "numberOutput": "Number",
+        "dateInput": [
+            "Locale date",
+            "Year-month-day digits"
+        ],
+        "dateOutput": "Locale date"
+    },
+    "palette": [
+        {
+            "controls": [
+                {
+                    "kind": "label",
+                    "id": "heading",
+                    "text": "Heading",
+                    "customProperties": {
+                        "header-level": {
+                            "type": "number",
+                            "kind": "static"
+                        }
+                    }
+                },
+                {
+                    "kind": "label",
+                    "id": "html",
+                    "text": "HTML Block",
+                    "disableHTML": true,
+                    "customProperties": {}
+                },
+                {
+                    "id": "page",
+                    "kind": "page",
+                    "text": "Page"
+                },
+                {
+                    "id": "label",
+                    "kind": "label",
+                    "text": "Paragraph"
+                }
+            ],
+            "text": "Simple flow"
+        },
+        {
+            "controls": [
+                {
+                    "kind": "input",
+                    "dataType": "number",
+                    "id": "number-currency",
+                    "inputStyle": "textBox",
+                    "text": "Currency",
+                    "outputFormat": "Currency",
+                    "inputFormats": [
+                        "Currency unformatted"
+                    ]
+                },
+                {
+                    "kind": "input",
+                    "dataType": "date",
+                    "id": "date-general",
+                    "inputStyle": "textBox",
+                    "text": "Date",
+                    "outputFormat": "Locale date",
+                    "inputFormats": [
+                        "Year-month-day digits"
+                    ]
+                },
+                {
+                    "id": "number-general",
+                    "text": "Number",
+                    "kind": "input",
+                    "inputStyle": "textBox",
+                    "dataType": "number",
+                    "outputFormat": "Number",
+                    "inputFormats": []
+                },
+                {
+                    "id": "text",
+                    "text": "Text",
+                    "kind": "input",
+                    "inputStyle": "textBox",
+                    "dataType": "text",
+                    "outputFormat": "",
+                    "inputFormats": []
+                }
+            ],
+            "text": "Filled inputs"
+        },
+        {
+            "controls": [
+                {
+                    "id": "boolean-checkbox",
+                    "text": "Checkbox",
+                    "kind": "input",
+                    "inputStyle": "checkBox",
+                    "dataType": "boolean",
+                    "outputFormat": "",
+                    "inputFormats": []
+                },
+                {
+                    "id": "boolean-radio",
+                    "text": "Radio yes/no",
+                    "kind": "input",
+                    "inputStyle": "radioButtons",
+                    "dataType": "boolean",
+                    "outputFormat": "",
+                    "inputFormats": []
+                }
+            ],
+            "text": "Yes/no"
+        },
+        {
+            "controls": [
+                {
+                    "id": "reference-dropdown",
+                    "text": "Dropdown list",
+                    "kind": "input",
+                    "inputStyle": "dropDown",
+                    "dataType": "record",
+                    "outputFormat": "",
+                    "inputFormats": []
+                },
+                {
+                    "id": "reference-radio",
+                    "text": "Radio group",
+                    "kind": "input",
+                    "inputStyle": "radioButtons",
+                    "dataType": "record",
+                    "outputFormat": "",
+                    "inputFormats": []
+                }
+            ],
+            "text": "Select"
+        },
+        {
+            "text": "More inputs",
+            "controls": [
+                {
+                    "id": "recordlist-checkbox-multiselect",
+                    "text": "Checkbox multi-select",
+                    "kind": "referenceList",
+                    "dataType": "list"
+                },
+                {
+                    "id": "recordlist-record-collect",
+                    "kind": "recordCollect",
+                    "text": "Record collect"
+                },
+                {
+                    "id": "text-area",
+                    "text": "Text area",
+                    "kind": "input",
+                    "inputStyle": "textArea",
+                    "dataType": "text",
+                    "outputFormat": "",
+                    "inputFormats": []
+                }
+            ]
+        },
+        {
+            "text": "Other",
+            "controls": [
+                {
+                    "id": "comment",
+                    "kind": "comment",
+                    "text": "Comment"
+                },
+                {
+                    "id": "control-group",
+                    "kind": "group",
+                    "text": "Control group"
+                },
+                {
+                    "id": "page-group",
+                    "kind": "flowItemGroup",
+                    "text": "Page group"
+                },
+                {
+                    "id": "validation",
+                    "kind": "validation",
+                    "text": "Validation"
+                }
+            ]
+        },
+        {
+            "controls": [
+                {
+                    "kind": "dataAction",
+                    "id": "get-student",
+                    "text": "Load existing student details",
+                    "icon": "cloud-db",
+                    "sendSchema": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "number",
+                                "displayName": "The existing student's ID",
+                                "text": "the existing student's ID"
+                            }
+                        }
+                    },
+                    "returnSchema": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "displayName": "The existing student's name",
+                                "text": "the existing student's name"
+                            },
+                            "gender": {
+                                "type": "number",
+                                "references": "/defined-genders",
+                                "displayName": "The existing student's gender",
+                                "text": "the existing student's gender"
+                            },
+                            "citizenship-status": {
+                                "type": "number",
+                                "references": "/defined-citizenship-statuses",
+                                "displayName": "The existing student's citizenship/immigration status",
+                                "text": "the existing student's citizenship/immigration status"
+                            },
+                            "enrollment-status": {
+                                "type": "number",
+                                "references": "/defined-enrollment-statuses",
+                                "displayName": "The existing student's enrollment status",
+                                "text": "the existing student's enrollment status"
+                            }
+                        }
+                    },
+                    "iconColor": "purple",
+                    "customProperties": {}
+                },
+                {
+                    "kind": "dataAction",
+                    "id": "save-student-benefit-request",
+                    "text": "Save student benefit request",
+                    "icon": "adapter",
+                    "sendSchema": {
+                        "type": "object",
+                        "properties": {
+                            "existing-student-id": {
+                                "type": "number",
+                                "displayName": "The existing student's ID",
+                                "text": "the existing student's ID"
+                            },
+                            "student-name": {
+                                "type": "string",
+                                "displayName": "The student's name",
+                                "text": "the student's name"
+                            },
+                            "gender": {
+                                "type": "number",
+                                "references": "/defined-genders",
+                                "displayName": "The student's gender",
+                                "text": "the student's gender"
+                            },
+                            "citizenship-status": {
+                                "type": "number",
+                                "references": "/defined-citizenship-statuses",
+                                "displayName": "The student's citizenship/immigration status",
+                                "text": "the student's citizenship/immigration status"
+                            },
+                            "enrollment-status": {
+                                "type": "number",
+                                "references": "/defined-enrollment-statuses",
+                                "displayName": "The student's enrollment status",
+                                "text": "the student's enrollment status"
+                            }
+                        }
+                    },
+                    "returnSchema": {
+                        "type": "object",
+                        "properties": {
+                            "request-reference-number": {
+                                "type": "string",
+                                "displayName": "The benefit request's reference number",
+                                "text": "the benefit request's reference number"
+                            },
+                            "failure-message": {
+                                "type": "string",
+                                "displayName": "The benefit request's failure message",
+                                "text": "the benefit request's failure message"
+                            }
+                        }
+                    },
+                    "iconColor": "green"
+                }
+            ],
+            "text": "Data Actions"
+        }
+    ],
+    "localisationStrings": {
+        "locale": "en-US",
+        "dayFull": [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ],
+        "dayShort": [
+            "Sun",
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thur",
+            "Fri",
+            "Sat"
+        ],
+        "monthFull": [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ],
+        "monthShort": [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ],
+        "trueValue": "Yes",
+        "falseValue": "No",
+        "nullValue": "Null",
+        "numberFormatError": "Please enter a valid number.",
+        "dateFormatError": "Please enter a valid date.",
+        "dateNotExistError": "The entered date does not exist, or is before the year 0001 or after the year 9999.",
+        "mandatoryError": "This value is mandatory.",
+        "invalidReturnedDataError": "Returned data is invalid.",
+        "invalidValue": "Invalid value."
+    },
+    "icon": "dialog",
+    "inputSchema": {
+        "type": "object",
+        "properties": {
+            "existing-student-id": {
+                "type": "number",
+                "displayName": "The existing student's ID",
+                "text": "the existing student's ID"
+            },
+            "defined-citizenship-statuses": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "displayName": "Text",
+                            "text": "citizenship/immigration status display text"
+                        }
+                    }
+                },
+                "identity": "value",
+                "nameProperty": "value",
+                "namedRecords": [
+                    "citizen",
+                    "national",
+                    "permanent resident",
+                    "other"
+                ],
+                "displayName": "Defined citizenship/immigration statuses",
+                "text": "Defined citizenship/immigration statuses"
+            },
+            "defined-enrollment-statuses": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "displayName": "Text",
+                            "text": "enrollment status display text"
+                        }
+                    }
+                },
+                "identity": "value",
+                "nameProperty": "value",
+                "namedRecords": [
+                    "enrolled",
+                    "accepted",
+                    "not enrolled"
+                ],
+                "displayName": "Defined enrollment statuses",
+                "text": "Defined enrollment statuses"
+            },
+            "defined-genders": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "displayName": "Text",
+                            "text": "gender display text"
+                        }
+                    }
+                },
+                "identity": "value",
+                "nameProperty": "value",
+                "namedRecords": [
+                    "male",
+                    "female"
+                ],
+                "displayName": "Defined genders",
+                "text": "Defined genders"
+            }
+        }
+    },
+    "debugURL": "http://localhost:8081"
+}
