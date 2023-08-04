@@ -1,6 +1,6 @@
 # Intelligent Advisor tools and samples
 
-This repository contains sample code and tools for Oracle Intelligent Advisor.
+This repository contains sample code and tools for Oracle Intelligent Advisor. Intelligent Advisor is designed to deliver consistent and auditable advice across channels and business processes by capturing rules in natural language and building interactive customer service experiences called interviews around those rules. Learn more about it [on the website](https://www.oracle.com/cx/service/intelligent-advisor/).
 
 ## Repository Structure
 
@@ -19,11 +19,11 @@ To get further help on Intelligent Advisor, see:
 
 ## Contributing
 
-This project welcomes contributions from the community. Before submitting a pull request, please [review our contribution guide](./CONTRIBUTING.md)
+This project welcomes contributions from the community. Before submitting a pull request, please [review our contribution guide](./CONTRIBUTING.md).
 
 ## Security
 
-Please consult the [security guide](./SECURITY.md) for our responsible security vulnerability disclosure process
+Please consult the [security guide](./SECURITY.md) for our responsible security vulnerability disclosure process.
 
 ## Redistribution
 
