@@ -1,5 +1,6 @@
 {
-	/** These settings control the migration of Oracle Policy Modeling rules.
+	/** These settings control the migration of Oracle Policy Modeling rules and 
+        interview controls. 
 	    Top-level properties can be excluded, and will have sensible defaults.
 		Refer to the README.md for more information.
 	*/
@@ -33,5 +34,54 @@
             "decimalSeparator":".",
             "thousandsSeparator":","
         }
+    },
+
+    /** Settings for the migration of interview controls to flow controls */
+    "flowControls":
+    { 
+        "label": "label",
+        "screen": "page",
+        "container": "control-group",
+        "stage": "page-group",
+        "entityCollect": "recordlist-record-collect",
+        "entityContainer": "control-group",
+        "entityScreenGroup": "page-group",
+ 
+        "input":
+        {
+            "number":
+            {
+                "slider": "number-slider",
+                "text": "number-general"
+            },
+            "date":
+            {
+                "calendar": "date-calendar",
+                "dmy-inputs": "date-dmy"
+            },
+            "text":
+            {
+                "text-area": "text-textarea",
+                "password": "text-password",
+                "masked": "text-masked"
+            },
+            "boolean":
+            {
+                "checkbox": "boolean-checkbox",
+                "switch": "boolean-switch"
+            },
+            "currency":
+            {
+                "drop-down": "number-currency-dropdown",
+                "text": "number-currency"
+            }
+        }
+    },
+
+    /** Settings to enable optional behaviour when creating the output contract when migrating to a Decision Service project */
+    "decisionServiceContract" : {
+        "outputGoalAttributes" : true,
+        "outputNonInputAttributesWithPublicNames" : true
     }
+
 }

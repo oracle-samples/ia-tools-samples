@@ -18,7 +18,7 @@ export interface NumberFormat {
     currencySymbolLocation?: 'beforeNumber' | 'afterNumber';
 }
 
-type GroupingStyleTypes = 'none'        //1234567
+export type GroupingStyleTypes = 'none'        //1234567
     | 'thirds'      //1,234,567
     | 'firstThird'  //1234,567
     | 'lakhCrore';       //12,34,567

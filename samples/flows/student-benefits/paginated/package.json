@@ -12,7 +12,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "@oracle/ia-flows-sdk": "23.0.0",
+    "@oracle/ia-flows-sdk": "23.2.1",
     "preact": "10.11.2"
   }
 }

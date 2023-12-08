@@ -1,25 +1,33 @@
 /* Copyright (c) 2021, 2023, Oracle and/or its affiliates. Licensed under The Universal Permissive License (UPL), Version 1.0 as shown at https://oss.oracle.com/licenses/upl/ */
-import { IAFlowSession, IAPage, IASentDataObject } from "@oracle/ia-flows-sdk/IAFlowEngineAPI";
-import { StateUpdater, useState } from "preact/hooks";
-import { Page } from "./controls/Page";
+import {IADebugFlowSession, IAFlowSession, IAPage, IASentDataObject} from "@oracle/ia-flows-sdk/IAFlowEngineAPI";
+import {StateUpdater, useState} from "preact/hooks";
+import {Page} from "./controls/Page";
+import {Debugger} from "./Debugger";
 import Navigation from "./Navigation";
-import { findFirstControlWithErrors, getFirstVisiblePage, getVisibleInputControls } from "./PageUtils";
-import { ApplicationSession, ApplicationState, generateNewState, SessionContext } from "./Session";
+import {findFirstControlWithErrors, getFirstVisiblePage, getVisibleInputControls} from "./PageUtils";
+import {ApplicationSession, ApplicationState, generateNewState, SessionContext} from "./Session";
 
 /** Logging functions overwritten in debug.tsx; there's no logging by default in production */
-export const logger = {log: (msg, isError = false) => {}, error: (msg) => {}};
+export const logger = {
+    log: (msg, isError = false) => {
+    }, error: (msg) => {
+    }
+};
 
 /** There isn't a production implementation of 'transact', but when run in debug
  *  the transact function is overwritten by a debugTransaction function in DebugDataAdapter.ts */
 export const dataAdapter = {
-    transact: (schemeId: string, inputData: IASentDataObject, resultDefinition: any) => { return {} }
+    transact: (schemeId: string, inputData: IASentDataObject, resultDefinition: any) => {
+        return {}
+    }
 };
 
 interface ApplicationProps {
     session: IAFlowSession;
+    debuggerEnabled: boolean;
 }
 
-export default function Application({ session }: ApplicationProps) {
+export default function Application({session, debuggerEnabled}: ApplicationProps) {
 
     const firstPage = getFirstVisiblePage(session.model.items);
     if (!firstPage) {
@@ -92,11 +100,14 @@ export default function Application({ session }: ApplicationProps) {
     }
 
     return <SessionContext.Provider value={applicationSession}>
-        <div class="flow">
-            <Navigation />
-            <main>
-                <Page page={appState.currentPage} />
-            </main>
+        <div class="main">
+            <div class="flow">
+                <Navigation/>
+                <main>
+                    <Page page={appState.currentPage}/>
+                </main>
+            </div>
+            {debuggerEnabled ? <Debugger debugSession={session as IADebugFlowSession}/> : null}
         </div>
     </SessionContext.Provider>
 }

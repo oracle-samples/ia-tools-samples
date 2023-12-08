@@ -1,5 +1,5 @@
 ## ia-public-js
-Public interface definitions for Intelligent Advisor for decision service and flow projects. This is a dependency for the flows migrator.
+Public interface definitions for Intelligent Advisor for decision service and flow projects. This is a dependency for the web projects migrator.
 
 ## migrator
-Main source for the flows migrator.
+Main source for the web projects migrator.

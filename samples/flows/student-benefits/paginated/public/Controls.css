@@ -4,9 +4,21 @@ body {
     font-size: 16px;
 }
 
+.main {
+    display: flex;
+    align-items: flex-start;
+}
+
+.debugger {
+    min-width: 50%;
+    height: 100vh;
+}
+
+
 .flow {
     max-width: 1024px;
-    margin: auto;
+    min-width: 50%;
+    margin: 0 auto;
     padding: 0 1em;
 }
 

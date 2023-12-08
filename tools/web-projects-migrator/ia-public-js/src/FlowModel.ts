@@ -95,6 +95,19 @@ export interface FlowDataAction extends VisibleStateConfiguration {
     inputMapping: any;
     outputMapping: any;
     requireValidData: boolean;
+    /** A value should be specified when control is in a FlowControlRow */
+    width?: number;
+    additionalSend?: FlowDataActionAdditionalProperty[];
+    additionalReturn?: FlowDataActionAdditionalProperty[];
+}
+
+export interface FlowDataActionAdditionalProperty {
+    kind: "additionalProperty",
+    uid: string;
+    name: string;
+    displayName?: string;
+    type: "string" | "number" | "boolean" | "date" | "array";
+    items?: FlowDataActionAdditionalProperty[];
 }
 
 export interface FlowValidationControl extends VisibleStateConfiguration {
