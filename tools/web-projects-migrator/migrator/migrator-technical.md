@@ -12,12 +12,16 @@ included in this repository), that contains TypeScript definitions for some Inte
 public interfaces, and may also be useful for other custom development.
 
 There are helper functions to handle reading Word and Excel documents and navigating XML, but most
-of the actual migration takes place across three source files:
+of the actual migration takes place across five source files:
 - ExcelMigrator.ts
 - WordMigrator.ts
+- InterviewScreensMigrator.ts
+- DecisionServiceContractHandler
 - MigratorCommon.ts
 
-## Translating Rule Structures
+## Migrating Rules
+
+### Translating Rule Structures
 
 In converting each rule document, the migrator does not simply copy the text out of the source
 documents.  If it did, many migrated projects would need a substantial amount of manual work to
@@ -88,7 +92,7 @@ Some things to note in this example:
 - "the current date" was interpreted as a function, but is now a field that is (hopefully) defined
   in the flow scheme.
 
-## Non-Rule Content
+### Non-Rule Content
 
 Both Word and Excel documents may have content that is not interpreted as rules but is
 nevertheless important to the rule author.  This could be headings, explanatory text, or Excel
@@ -109,7 +113,7 @@ Excel rule documents:
   way to represent it without breaking up the structure (tables must always represent a rule).  
   The text is available to the migrator if it is needed.
 
-## Parenthesis
+### Parenthesis
 
 Parenthesis '(' and ')' are not present in the xgen file, so the migrator can't copy them across
 directly.  Instead it looks at the compiled expression and based on operator precedence, it works
@@ -123,7 +127,7 @@ This process gives a correct result but means parenthesis added just for readibi
 lost.  For example, when the original rule says "(a+b)\*(x-y)", it will keep the parenthesis, but
 "(a\*b)+(x/y)" will get rewritten as "a\*b+x/y".
 
-## Boolean Negations
+### Boolean Negations
 
 Web-authored rules don't automatically recognise the negative phrasing of a Boolean field.  For 
 example, "the person does not have a valid license" is not automatically recognized as being 
@@ -135,7 +139,7 @@ requires some adjustments:
 if ..." then the rule is rewritten as "it is false that the person has a license if ..." and then 
 a rule is added "the person has a license = not(it is false that the person has a license)".
 
-## Collapsing "IsUncertain(x) or IsUnknown(x)"
+### Collapsing "IsUncertain(x) or IsUnknown(x)"
 
 These are both converted into a comparison with null.  For example, "IsUncertain(x)" becomes "x = 
 null".
@@ -144,7 +148,7 @@ It is also common to test for both cases with "IsUncertain(x) or IsUnknown(x)". 
 down to a single comparison with null, and if these were the only conditions inside the "or", then 
 the entire "or" is replaced with the null comparison.
 
-## Intermediate Rules
+### Intermediate Rules
 
 While translating an expression, the migrator will sometimes find a condition that was allowed 
 inside a rule in Policy Modeling, but not in web-authored rules.  In those cases it will create an 
@@ -170,7 +174,7 @@ negation (as described above).  When migrated, this example becomes:
 
     the license has expired = Not(it is false that the license has expired)
 
-## Mixed Entity Levels in Excel tables
+### Mixed Entity Levels in Excel tables
 
 Excel rules allow columns to belong to different entity levels within the same rule, as long as 
 the conditions are all available from the entity of each conclusion.  This is most commonly found 
@@ -181,7 +185,7 @@ The migrator doesn't allow one table to evaluate results for multiple objects, s
 converts the Excel rule into multiple tables, one table for each entity level in which a 
 conclusion exists.
 
-## Apply Sheet Rules
+### Apply Sheet Rules
 
 Apply Sheet rules in Excel documents allow attributes to be set to a different value across 
 multiple worksheets and then a top-level rule decides which worksheet should be applied to all of 
@@ -191,3 +195,25 @@ Web-authored rules don't have an equivalent to this, so instead each rule inside
 will have the worksheet name prepended to the attribute name, ensuring each rule concludes a 
 different attribute.  Then the top-level rule is rewritten to expand the "apply sheet" column into  column for every attribute, selecting each specific worksheet value when the worksheet's 
 conditions are met.
+
+## Migrating Interview Screens 
+
+### Screen Order Behaviour
+In a Flow project migrated from an Oracle Policy modeling project, page groups are used to achieve similar entity-level screen order behaviour to the original OPM interview. 
+
+See the following help topics from the Policy Modeling user documentation to understand this behaviour:
+
+- [Understand what entity a screen belongs to](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Use_Policy_Modeling/Screens/Understand_what_entity_screen_belongs_to.htm)
+- [Control the order of entity-level screens](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Use_Policy_Modeling/Screens/Control_order_entity_level_screens.htm)
+
+### Unsupported Features
+The following features in Oracle Policy Modeling interviews are not supported. Usages of these features will be ignored by the migrator and associated warnings will be logged to the console:
+- Date and time and Time of day attribute types
+- "Show/Hide if relevant, otherwise..." rules
+- "Optional/Mandatory if relevant, otherwise..." rules
+- "Read-only/Enabled if relevant, otherwise..." rules
+- Value list references
+- Manual lists
+
+## Migrating to a Decision Service project
+Date and time and Time of day attribute types are not supported. These attributes will be ignored by the migrator, and associated warnings will be logged to the console.

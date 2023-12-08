@@ -265,6 +265,7 @@ function FlowDetailsForms() {
         <form hidden={!jwt} method="GET" target="_blank">
             <input hidden={true} name="_iajwt" value={jwt}></input>
             <input hidden={true} name="_globalDataBase64" value={selectedDataSetBase64}></input>
+            <input hidden={true} name="_debugger" value={action === 'debug' ? 'true' : 'false'}></input>
             <input type="submit" value={`Start '${flow}' flow`}> </input>
         </form>
     </div>

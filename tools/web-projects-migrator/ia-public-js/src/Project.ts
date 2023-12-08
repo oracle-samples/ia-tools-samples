@@ -1,6 +1,6 @@
 import { FlowSection } from './FlowModel';
 import { RuleDocument } from './RuleDocument'
-import { ContractFields } from './Contract';
+import {ContractFields} from './Contract';
 import { FlowSchemeIcon, LocalisationStrings, SchemeConnectionObject, SchemeDefaultFormatters, SchemeFormatter, SchemeObjectSchema, SchemePaletteGroup } from './FlowSchemeModel';
 
 export type ProjectRules = {
@@ -33,8 +33,21 @@ export function getRuleLanguageSettings(project: DecisionServiceProject | FlowSc
     if (!project) {
         return DefaultRuleLanguageSettings;
     } else {
-        return 'ruleLanguage' in project ? project.ruleLanguage : DefaultRuleLanguageSettings;
+        return project.ruleLanguage ?? DefaultRuleLanguageSettings;
     }
+}
+
+export type ProjectReference = DecisionServiceReference;
+
+export interface DecisionServiceReference {
+    uid: string;
+    kind: "decisionService",
+    name: string;
+    modelObjectPath: string;
+    deployment: string;
+    isProject?: boolean;
+    inputMapping: any;
+    outputMapping: any;
 }
 
 export interface DecisionServiceProject {
@@ -42,6 +55,10 @@ export interface DecisionServiceProject {
      * version 1: Initial version (version property is absent)
      * version 2: Optional input fields
      * version 3: Rule language
+     * version 4: User Set Data
+     * version 5: Multiple rule documents
+     * version 6: Decision service references
+     * version 7: Decision service reference changes
      */
     version?: number;
 
@@ -56,6 +73,19 @@ export interface DecisionServiceProject {
 
     /** Should only be absent when version < 3, and then the DefaultRuleLanguageSettings are used.  */
     ruleLanguage?: RuleLanguageSettings;
+
+    /** Additional document properties, added in version 5 */
+    documents?: ProjectDocumentProperties[];
+
+    /**
+     * External references such to other dependencies such as decision services, added in version 6.
+     */
+    references?: ProjectReferences;
+}
+
+export interface ProjectReferences {
+    uid: string,
+    items: ProjectReference[];
 }
 
 export type ProjectDocumentKind = "flow" | "rules";
@@ -72,6 +102,11 @@ export interface FlowProject {
     /**
      * version 1: Initial version
      * version 2: Added documents
+     * version 3: Rule language
+     * version 4: Resizing data action on a screen
+     * version 6: additional properties for data controls
+     * version 7: Decision service references
+     * version 8: Decision service reference changes
      */
     version: number;
 
@@ -81,6 +116,11 @@ export interface FlowProject {
     flow: FlowSection;
     scheme: string;
 
+    /**
+     * External references such to other dependencies such as decision services, added in version 5.
+     */
+    references?: ProjectReferences;
+
     /** Additional document properties, added in version 2 */
     documents?: ProjectDocumentProperties[];
 }
@@ -89,6 +129,8 @@ export interface FlowSchemeProject {
     /**
      * version 1: Initial version (version property is absent)
      * version 2: ruleLanguage
+     * version 3: restructured mapping
+     * version 4: additional properties for data controls
     */
     kind: "flowScheme";
     version: number,

@@ -19,6 +19,7 @@ export interface SchemeObjectSchema {
     properties: {
         [index: string]: SchemeItemSchema;
     }
+    additionalProperties?: boolean;
 }
 
 export interface SchemeBooleanSchema {
@@ -143,7 +144,9 @@ export type SchemeItemKind =
 export type SchemeControlCustomProperties = {
     [index: string]: {
         type: "string" | "number" | "boolean";
-        kind: "static" | "rule"
+        kind: "static" | "rule";
+        options?: string[];
+        displayName?: string;
     }
 };
 

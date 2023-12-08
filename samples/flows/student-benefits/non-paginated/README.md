@@ -65,7 +65,7 @@ credentials, the Flow name and version, and the 'Start [flow name]' button will 
 a new tab with the JWT value in the _iajwt parameter as would be expected for the production
 build of this project.
 
-For further information see [Get a session token](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Developer_Guide/Flow_Engine_API/Get_a_session_token.htm)
+For further information see [Get a session token](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Customize_extend/Flow_Engine_API/Get_a_session_token.htm)
 
 ### _globalDataBase64
 
@@ -73,4 +73,10 @@ This is an optional parameter, if provided the value should be a Base64 encoding
 containing global input values for the Flow. As with the _iajwt parameter there is help
 for building this in the debug build, but not in production.
 
-For further information see [Global input data](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Developer_Guide/Flow_Engine_API/Global_input_data.htm)
+For further information see [Global input data](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Customize_extend/Flow_Engine_API/Global_input_data.htm)
+
+### _debugger
+This is an optional parameter that controls whether the debugger should be displayed. If the value is true the
+flow debugger will be displayed. 
+
+**Note:** to display the debugger, the provided [session token](#iajwt) must have an action of *debug*. 

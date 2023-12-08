@@ -626,7 +626,14 @@ export async function migrateExcelRuleDocument(xlsxBuffer:Buffer, xgen:XmlElemen
                 }
 
                 for(const conclusion of tableEntity.columns) {
-                    table.columns.push({type:'conclusion', text:conclusion.heading});
+                    if (conclusion.isEntityId) {
+                        table.columns.unshift({type:'identifier', text:conclusion.heading});
+                        context.addInferredEntity(tableEntity.entity.name);
+                    } else {
+                        table.columns.push({type:'conclusion', text:conclusion.heading});
+                    }
+
+                    
                     if (rowCount === null) {
                         rowCount = conclusion.cells.length;
                     } else if (rowCount !== conclusion.cells.length) {
@@ -667,7 +674,11 @@ export async function migrateExcelRuleDocument(xlsxBuffer:Buffer, xgen:XmlElemen
                                 }
                             }
                         }
-                        row.push(conclusion.cells[i]);
+                        if (conclusion.isEntityId) {
+                            row.unshift(conclusion.cells[i] !== null ? conclusion.cells[i].replace(/"/g, '') : null);
+                        } else {
+                            row.push(conclusion.cells[i]);
+                        }
                     }
                 }
             }
