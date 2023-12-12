@@ -1,10 +1,11 @@
 /* Copyright (c) 2021, 2023, Oracle and/or its affiliates. Licensed under The Universal Permissive License (UPL), Version 1.0 as shown at https://oss.oracle.com/licenses/upl/ */
-import { XgenAttribute, XgenDataModel, XgenEntity, XgenRelationship } from './xgenParser';
+import { XgenAttribute, XgenDataModel, XgenEntity, XgenRelationship } from './XgenParser';
 import { XmlElement } from './Xml'
 import { RuleLanguageSettings } from 'ia-public/Project'
 import { NCSet, StringUtil, Lookup, NCMap } from './Util';
 import { getRuleLanguage } from 'ia-public/RuleLanguage';
 
+export type opmInputStyle = "checkbox" | "dmy-inputs" | "searching-combo" | "text-area" | "custom" | "masked" | "text-button-group" | "image-button-group" | "text-image-button-group" | "slider" | "switch" | "password" | "image-button" | "drop-down" | "radio-button" | "calendar" | "listbox" | "text"
 export interface MigrationSettings {
     /** List of entities that are collapsed into their parent during migration */
     collapseEntities:string[];
@@ -26,6 +27,35 @@ export interface MigrationSettings {
 
     /** Language settings to use for the migration */
     language:RuleLanguageSettings;
+
+    flowControls?:{
+        label?:string, 
+        screen?:string,
+        stage?:string,
+        container?:string,
+        entityCollect?:string,
+        entityContainer?: string, 
+        entityScreenGroup?:string,
+        input?:{
+            number?: { [style in opmInputStyle]: string },
+            date?: { [style in opmInputStyle]: string },
+            text?: { [style in opmInputStyle]: string },
+            boolean?: { [style in opmInputStyle]: string }
+        },
+        referenceRelationship?:{
+            toOne?: {
+                [style in opmInputStyle]: string
+            },
+            toMany?: {
+                [style in opmInputStyle]: string
+            }
+        }
+    },
+
+    decisionServiceContract?:{
+        outputGoalAttributes?: boolean,
+        outputNonInputAttributesWithPublicNames?: boolean
+    }
 }
 
 /** Create one of these for each project being migrated */
@@ -41,6 +71,8 @@ export class MigrationContext {
     public definedLegends = new NCMap<string>();
 
     public intermediates = new NCSet();
+
+    public inferredEntities = new NCSet();
 
     createRelationshipConditionIntermediate(rel:XgenRelationship) {
         const defaultName = this.migrationLanguage.relationshipConditionTemplate.replace("?", this.migrateAttributeText(rel.text));
@@ -212,6 +244,14 @@ export class MigrationContext {
 
     public functionCall(englishName:string, args:string[]) {
         return this.functionName(englishName) + "(" + args.join(this.formats.argumentSeparator +  " ") + ")";
+    }
+
+    public addInferredEntity(entityContainmentRel:string) {
+        this.inferredEntities.add(entityContainmentRel);
+    }
+
+    public isInferredEntity(entityContainmentRel:string) : boolean {
+        return this.inferredEntities.has(entityContainmentRel);
     }
 }
 

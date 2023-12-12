@@ -1,8 +1,7 @@
-# Intelligent Advisor Flow Migrator
+# Intelligent Advisor Web Project Migrator
 
-*migrator* is a Node.js tool that migrates the rules contained inside an Oracle Policy Modeling
-project into an Intelligent Advisor Flow project.  It does not currently handle interview screens
-or mapped data.
+*migrator* is a Node.js tool that migrates Oracle Policy Modeling
+projects to Intelligent Advisor web-authored Flow projects, or Decision Service projects.
 
 The migrator is somewhat configurable via a settings file, but the full source of the migrator is
 provided so it can be adapted to the needs of particular projects.
@@ -13,19 +12,26 @@ You'll need Node.js to build and run the migrator:
 
     npm install
 
-Then you can build a standalone Node.js executable:
+### Migration to Flow Project    
+
+You can then build a standalone Node.js executable:
 
     npm run build
-    node build/migrate.js [project-directory] --template [template-project.json] --settings [settings.json] --outproject [project.json]
+    node build/migrate.js [project-directory] --template [template-project.json] --scheme [flow-scheme.json] --settings [settings.json] --outproject [project.json]
 
 Or run the tool directly from source:
 
-    npx ts-node src/main [project-directory] --template [template-project.json] --settings [settings.json] --outproject [project.json]
+    npx ts-node src/main [project-directory] --template [template-project.json] --scheme [flow-scheme.json] --settings [settings.json] --outproject [project.json]
 
 Arguments:
 
 - *project-directory* is a directory containing a Policy Modeling project (not the path to the
   actual xprj file).  Both the "Rules" folder and the "bin" folder should be present there.
+
+- *flow-scheme.json* is a flow scheme (exported from a Hub) that will be used when migrating
+interview screens. The flow controls to use for each kind, or data type in the case of input controls 
+can be configured in the settings.json file (see below). Where no configuration has been provided for particular
+ screen control, the first control in the scheme with the appropriate kind, or data type in the case of input controls.
 
 - *template-project.json* (optional) is a flow project (exported from a Hub) that the migrated
   rule documents will be added to.  The template is not modified, and if not provided the rules
@@ -38,19 +44,51 @@ Arguments:
   This can be imported into a Hub (make sure the necessary scheme is also imported).  If not
   provided, the migrated project will be written to the console.
 
+### Migration to Decision Service Project
+
+The migrator now supports migrating to a Decision Service project. To use this feature, include the --decision-service switch. When running in decision service mode, the --scheme parameter is not needed.
+
+When migrating to a decision service project, rules are migrated in the same way as they are for Flow projects. 
+
+Fields are added to the Decision Service input and output contracts using the following rules:
+- For the input contact, fields are added for all of the following:
+  - Any attributes whose values are collected on interview screens via input controls
+  - Any attributes seeded via URL parameters
+  - Any attributes used in an input data mapping
+- For the output contract, fields are added for all of the following:
+  - Any attributes used in an output data mapping
+  - If the outputGoalAttributes setting (see below) is set to true, any goal attributes
+  - If the outputNonInputAttributesWithPublicNames setting (see below) is set to true, any attributes that have public names that are not used as inputs
+
+An attribute's public name is used as its corresponding field name in the input for output contract. For attributes that don't have public names, the attribute text is used.
+
+Example:
+    npx ts-node src/main.ts [project-directory] --decision-service --outproject [output-project.json] --template [template-project.json] --settings [settings.json]
+
+Arguments:
+
+- *project-directory* is the same as in the standard migration, containing the Policy Modeling project.
+
+- *output-project.json* is the filename where the new migrated decision service project will be saved. This file can be used in environments supporting decision service projects.
+
+- *template-project.json* (optional) is a decision service project (exported from a Hub) that the migrated
+  rule documents will be added to.  The template is not modified, and if not provided the rules
+  will be placed into an empty project.  See below for more detail.
+
 ## Template Project
+
+The template project is a project exported from an Intelligent Advisor hub. It is either a flow project or decision service project, depending on the mode the tool is being run in.
 
 Anything in the template project will also appear in the migrated project. For example, screens
 that collect data and data actions will be copied across.
 
 Existing rule documents in the template project are also kept, which may be useful for repeated
-conversions where some common bridging logic needs to be included.  If a previously migrated
+conversions where some common bridging logic needs to be included. If a previously migrated
 project is used as the template, remove the old migrated documents first.
 
-The flow scheme referenced by the template project will also be referenced by the migrated project,
-so make sure you have the flow scheme if you plan to import the migrated project into a different
-Hub from the template project.  If the template project is not provided, the migrated project will
-reference a flow scheme called "interview-scheme".
+When using the migrator to produce a flow project, the flow scheme referenced by the template project will also be referenced by the migrated project. Therefore, make sure you use the 
+flow scheme argument if you plan to import the migrated project into a different Hub from the template project.  If the template project is not provided, the migrated project will
+reference the flow screen in the file provided for use when migrating interview screens.
 
 ## Settings
 
@@ -156,6 +194,103 @@ The following settings are available:
       }
   }
   ```
+
+- *flowControls*:
+The flow controls settings allow the user to control how OPM interview controls are migrated to flow controls. For each OPM interview control type, a flow scheme ID can be specified. All instances of that OPM interview will then be migrated to flow control with the specified flow scheme ID. OPM interview controls that do not have a mapping specified here will be migrated to the first flow control in the scheme that
+has the appropriate kind.
+
+  General Control Types:
+
+  - label: Specifies the scheme ID for label controls.
+  - screen: Specifies the scheme ID for screen controls.
+  - container: Specifies the scheme ID for container controls.
+  - stage: Specifies the scheme ID for interview stage.
+  - entityCollect: Specifies the scheme ID for entity collect controls.
+  - entityContainer: Specifies the scheme ID for entity container controls.
+  - entityScreenGroup: Specifies the scheme ID for entity screen group controls.
+
+  Input Controls:
+  Under the input property, various data types are listed (number, date, text, boolean, currency), each with a set of specific control types that can be used for inputs of that data type. For each control type under a specific data type, a scheme ID is provided.
+
+  The following table shows the control types that are applicable for each input data type. The type "custom" is for custom controls:
+  | Input Data Type | Permitted Control Types                                                                                   |
+  |-----------------|-----------------------------------------------------------------------------------------------------------|
+  | number          | "radio-button", "text-button-group", "image-button-group", "text-image-button-group", "slider", "drop-down", "searching-combo", "listbox", "text", "custom" |
+  | date            | "radio-button", "text-button-group", "image-button-group", "text-image-button-group", "slider", "calendar", "dmy-inputs", "datetime-text-group", "drop-down", "searching-combo", "listbox", "text", "custom" |
+  | text            | "text", "radio-button", "text-button-group", "image-button-group", "text-image-button-group", "slider", "drop-down", "searching-combo", "listbox", "text-area", "password", "masked", "custom" |
+  | boolean         | "radio-button", "text-button-group", "image-button-group", "text-image-button-group", "drop-down", "searching-combo", "listbox", "checkbox", "image-button", "switch", "custom" |
+  | currency        | "radio-button", "text-button-group", "image-button-group", "text-image-button-group", "slider", "drop-down", "searching-combo", "listbox", "text", "custom" |
+
+  Reference Relationship Controls:
+  Under the referenceRelationship property, there are two sub-properties:
+
+  - toOne: Specifies the control types and their corresponding scheme IDs for one-to-one and many-to-one reference relationships.
+  - toMany: Specifies the control types and their corresponding scheme IDs for one-to-many and many-to-many reference relationships.
+
+  | Relationship Type | Permitted Control Types                                      |
+  |-------------------|--------------------------------------------------------------|
+  | toOne             | "text", "radio-button", "drop-down", "searching-combo", "listbox" |
+  | toMany            | "checkbox"                                                   |
+
+
+For example:
+```
+"flowControls":
+   {
+       "label": "label",
+       "screen": "page",
+       "container": "control-group",
+       "stage": "page-group",
+       "entityCollect": "recordlist-record-collect",
+       "entityContainer": "control-group",
+       "entityScreenGroup": "page-group",
+
+       "input":
+       {
+           "number":
+           {
+               "slider": "number-slider",
+               "text": "number-general"
+           },
+           "date":
+           {
+               "calendar": "date-calendar",
+               "dmy-inputs": "date-dmy"
+           },
+           "text":
+           {
+               "text-area": "text-textarea",
+               "password": "text-password",
+               "masked": "text-masked"
+           },
+           "boolean":
+           {
+               "checkbox": "boolean-checkbox",
+               "switch": "boolean-switch"
+           },
+           "currency":
+           {
+               "drop-down": "number-currency-dropdown",
+               "text": "number-currency"
+           }
+       }
+   }
+```
+
+- *decisionServiceContract*:
+The decisionServiceContract settings allow the user to enable optional behaviour related to what attributes are used in the output control when migrating an OPM
+project to a Decision Service contract.
+
+  - outputGoalAttributes: If true, any attributes that are interview goals will be used in the output contract
+  - outputNonInputAttributesWithPublicNames: If true, any attributes that have public names but are not used as inputs will be used in the output contract
+
+For example:
+```
+    "decisionServiceContract" : {
+        "outputGoalAttributes" : true,
+        "outputNonInputAttributesWithPublicNames" : true
+    }
+```
 
 ## Compatibility
 

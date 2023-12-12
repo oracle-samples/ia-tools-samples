@@ -1,5 +1,5 @@
 /* Copyright (c) 2021, 2023, Oracle and/or its affiliates. Licensed under The Universal Permissive License (UPL), Version 1.0 as shown at https://oss.oracle.com/licenses/upl/ */
-import { createSession } from "@oracle/ia-flows-sdk";
+import {createDebugSession, createSession} from "@oracle/ia-flows-sdk";
 import { IAFlowSession } from "@oracle/ia-flows-sdk/IAFlowEngineAPI";
 import { render } from "preact";
 import Application, { logger } from "./Application";
@@ -31,10 +31,18 @@ export async function startSession() {
             throw new Error("JWT missing");
         }
 
-        const session = await createSession({
-            jwt
-        });
+        const debuggerEnabled = (url.searchParams.get("_debugger") ?? "false").toLowerCase() === 'true';
 
+        let session;
+        if(debuggerEnabled){
+            session = await createDebugSession({
+                jwt
+            })
+        } else {
+            session = await createSession({
+                jwt
+            });
+        }
         const globalInputBase64 = url.searchParams.get("_globalDataBase64");
         let globalInputData = null;
         if (globalInputBase64) {
@@ -50,7 +58,7 @@ export async function startSession() {
         }
 
         document.getElementById('flow-container').replaceChildren();
-        render(<Application session={session} />, document.getElementById('flow-container'));
+        render(<Application session={session} debuggerEnabled={debuggerEnabled} />, document.getElementById('flow-container'));
 
     } catch (ex) {
         document.getElementById('flow-container').replaceChildren();

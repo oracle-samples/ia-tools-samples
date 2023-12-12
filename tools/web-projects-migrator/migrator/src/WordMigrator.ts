@@ -1,6 +1,6 @@
 /* Copyright (c) 2021, 2023, Oracle and/or its affiliates. Licensed under The Universal Permissive License (UPL), Version 1.0 as shown at https://oss.oracle.com/licenses/upl/ */
 import decompress from 'decompress-unzip';
-import { RuleComment, RuleDocument, RuleBlock, RuleLine, RuleTable } from 'ia-public/RuleDocument'
+import { RuleComment, RuleDocument, RuleBlock, RuleLine, RuleTable } from 'ia-public/RuleDocument';
 import { parseXgenDataModel, XgenAttribute, XgenEntity } from './XgenParser';
 import { parseXml, XmlElement, XmlNamespaces } from './Xml'
 import { StringUtil, addToSet, hasOwnProperty } from './Util';
@@ -427,7 +427,9 @@ export async function migrateWordRuleDocument(docxBuffer:Buffer, xgen:XmlElement
         const concXml = tableXml.select("conclusion-col").elements[0];
         let conclusionAttr:XgenAttribute;
 
-        if (concXml.attributes["relationship-id"])  {
+        let table:RuleTable;
+
+        if (concXml.attributes["relationship-id"])  { 
             // Concluding an entity in a table.
             const conclusionRel = model.relationshipsById[concXml.attributes["relationship-id"]];
 
@@ -441,12 +443,13 @@ export async function migrateWordRuleDocument(docxBuffer:Buffer, xgen:XmlElement
 
             targetBlock.lines.push({level:0, text:context.migrateAttributeText(conclusionRel.text) + " = ..."})
 
+            table = { type:'table', columns:[ { type:'identifier', text:context.migrateAttributeText(conclusionAttr.text) }, { type:'condition' } ], rows:[] };
+            context.addInferredEntity(conclusionRel.target.name);
         } else {
             // Regular attribute concluded in a Word rule
             conclusionAttr = model.attributesById[concXml.attributes["attr-id"]];
+            table = { type:'table', columns:[ { type:'condition' }, { type:'conclusion', text:context.migrateAttributeText(conclusionAttr.text) } ], rows:[] };
         }
-
-        const table:RuleTable = { type:'table', columns:[ { type:'condition' }, { type:'conclusion', text:context.migrateAttributeText(conclusionAttr.text) } ], rows:[] };
 
         const conditionRows = condXml.select("rows/*").elements.map(row => {
             if (row.name === "empty") {
@@ -477,8 +480,15 @@ export async function migrateWordRuleDocument(docxBuffer:Buffer, xgen:XmlElement
             }
         })
 
-        for(let i=0; i<conditionRows.length; i++) {
-            table.rows.push([conditionRows[i], conclusionRows[i]]);
+        if (concXml.attributes["relationship-id"]) {
+            // identifier column must go first in the table, and its values should not be surrounded with quotes
+            for(let i=0; i<conditionRows.length; i++) {
+                table.rows.push([conclusionRows[i] !== null ? conclusionRows[i].replace(/"/g, '') : null, conditionRows[i]]);
+            }
+        } else {
+            for(let i=0; i<conditionRows.length; i++) {
+                table.rows.push([conditionRows[i], conclusionRows[i]]);
+            }
         }
 
         targetBlock.lines.push(table);
