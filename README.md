@@ -10,6 +10,7 @@ Directory | Description
 ------------ | -------------
 [`samples/`](samples/) | Code samples demonstrating methods of integrating 3rd-party applications with Oracle Intelligent Advisor.
 [`tools/`](tools/) | Standalone utilities for working with Oracle Intelligent Advisor. Supplied in source form to encourage project-specific enhancements.
+[`llm/`](llm/) | Code samples demonstrating how to use OpenAI SDK with an Oracle Intelligent Advisor-powered tool to provide accurate answers.
 
 ## Help
 

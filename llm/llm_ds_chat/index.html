@@ -1,0 +1,182 @@
+<html>
+<head>
+    <title>Home</title>
+    <style>
+        /* QuickReset */ * {margin: 0; box-sizing: border-box;}
+
+body {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.chat {
+  --rad: 20px;
+  --rad-sm: 3px;
+  font: 16px/1.5 sans-serif;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.input {
+    flex: 0 0 auto;
+    display: flex;
+}
+
+.input input {
+    font-family: inherit;
+    font-size: inherit;
+    width: 100%;
+    padding: 4px;
+}
+
+.msg {
+  position: relative;
+  max-width: 75%;
+  padding: 7px 15px;
+  margin-bottom: 2px;
+  white-space-collapse: break-spaces;
+}
+
+.msg.sent {
+  border-radius: var(--rad) var(--rad-sm) var(--rad-sm) var(--rad);
+  background: #42a5f5;
+  color: #fff;
+  margin-left: auto;
+}
+
+.msg.tool {
+    border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad-sm);
+  border: dashed 2px black;
+  background: yellow;
+  color: black;
+  margin-right: auto;
+}
+
+.msg.toolrcv {
+    border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad-sm);
+  background: yellow;
+  color: black;
+  margin-right: auto;
+}
+
+
+
+.msg.rcvd {
+  border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad-sm);
+  background: #f1f1f1;
+  color: #555;
+  margin-right: auto;
+}
+
+/* Improve radius for messages group */
+
+.msg.sent:first-child,
+.msg.rcvd+.msg.sent {
+  border-top-right-radius: var(--rad);
+}
+
+.msg.rcvd:first-child,
+.msg.sent+.msg.rcvd {
+  border-top-left-radius: var(--rad);
+}
+
+
+/* time */
+
+.msg::before {
+  content: attr(data-time);
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 100%;
+  color: #888;
+  white-space: nowrap;
+  /* Hidden by default */
+  display: none;
+}
+
+.msg.sent::before {
+  right: 15px;
+}
+
+.msg.rcvd::before {
+  left: 15px;
+}
+
+
+/* Show time only for first message in group */
+
+.msg:first-child::before,
+.msg.sent+.msg.rcvd::before,
+.msg.rcvd+.msg.sent::before {
+  /* Show only for first message in group */
+  display: block;
+}
+    </style>
+</head>
+<body>
+    <div id="chat" class="chat">
+
+    </div>
+    <div class="input">
+        <input id="chatInput" type="text">
+    </div>
+
+    <script type="module">
+        import {getBearerToken, callDecisionService} from "./decision.js";
+        import {addUserMessage, addToolResult} from "./llm.js";
+
+        async function main() {
+            const chat = document.getElementById("chat");
+            const chatInput = document.getElementById("chatInput");
+
+            const bearer = await getBearerToken();
+
+            function addBubble(text, cls) {
+                const el = document.createElement("div");
+                el.className = cls;
+                el.textContent = text;
+                chat.appendChild(el);
+                chat.scrollTop = chat.clientHeight;
+            }
+
+            async function handleUserMessage(text) {
+                let message = await addUserMessage(text);
+
+                while (message.tool_calls?.length) {
+                    const call = message.tool_calls[0];
+                    const fn = call.function;
+
+                    addBubble(`${fn.name}\n\n${JSON.stringify(JSON.parse(fn.arguments), null, 4)}`, "msg tool");
+
+                    const result = await callDecisionService(fn.name, JSON.parse(fn.arguments))
+
+                    addBubble(`${JSON.stringify(result, null, 4)}`, "msg toolrcv");
+
+                    message = await addToolResult(call.id, result);
+                }
+                addBubble(message.content, "msg rcvd")
+            }
+
+            chatInput.addEventListener("keydown", async evt=>{
+                if (evt.key === "Enter") {
+                    const text = chatInput.value;
+                    if (text != "") {
+                        addBubble(text, "msg sent");
+                        chatInput.value = "";
+                        handleUserMessage(text);
+                    }
+                }
+            })
+
+            chatInput.focus();
+        }
+
+        main();
+    </script>
+</body>
+</html>
