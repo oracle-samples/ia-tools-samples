@@ -1,3 +1,4 @@
+/* Copyright (c) 2021, 2023, Oracle and/or its affiliates. Licensed under The Universal Permissive License (UPL), Version 1.0 as shown at https://oss.oracle.com/licenses/upl/ */
 import { tools } from "./tools.js";
 
 const openAIEndpoint = "https://api.openai.com/v1/chat/completions";
