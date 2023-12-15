@@ -1,4 +1,4 @@
-const hub = "https://demos.ia.oraclecorp.com/74/"
+const hub = "<YOURINTELLIGENTADVISORSITE>/"
 const apiuser = "<YOURINTELLIGENTADVISORAPIUSERNAME>";
 const apiuserPassword = "<YOURINTELLIGENTADVISORAPIPASSWORD>";
 

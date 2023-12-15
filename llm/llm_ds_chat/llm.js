@@ -1,7 +1,7 @@
 import { tools } from "./tools.js";
 
 const openAIEndpoint = "https://api.openai.com/v1/chat/completions";
-const apiKey = "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"
+const apiKey = "<YOUROPENAIKEY>"
 const model = "gpt-4-1106-preview";
 
 let messages = [{
