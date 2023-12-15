@@ -1,0 +1,209 @@
+{
+  "version": 7,
+  "inputContract": {
+    "properties": [
+      {
+        "uid": "9dezqg6egd7",
+        "value": "the person is claiming the additional child tax credit",
+        "name": "additional_child_credit",
+        "type": "boolean",
+        "constraint": {
+          "optional": true
+        }
+      },
+      {
+        "uid": "f8kxe0vgpwu",
+        "value": "the person can be claimed as a dependent",
+        "name": "claimed_as_dependent",
+        "type": "boolean",
+        "constraint": {
+          "optional": true
+        }
+      },
+      {
+        "uid": "qo10zdibqii",
+        "value": "the person made estimated tax payments",
+        "name": "estimated_tax_payments_made",
+        "type": "boolean",
+        "constraint": {
+          "optional": true
+        }
+      },
+      {
+        "uid": "263jus8any2",
+        "value": "the person's filing status",
+        "name": "filing_status",
+        "type": "string"
+      },
+      {
+        "uid": "qhbg1u14bcf",
+        "value": "the person's gross income",
+        "name": "gross_income",
+        "type": "number",
+        "constraint": {
+          "optional": true
+        }
+      },
+      {
+        "uid": "c9316vnl09q",
+        "value": "the person received distributions from a medical savings account",
+        "name": "medical_savings_distributions",
+        "type": "boolean",
+        "constraint": {
+          "optional": true
+        }
+      },
+      {
+        "uid": "893z7fbit0g",
+        "value": "the person owes recapture taxes",
+        "name": "recapture_taxes_owed",
+        "type": "boolean",
+        "constraint": {
+          "optional": true
+        }
+      },
+      {
+        "uid": "7vxh7v4yi94",
+        "value": "the person received social security benefit",
+        "name": "received_social_security",
+        "type": "boolean",
+        "constraint": {
+          "optional": true
+        }
+      },
+      {
+        "uid": "xik4shafme",
+        "value": "the spouse's gross income",
+        "name": "spouses_gross_income",
+        "type": "number",
+        "constraint": {
+          "optional": true
+        }
+      }
+    ]
+  },
+  "outputContract": {
+    "properties": [
+      {
+        "uid": "ulov7bsvlt",
+        "value": "the person needs to file a tax return",
+        "name": "tax_return_needed",
+        "type": "boolean"
+      }
+    ]
+  },
+  "rules": {
+    "Rules": [
+      {
+        "text": "Intelligent Advisor rule documents can contain inline text like this, which explains what your rules do.",
+        "style": "normal"
+      },
+      {
+        "text": "Use the ellipsis button ... to modify a style, and the + button on a blank line to insert new paragraphs or rules.",
+        "style": "normal"
+      },
+      {
+        "text": "Write your actual rules inside rule blocks, like the one below.",
+        "style": "normal"
+      },
+      {
+        "type": "rule-block",
+        "lines": [
+          {
+            "text": "the person needs to file a tax return if",
+            "level": 0
+          },
+          {
+            "text": "the person exceeds the income threshold or",
+            "level": 1
+          },
+          {
+            "text": "the person owes special taxes or ",
+            "level": 1
+          },
+          {
+            "text": "the person has special situations that require them to file",
+            "level": 1
+          },
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "condition",
+                "text": "the person's filing status"
+              },
+              {
+                "type": "conclusion",
+                "text": "the person exceeds the income threshold"
+              }
+            ],
+            "rows": [
+              [
+                "\"Single\"",
+                "the person's gross income > $12,950"
+              ],
+              [
+                "\"Married filing jointly\"",
+                "the household gross income > $25,900"
+              ],
+              [
+                "\"Married filing separately\"",
+                "the person's gross income > $5"
+              ],
+              [
+                "\"Head of household\"",
+                "the person's gross income > $19,400"
+              ]
+            ]
+          },
+          {
+            "text": "the household gross income = the person's gross income + the spouse's gross income",
+            "level": 0
+          },
+          {
+            "text": "the person owes special taxes if",
+            "level": 0
+          },
+          {
+            "text": "the person received distributions from a medical savings account or",
+            "level": 1
+          },
+          {
+            "text": "the person owes recapture taxes",
+            "level": 1
+          },
+          {
+            "text": "the person has special situations that require them to file if",
+            "level": 0
+          },
+          {
+            "text": "the person made estimated tax payments or",
+            "level": 1
+          },
+          {
+            "text": "the person is claiming the additional child tax credit",
+            "level": 1
+          }
+        ]
+      },
+      {
+        "text": "",
+        "style": "normal"
+      }
+    ]
+  },
+  "ruleLanguage": {
+    "language": "en",
+    "formats": {
+      "decimalSeparator": ".",
+      "thousandsSeparator": ",",
+      "argumentSeparator": ",",
+      "dateFormat": "dd/mm/yyyy"
+    }
+  },
+  "documents": [],
+  "references": {
+    "uid": "6s234jv7ciq",
+    "items": []
+  }
+}

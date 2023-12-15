@@ -1,0 +1,97 @@
+{
+    "version": 7,
+    "inputContract": {
+        "properties": [
+            {
+                "uid": "uq3z1jqhu9c",
+                "value": "the customer ID",
+                "name": "theCustomerID",
+                "type": "string"
+            }
+        ]
+    },
+    "outputContract": {
+        "properties": [
+            {
+                "uid": "vbvyizplwnf",
+                "value": "the taxpayer's date of birth",
+                "name": "date_of_birth",
+                "type": "date"
+            },
+            {
+                "uid": "2983dgicx6u",
+                "value": "the filing status",
+                "name": "filing_status",
+                "type": "string"
+            }
+        ]
+    },
+    "rules": {
+        "Rules": [
+            {
+                "text": "Intelligent Advisor rule documents can contain inline text like this, which explains what your rules do.",
+                "style": "normal"
+            },
+            {
+                "text": "Use the ellipsis button ... to modify a style, and the + button on a blank line to insert new paragraphs or rules.",
+                "style": "normal"
+            },
+            {
+                "text": "Write your actual rules inside rule blocks, like the one below.",
+                "style": "normal"
+            },
+            {
+                "type": "rule-block",
+                "lines": [
+                    {
+                        "type": "table",
+                        "columns": [
+                            {
+                                "type": "condition",
+                                "text": "the customer ID"
+                            },
+                            {
+                                "type": "conclusion",
+                                "text": "the filing status"
+                            },
+                            {
+                                "type": "conclusion",
+                                "text": "the taxpayer's date of birth"
+                            }
+                        ],
+                        "rows": [
+                            [
+                                "\"4444\"",
+                                "\"Single\"",
+                                "01/01/2001"
+                            ],
+                            [
+                                "\"5555\"",
+                                "\"Single\"",
+                                "02/02/1990"
+                            ]
+                        ]
+                    }
+                ]
+            },
+            {
+                "text": "",
+                "style": "normal"
+            }
+        ]
+    },
+    "ruleLanguage": {
+        "language": "en",
+        "formats": {
+            "decimalSeparator": ".",
+            "thousandsSeparator": ",",
+            "argumentSeparator": ",",
+            "dateFormat": "dd/mm/yyyy"
+        }
+    },
+    "documents": [],
+    "references": {
+        "uid": "19pk5wk63we",
+        "items": []
+    }
+}
