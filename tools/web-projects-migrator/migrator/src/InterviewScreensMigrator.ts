@@ -163,26 +163,7 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
             }
         }
 
-        let screenEntityId;
-
-        if (processedControls.length > 0) {
-            let firstControl: ProcessedControl = processedControls[0];
-            let firstInputControl: ProcessedControl;
-
-            for (const processedControl of processedControls) {
-                if (processedControl.control.kind === "input" || processedControl.control.kind === "referenceInput") {
-                    firstInputControl = processedControl;
-                    break;
-                }
-            }
-
-            if (firstInputControl) {
-                screenEntityId = firstInputControl.entityId
-            } else if (firstControl.control.kind === "recordCollect") {
-                screenEntityId = firstControl.entityId
-            }
-
-        }
+        let screenEntityId = getScreenEntityForControls(processedControls);
 
         if (!screenEntityId && showScreenExprAttributeId) {
             screenEntityId = attributeDetails[showScreenExprAttributeId]["entity"];
@@ -231,7 +212,41 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
                     createNewPageGroup = true;
                     currentPageGroupHierarchy = [];
                 } else {
-                    throw "Error determining screen entity/page group";
+                    // The screen entity hierarchy has skipped over one or more entities between the global and the screen entity. Need to add these in.
+                    let pageGroupsToAdd : FlowItemGroup[] = [];
+
+                    let entityToAdd : ModelEntity = parentEntity
+                    while (entityToAdd.text !== "global") {
+                        let newPageGroup: FlowItemGroup = {
+                            kind: "flowItemGroup",
+                            text: "Page group",
+                            schemeId: getSetSchemeIdOrDefaultForKind("entityScreenGroup", "flowItemGroup"),
+                            uid: newUID(),
+                            rows: [],
+                            listName: createRecordListNameForEntity(entityToAdd),
+                            visible: true,
+                            readOnly: false,
+                            optionFilter: false
+                        }
+
+                        pageGroupsToAdd.unshift(newPageGroup);
+                        entityToAdd = entityDetails[entityToAdd.parent];
+                    }
+
+                    for (let i=0; i < pageGroupsToAdd.length; i++) {
+                        let pageGroup = pageGroupsToAdd[i];
+
+                        if (i < pageGroupsToAdd.length - 1) {
+                            let childPageGroup = pageGroupsToAdd[i + 1];
+                            pageGroup.rows.push(childPageGroup);
+                        }
+
+                        currentPageGroupHierarchy.push(pageGroup);
+                    }
+
+                    addTo = pageGroupsToAdd[pageGroupsToAdd.length - 1];
+                    createNewPageGroup = true;
+                    currentStagePageGroup.rows.push(pageGroupsToAdd[0]);
                 }
             }
 
@@ -384,6 +399,7 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
                 handleInputDataType("date");
             } else if (attributeType === "datetime" || attributeType === "timeofday") {
                 logDocumentMigrationWarning(`Attribute ${attributeText}: type ${attributeType} is not supported. This control has been omitted from the converted screen.`);
+                return null;
             } else {
                 throw "Unknown attribute type " + attributeType;
             }
@@ -406,8 +422,13 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
             processHideIfExpression(controlEl, controlGroup); // HideIfExpr
             processReadOnlyIfExpression(controlEl, controlGroup); // ReadOnlyIfExpr
 
+            let processedControls : ProcessedControl[] = [];
             for (const childControlEl of controlEl.select("Controls/*").elements) {
                 let processedChildControl: ProcessedControl = handleControl(childControlEl);
+                processedControls.push(processedChildControl);
+            }
+
+            for (let processedChildControl of processedControls) {
                 if (processedChildControl) {
                     let row: FlowControlRow = {
                         kind: "row",
@@ -420,6 +441,7 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
 
             if (controlGroup.rows.length > 0) {
                 control = controlGroup;
+                controlEntityId = getScreenEntityForControls(processedControls);
             }
         } else if (controlEl.name === "EntityGroupControl") {
             let entityId: string = controlEl.attributes["Entity"];
@@ -450,6 +472,10 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
                         controls: [processedChildControl.control]
                     }
                     controlGroup.rows.push(row);
+
+                    if (processedChildControl.entityId && !controlEntityId) {
+                        controlEntityId = processedChildControl.entityId;
+                    }
                 }
             }
 
@@ -490,7 +516,7 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
             }
 
             control = recordCollect;
-            controlEntityId = relationshipDetails[relationshipId]["entity"];
+            controlEntityId = relationshipDetails[relationshipId]["source"];
         } else if (controlEl.name === "ReferenceRelationshipControl") {
             let relationshipId = controlEl.attributes["Relationship"];
 
@@ -629,7 +655,9 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
         }
 
         if (conversionFailure === true) {
-            logDocumentMigrationWarning("Couldn't convert expression referencing value list " + el);
+            let attributeId = el.attributes["Attribute"];
+            let attributeText = attributeDetails[attributeId].text
+            logDocumentMigrationWarning("Couldn't convert expression referencing value list '" + attributeText + "'");
             return null;
         }
 
@@ -773,5 +801,49 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
         } else {
             return kindToDefaultSchemeId[kind];
         }
+    }
+
+    function getScreenEntityForControls(processedControls : ProcessedControl[]) : string {
+        if (processedControls.length > 0) {
+            let screenEntityId;
+
+            // ignore unhandled controls e.g. image controls (represented as null), as well as label controls here. They are not relevant.
+            let filteredControls : ProcessedControl[] = [];
+            for (const processedControl of processedControls) {
+                if (processedControl) {
+                    if (processedControl.entityId) {
+                        filteredControls.push(processedControl);
+                    }
+                }
+            }
+
+            if (filteredControls.length === 0) {
+                return null;
+            }
+
+            let firstControl: ProcessedControl;
+            let firstInputControl: ProcessedControl;
+
+            for (const processedControl of filteredControls) {
+                if (!firstControl) {
+                    firstControl = processedControl;
+                }
+
+                if (processedControl && (processedControl.control.kind === "input" || processedControl.control.kind === "referenceInput")) {
+                    firstInputControl = processedControl;
+                    break;
+                }
+            }
+
+            if (firstInputControl) {
+                screenEntityId = firstInputControl.entityId
+            } else {
+                screenEntityId = firstControl.entityId
+            }
+
+            return screenEntityId;
+        }
+
+        return null;
     }
 }
