@@ -125,7 +125,7 @@ function readMigrationSettings(customSettingsFile:string):MigrationSettings {
                         custom:optionalValidator(stringValidator),
                     })),
                     text:optionalValidator(objectValidator({
-                        text:stringValidator,
+                        text:optionalValidator(stringValidator),
                         "radio-button":optionalValidator(stringValidator),
                         "text-button-group":optionalValidator(stringValidator),
                         "image-button-group":optionalValidator(stringValidator),
