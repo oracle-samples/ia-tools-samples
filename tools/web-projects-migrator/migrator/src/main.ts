@@ -125,7 +125,7 @@ function readMigrationSettings(customSettingsFile:string):MigrationSettings {
                         custom:optionalValidator(stringValidator),
                     })),
                     text:optionalValidator(objectValidator({
-                        text:stringValidator,
+                        text:optionalValidator(stringValidator),
                         "radio-button":optionalValidator(stringValidator),
                         "text-button-group":optionalValidator(stringValidator),
                         "image-button-group":optionalValidator(stringValidator),
@@ -403,7 +403,8 @@ function readMigrationSettings(customSettingsFile:string):MigrationSettings {
 
     async function findAttributeTypeInRulebaseXml(attributeName: string) : Promise<string> {
         if (rulebaseXmlAttributeTypes === null) {
-            let rulebaseXmlBuffer = fs.readFileSync(argProjectDir + "/output/" + path.basename(argProjectDir) + ".zip");
+            const zipName = fs.readdirSync(argProjectDir + "/output").filter(name => name.endsWith(".zip"))[0];
+            const rulebaseXmlBuffer = fs.readFileSync(argProjectDir + "/output/" + zipName);
             let rulebaseXml;
             let unzippedFiles: DecompressFile[] = await decompress()(rulebaseXmlBuffer);
             for (let file of unzippedFiles) {

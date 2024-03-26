@@ -513,7 +513,13 @@ export async function migrateWordRuleDocument(docxBuffer:Buffer, xgen:XmlElement
         const allTargetsExpr = docContext.getEntityObjectName(rel.target);
         const conditionXml = concludeRelXml.select("condition/*").elements[0];
 
-        if (conditionXml.name === "and" || conditionXml.name === "or") {
+        if (!conditionXml) {
+            // No condition at all! Rare, but legal
+            const block = requireRuleBlock(rel.source);
+            block.lines.push({level:0,
+                text:`${context.migrateAttributeText(rel.text)} = ${allTargetsExpr}`
+            });
+        } else if (conditionXml.name === "and" || conditionXml.name === "or") {
             // multiline condition which will require an intermediate:
             const conditionField = context.createRelationshipConditionIntermediate(rel);
             const block = requireRuleBlock(rel.source);
