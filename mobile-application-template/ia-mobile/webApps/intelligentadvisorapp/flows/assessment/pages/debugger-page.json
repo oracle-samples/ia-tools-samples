@@ -1,0 +1,68 @@
+{
+  "title": "debugger",
+  "description": "",
+  "variables": {
+    "deploymentDetails": {
+      "type": "object"
+    },
+    "flowName": {
+      "type": "string"
+    },
+    "isPageLoaded": {
+      "type": "boolean"
+    },
+    "jwt": {
+      "type": "string"
+    }
+
+  },
+  "metadata": {},
+  "types": {},
+  "eventListeners": {
+    "iaDebugDataAction": {
+      "chains": [
+        {
+          "chain": "ON_DATA_ACTION",
+          "parameters": {
+            "dataActionDetail": "[[ $event.detail ]]",
+            "assessmentDetail": "[[ $variables.deploymentDetails ]]"
+          }
+        }
+      ]
+    },
+    "toggleDrawer": {
+      "chains": [
+        {
+          "chain": "application:toggleDrawerHandler"
+        }
+      ]
+    },
+    "vbBeforeEnter": {
+      "chains": [
+        {
+          "parameters": {},
+          "chain": "GET_JWT"
+        }
+      ]
+    },
+    "vbEnter": {
+      "chains": [
+        {
+          "parameters": {},
+          "chain": "GET_DEPLOYMENT_DETAILS"
+        }
+      ]
+    }
+
+  },
+  "imports": {
+    "components": {
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-ia-intv": {
+        "path": "oj-ia/intv/loader"
+      }
+    }
+  }
+}

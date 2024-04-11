@@ -1,0 +1,106 @@
+{
+  "root": "callFunctionConvertDataObject",
+  "description": "A sample action chain to submit data to B2C",
+  "variables": {
+    "assessmentDetail": {
+      "type": "application:AssessmentItem",
+      "required": false,
+      "input": "fromCaller"
+    },
+    "dataActionDetail": {
+      "type": "application:FlowDataActionProps",
+      "required": true,
+      "input": "fromCaller"
+    }
+  },
+  "actions": {
+    "callRestCreateIncident": {
+      "module": "vb/action/builtin/restAction",
+      "parameters": {
+        "endpoint": "b2cRestApi/createIncident",
+        "body": "{{ $chain.results.callFunctionConvertFileData }}",
+        "responseBodyFormat": "json",
+        "responseType": "flow:B2CCreateIncidentResponse"
+      },
+      "outcomes": {
+        "failure": "callChainMANAGEERROR",
+        "success": "fireNotification"
+      },
+      "label": "Rest call for creating incident",
+      "description": "Rest call for creating incident"
+    },
+    "callFunctionConvertDataObject": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $application.functions ]]",
+        "functionName": "convertDataObject",
+        "params": [
+          "{{ $variables.dataActionDetail.sentData }}"
+        ],
+        "returnType": "flow:B2CCreateIncidentRequest"
+      },
+      "outcomes": {
+        "success": "callFunctionConvertFileData"
+      },
+      "label": "Convert Data Action Sent Data",
+      "description": "Convert the obj_ array field in the sent data to an actual object"
+    },
+    "callChainMANAGEERROR": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "application:GLOBAL_ERROR_HANDLER_CHAIN",
+        "params": {
+          "response": "{{ $chain.results.callRestCreateIncident }}",
+          "type": "{{ $application.constants.errorTypes.b2cCreateIncident }}"
+        }
+      },
+      "label": "Call Global Error Handler",
+      "description": "Invoke global error handler action chain",
+      "outcomes": {
+        "success": "return2"
+      }
+    },
+    "fireNotification": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "target": "leaf",
+        "summary": "B2C Service Incident Created",
+        "message": "[[ $chain.results.callRestCreateIncident.body.lookupName ]]",
+        "type": "info",
+        "displayMode": "transient"
+      },
+      "outcomes": {
+        "success": "return"
+      }
+    },
+    "return": {
+      "module": "vb/action/builtin/returnAction",
+      "parameters": {
+        "outcome": "success"
+      }
+    },
+    "return2": {
+      "module": "vb/action/builtin/returnAction",
+      "parameters": {
+        "outcome": "failure",
+        "payload": "{{ $chain.results.callRestCreateIncident }}"
+      }
+    },
+    "callFunctionConvertFileData": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "label": "Convert File Data to Base64",
+      "description": "Convert original file data to Base64 string",
+      "parameters": {
+        "module": "[[ $flow.functions ]]",
+        "functionName": "convertFileData",
+        "returnType": "flow:B2CCreateIncidentRequest",
+        "params": [
+          "{{ $chain.results.callFunctionConvertDataObject }}"
+        ]
+      },
+      "outcomes": {
+        "success": "callRestCreateIncident"
+      }
+    }
+  }
+}

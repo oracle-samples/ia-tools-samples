@@ -1,0 +1,63 @@
+{
+    "items": [
+        {
+            "id": 31,
+            "lookupName": "31",
+            "Deployment": "Car Charging",
+            "Description": "Sample 1",
+            "ObjectID": null,
+            "links": [
+                {
+                    "rel": "canonical",
+                    "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/OPA.MobileAssessment/31"
+                }
+            ]
+        },
+        {
+            "id": 32,
+            "lookupName": "32",
+            "Deployment": "Car Charging",
+            "Description": "Sample 2",
+            "ObjectID": "test-reference-1",
+            "links": [
+                {
+                    "rel": "canonical",
+                    "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/OPA.MobileAssessment/32"
+                }
+            ]
+        },
+        {
+            "id": 269,
+            "lookupName": "269",
+            "Deployment": "New Car Charging",
+            "Description": "Sample 3",
+            "ObjectID": null,
+            "links": [
+                {
+                    "rel": "canonical",
+                    "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/OPA.MobileAssessment/269"
+                }
+            ]
+        }
+    ],
+    "hasMore": false,
+    "links": [
+        {
+            "rel": "canonical",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/OPA.MobileAssessment"
+        },
+        {
+            "rel": "describedby",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/metadata-catalog/OPA.MobileAssessment",
+            "mediaType": "application/schema+json"
+        },
+        {
+            "rel": "search-form",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/OPA.MobileAssessment-search-form"
+        },
+        {
+            "rel": "self",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/OPA.MobileAssessment?fields=Deployment%2CDescription%2CObjectID"
+        }
+    ]
+}

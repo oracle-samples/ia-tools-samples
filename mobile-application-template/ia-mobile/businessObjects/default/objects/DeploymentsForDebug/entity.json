@@ -1,0 +1,71 @@
+{
+    "fields": [
+        {
+            "type": "number",
+            "name": "id",
+            "internal": false,
+            "key": true,
+            "oid": "a5a0771b-f105-4564-b08e-6867dd8b2fec",
+            "required": true,
+            "unique": true,
+            "displayLabel": "Id"
+        },
+        {
+            "type": "datetime",
+            "name": "creationDate",
+            "internal": false,
+            "oid": "fe79d774-75b9-4022-91fe-2d5e25cb10ef",
+            "displayLabel": "Created",
+            "historyType": "timeCreated"
+        },
+        {
+            "type": "datetime",
+            "name": "lastUpdateDate",
+            "internal": false,
+            "oid": "f1372e48-c4d7-4b45-88df-abe9b3b13675",
+            "displayLabel": "Last Updated",
+            "historyType": "timeUpdated"
+        },
+        {
+            "type": "string",
+            "name": "createdBy",
+            "internal": false,
+            "oid": "cbeac4fa-d78a-4ce3-b147-71a01122314b",
+            "displayLabel": "Created By",
+            "historyType": "createdBy"
+        },
+        {
+            "type": "string",
+            "name": "lastUpdatedBy",
+            "internal": false,
+            "oid": "4fa5994c-8fad-4ecf-ad1b-b455c44cf0f8",
+            "displayLabel": "Last Updated By",
+            "historyType": "updatedBy"
+        },
+        {
+            "type": "number",
+            "name": "versionNumber",
+            "internal": false,
+            "oid": "6d50a69b-2908-4676-9ff3-e63d696fb1fe",
+            "displayLabel": "Version Number",
+            "historyType": "versionNumber"
+        },
+        {
+            "type": "string",
+            "name": "deploymentName",
+            "oid": "b96048cb-3198-4a47-927a-0fe580d74262",
+            "required": true,
+            "unique": true,
+            "displayLabel": "deploymentName"
+        },
+        {
+            "type": "number",
+            "name": "externalDataId",
+            "oid": "d20aa007-9b6a-4499-917e-9bb609cccc2b",
+            "displayLabel": "externalDataId"
+        }
+    ],
+    "name": "DeploymentsForDebug",
+    "oid": "df611921-96a8-471c-9968-9a503d5ce352",
+    "displayLabel": "Deployments For Debug"
+}

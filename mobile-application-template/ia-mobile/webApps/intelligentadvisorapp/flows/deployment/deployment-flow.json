@@ -1,0 +1,8 @@
+{
+  "id": "deployment",
+  "description": "Flow deployment",
+  "defaultPage": "deployment-start",
+  "services": {},
+  "types": {},
+  "variables": {}
+}

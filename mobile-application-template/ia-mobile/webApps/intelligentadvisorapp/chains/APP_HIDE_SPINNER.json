@@ -1,0 +1,13 @@
+{
+  "description": "Hides the application loading screen shown immediately after the splash screen is dismissed.",
+  "root": "hideSpinner",
+  "actions": {
+    "hideSpinner": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "{{ $application.functions }}",
+        "functionName": "hideSpinner"
+      }
+    }
+  }
+}

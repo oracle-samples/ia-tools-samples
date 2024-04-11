@@ -1,0 +1,422 @@
+{
+  "root": "callFunctionCheckRequestIsNeedToNavigate",
+  "description": "Handle error globally",
+  "variables": {
+    "errorObject": {
+      "type": {
+          "message": "string",
+          "summary": "string"
+        }
+    },
+    "response": {
+      "type": "object",
+      "input": "fromCaller"
+    },
+    "type": {
+      "type": "string",
+      "required": false,
+      "input": "fromCaller"
+    }
+  },
+  "actions": {
+    "switchType": {
+      "module": "vb/action/builtin/switchAction",
+      "parameters": {
+        "caseValue": "[[ $variables.type ]]",
+        "possibleValues": [
+          "getAllDeployments",
+          "startSession",
+          "noOfflineDataFound",
+          "boCreateAssessment",
+          "b2cCreateAssessment",
+          "login",
+          "b2cCreateIncident",
+          "b2cGetContacts",
+          "getSampleContacts",
+          "getSampleCountries",
+          "b2cGetAssessmentById",
+          "b2cGetAssessmentStatusById",
+          "b2cUpdateAssessment",
+          "boUpdateAssessment",
+          "createAttachment",
+          "deleteAssessmentFromB2C",
+          "deleteAssessmentFromBO",
+          "getAllassessmentFromB2C",
+          "getAllAssessmentFromBO"
+        ]
+      },
+      "outcomes": {
+        "getAllDeployments": "assignVariablesGetAllDeployments",
+        "startSession": "assignVariablesErrorObjectIfStatusNot400",
+        "noOfflineDataFound": "assignVariablesNoOfflineDataFound",
+        "boCreateAssessment": "assignVariablesBoCreateAssessment",
+        "b2cCreateAssessment": "assignVariablesB2cCreateAssessment",
+        "login": "assignVariablesLogin",
+        "b2cCreateIncident": "assignVariablesCreateIncident",
+        "b2cGetContacts": "assignVariablesGetB2cContacts",
+        "getSampleContacts": "assignVariablesGetSampleContacts",
+        "getSampleCountries": "assignVariablesGetSampleCountries",
+        "b2cGetAssessmentById": "assignVariablesB2cGetAssessmentById",
+        "b2cGetAssessmentStatusById": "assignVariablesB2cGetAssessmentStatusById",
+        "b2cUpdateAssessment": "assignVariablesB2cUpdateAssessment",
+        "boUpdateAssessment": "assignVariablesBoUpdateAssessment",
+        "createAttachment": "assignVariablesCreateAttachment",
+        "deleteAssessmentFromB2C": "assignVariablesDeleteAssessmentFromB2C",
+        "deleteAssessmentFromBO": "assignVariablesDeleteAssessmentFromBO",
+        "getAllassessmentFromB2C": "assignVariablesGetAllassessmentFromB2C",
+        "getAllAssessmentFromBO": "assignVariablesGetAllAssessmentFromBO",
+        "default": "fireNotificationErrorObject"
+      },
+      "label": "Switch between error types",
+      "description": "Switch between error types"
+    },
+    "assignVariablesB2cCreateAssessment": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.body.detail || $variables.response.message.summary }}",
+            "summary": "B2C create assessment error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesB2cGetAssessmentById": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.body.detail || $variables.response.message.summary }}",
+            "summary": "B2C get assessment error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesB2cGetAssessmentStatusById": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.body.detail || $variables.response.message.summary }}",
+            "summary": "B2C get assessment status error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesB2cUpdateAssessment": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.body.detail || $variables.response.message.summary }}",
+            "summary": "B2C update assessment error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesBoCreateAssessment": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.message.summary }}",
+            "summary": "BO create assessment error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesBoUpdateAssessment": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.message.summary }}",
+            "summary": "BO update assessment error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesCreateAttachment": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.message.summary }}",
+            "summary": "Create attachment error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesCreateIncident": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.body.detail || $variables.response.message.summary }}",
+            "summary": "B2C create incident error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesDeleteAssessmentFromB2C": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.body.detail || $variables.response.message.summary }}",
+            "summary": "B2C delete assessment error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesDeleteAssessmentFromBO": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.message.summary }}",
+            "summary": "BO delete assessment error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesGetAllassessmentFromB2C": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.body.detail || $variables.response.message.summary }}",
+            "summary": "B2C get all assessment error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesGetAllAssessmentFromBO": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.message.summary }}",
+            "summary": "BO get all assessment error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesGetAllDeployments": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.body.detail || $variables.response.message.summary }}",
+            "summary": "Get all deployments error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesGetB2cContacts": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.body.detail || $variables.response.message.summary }}",
+            "summary": "Get B2C contacts error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesGetSampleContacts": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.message.summary }}",
+            "summary": "Get sample contacts error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesGetSampleCountries": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.message.summary }}",
+            "summary": "Get sample countries error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesLogin": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.message.summary }}",
+            "summary": "Login error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "assignVariablesErrorObjectIfStatusNot400": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "{{ $variables.response.body.detail || $variables.response.message.summary }}",
+            "summary": "Flow start session error"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "fireNotificationErrorObject": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "target": "leaf",
+        "summary": "[[ $variables.errorObject.summary ]]",
+        "message": "[[ $variables.errorObject.message ]]",
+        "displayMode": "transient"
+      }
+    },
+    "checkRequestUnauth": {
+      "module": "vb/action/builtin/ifAction",
+      "parameters": {
+        "condition": "[[ $chain.results.callFunctionCheckRequestIsNeedToNavigate ]]"
+      },
+      "outcomes": {
+        "false": "switchType",
+        "true": "fireNotification"
+      },
+      "label": "Check if the request is unauthorised",
+      "description": "Check if the request is unauthorised"
+    },
+    "fireNotification": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "target": "leaf",
+        "summary": "[[$application.translations.app.ia_hub_user_unauthorized_summary]]",
+        "message": "[[$application.translations.app.retry_then_contact_admin_if_issue_persist_message]]",
+        "displayMode": "transient"
+      }
+    },
+    "assignVariablesNoOfflineDataFound": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$variables.errorObject": {
+          "source": {
+            "message": "No offline data found for the deployment",
+            "summary": "No offline data found"
+          },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireNotificationErrorObject"
+      }
+    },
+    "callFunctionCheckRequestIsNeedToNavigate": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $application.functions ]]",
+        "functionName": "checkRequestIsNeedToNavigate",
+        "params": [
+          "{{ $variables.type }}",
+          "{{ $variables.response }}"
+        ]
+      },
+      "outcomes": {
+        "success": "checkRequestUnauth"
+      }
+    }
+  }
+}

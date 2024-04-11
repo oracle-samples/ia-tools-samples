@@ -1,0 +1,57 @@
+{
+  "root": "switchType",
+  "description": "Handle warning globally",
+  "variables": {
+    "type": {
+      "type": "string",
+      "required": false,
+      "input": "fromCaller"
+    }
+  },
+  "actions": {
+    "switchType": {
+      "module": "vb/action/builtin/switchAction",
+      "parameters": {
+        "caseValue": "[[ $variables.type ]]",
+        "possibleValues": [
+          "appOffline",
+          "deploymentNotFound",
+          "b2cGetAccountFailed"
+        ]
+      },
+      "outcomes": {
+        "appOffline": "fireNotification",
+        "deploymentNotFound": "fireNotificationForDeploymentNotFound",
+        "b2cGetAccountFailed": "fireGetAccountFailureWarning"
+      }
+    },
+    "fireNotification": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "target": "leaf",
+        "summary": "No Network Connection",
+        "message": "You are offline for a while auth token may have expired.",
+        "type": "warning",
+        "displayMode": "transient"
+      }
+    },
+    "fireNotificationForDeploymentNotFound": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "target": "leaf",
+        "summary": "Deployment not found",
+        "message": "The deployment associated with the selected assessment is missing from hub. Using locally available data to run the assessment.",
+        "type": "warning"
+      }
+    },
+    "fireGetAccountFailureWarning": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "target": "leaf",
+        "summary": "[[$application.translations.app.b2c_account_get_failure_summary]]",
+        "displayMode": "transient",
+        "type": "warning"
+      }
+    }
+  }
+}

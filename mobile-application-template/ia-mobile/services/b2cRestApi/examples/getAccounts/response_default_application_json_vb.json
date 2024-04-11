@@ -1,0 +1,34 @@
+{
+    "items": [
+        {
+            "id": 10,
+            "lookupName": "Generic IntelligentAdvisor",
+            "links": [
+                {
+                    "rel": "canonical",
+                    "href": "https://oia-mobile-test-1.rightnowdemo.com/services/rest/connect/latest/accounts/10"
+                }
+            ]
+        }
+    ],
+    "hasMore": false,
+    "links": [
+        {
+            "rel": "canonical",
+            "href": "https://oia-mobile-test-1.rightnowdemo.com/services/rest/connect/latest/accounts"
+        },
+        {
+            "rel": "describedby",
+            "href": "https://oia-mobile-test-1.rightnowdemo.com/services/rest/connect/latest/metadata-catalog/accounts",
+            "mediaType": "application/schema+json"
+        },
+        {
+            "rel": "search-form",
+            "href": "https://oia-mobile-test-1.rightnowdemo.com/services/rest/connect/latest/accounts-search-form"
+        },
+        {
+            "rel": "self",
+            "href": "https://oia-mobile-test-1.rightnowdemo.com/services/rest/connect/latest/accounts?q=lookupName%3D'Generic%20IntelligentAdvisor'"
+        }
+    ]
+}

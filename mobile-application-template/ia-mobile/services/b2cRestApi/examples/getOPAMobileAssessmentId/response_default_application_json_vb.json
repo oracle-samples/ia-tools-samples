@@ -1,0 +1,40 @@
+{
+    "id": 2,
+    "lookupName": "2",
+    "Account": null,
+    "Deployment": "Car Charging",
+    "Description": "Sample 4",
+    "ObjectID": null,
+    "Status": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://day104-23200-sql-174h.qa.lan/services/rest/connect/latest/OPA.AssessmentStatus/2"
+            },
+            {
+                "rel": "canonical",
+                "href": "https://day104-23200-sql-174h.qa.lan/services/rest/connect/latest/OPA.AssessmentStatus/2"
+            },
+            {
+                "rel": "describedby",
+                "href": "https://day104-23200-sql-174h.qa.lan/services/rest/connect/latest/metadata-catalog/OPA.AssessmentStatus",
+                "mediaType": "application/schema+json"
+            }
+        ]
+    },
+    "links": [
+        {
+            "rel": "self",
+            "href": "https://day104-23200-sql-174h.qa.lan/services/rest/connect/latest/OPA.MobileAssessment/2"
+        },
+        {
+            "rel": "canonical",
+            "href": "https://day104-23200-sql-174h.qa.lan/services/rest/connect/latest/OPA.MobileAssessment/2"
+        },
+        {
+            "rel": "describedby",
+            "href": "https://day104-23200-sql-174h.qa.lan/services/rest/connect/latest/metadata-catalog/OPA.MobileAssessment",
+            "mediaType": "application/schema+json"
+        }
+    ]
+}

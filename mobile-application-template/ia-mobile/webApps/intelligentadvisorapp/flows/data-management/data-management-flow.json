@@ -1,0 +1,8 @@
+{
+  "id": "data-management",
+  "description": "Flow main",
+  "defaultPage": "data-management-start",
+  "services": {},
+  "types": {},
+  "variables": {}
+}

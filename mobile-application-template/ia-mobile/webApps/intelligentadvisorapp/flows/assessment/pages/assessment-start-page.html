@@ -1,0 +1,147 @@
+<!-- Mobile only header and page title -->
+<header role="banner" class="oj-sm-flex-initial vb-web-applayout-header oj-md-hide">
+  <div class="oj-flex-bar oj-sm-align-items-center vb-web-applayout-header-content">
+    <!-- Navigator toggle button will render only if we have a drawer -->
+    <oj-bind-if test="[[ document.querySelector('oj-vb-fragment[name=\'shell-drawer\']') ]]">
+      <div class="oj-flex-bar">
+        <oj-button chroming="borderless" display="icons" on-oj-action="[[$listeners.buttonAction4]]">
+          <span slot="startIcon" class="oj-ux-ico-menu"></span>
+          <span><oj-bind-text value="[[$application.translations.app.app_title_navigation_drawer]]"></oj-bind-text></span>
+        </oj-button>
+      </div>
+    </oj-bind-if>
+    <!-- Page specific title and actions with overflow menu displayed -->
+    <div class="oj-sm-margin-2x-horizontal oj-sm-align-items-center oj-md-hide oj-sm-flex-1">
+      <div class="vb-content-header oj-flex-bar oj-sm-flex-items-initial oj-sm-align-items-center">
+        <div class="oj-flex-bar-start">
+          <div class="oj-typography-body-lg oj-typography-semi-bold">
+            <oj-bind-text value="[[$application.translations.app.assessment_start_page_title]]"></oj-bind-text>
+          </div>
+        </div>
+        <div class="oj-flex-bar-end">
+          <oj-button on-oj-action="[[$listeners.createAssessmentsButtonClicked]]"
+            label="[[$application.translations.app.create_button_label]]" disabled="[[ $variables.isSyncing ]]"
+            class="oj-sm-margin-2x-start oj-button-sm" display="[[ $application.functions.getButtonDisplayMode() ]]"
+            :aria-label="[[$application.translations.app.assessment_local_create_page_title]]">
+            <span slot="startIcon" class="oj-ux-ico-plus"></span>
+          </oj-button>
+          <oj-button display="[[ $application.functions.getButtonDisplayMode() ]]" disabled="[[ $variables.isSyncing ]]"
+            label="[[$application.translations.app.synchronize_button_label]]"
+            on-oj-action="[[$listeners.buttonAction3]]" class="oj-sm-margin-2x-start oj-button-sm"
+            :aria-label="[[$application.translations.app.synchronize_button_aria_label]]">
+            <span slot="startIcon" class="oj-ux-ico-sync"></span>
+          </oj-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="vb-content-header oj-flex-bar oj-sm-flex-1 oj-sm-only-hide oj-sm-align-items-center">
+  <div class="oj-flex-bar-start">
+    <div class="oj-typography-body-lg oj-typography-semi-bold">
+      <oj-bind-text value="[[$application.translations.app.assessment_start_page_title]]"></oj-bind-text>
+    </div>
+  </div>
+  <div class="oj-flex-bar-end">
+    <oj-button on-oj-action="[[$listeners.createAssessmentsButtonClicked]]"
+      label="[[$application.translations.app.create_button_label]]" disabled="[[ $variables.isSyncing ]]"
+      class="oj-sm-margin-2x-start oj-button-sm" display="[[ $application.functions.getButtonDisplayMode() ]]"
+      :aria-label="[[$application.translations.app.assessment_local_create_page_title]]">
+      <span slot="startIcon" class="oj-ux-ico-plus"></span>
+    </oj-button>
+    <oj-button display="[[ $application.functions.getButtonDisplayMode() ]]" disabled="[[ $variables.isSyncing ]]"
+      label="[[$application.translations.app.synchronize_button_label]]" on-oj-action="[[$listeners.buttonAction3]]"
+      class="oj-sm-margin-2x-start oj-button-sm"
+      :aria-label="[[$application.translations.app.synchronize_button_aria_label]]">
+      <span slot="startIcon" class="oj-ux-ico-sync"></span>
+    </oj-button>
+  </div>
+</div>
+
+<div class="oj-flex oj-sm-flex-direction-column">
+  <div class="oj-flex-item">
+    <oj-ia-intv-session-manager id="ia-session-manager-seed" ia-site-url="[[ $application.variables.iaSiteUrl ]]">
+    </oj-ia-intv-session-manager>
+  </div>
+  <div class="oj-flex-item oj-sm-width-full">
+    <div class="oj-flex oj-sm-flex-direction-column oj-panel oj-panel-shadow-md">
+      <oj-bind-if
+        test="[[ $flow.functions.hasAssessmentsPendingSync($application.constants.appId, $application.variables.b2cAccountId, $variables.assessmentList) ]]">
+        <div class="oj-flex-item oj-bg-info-20 oj-sm-align-self-center">
+          <oj-highlight-text text="[[$application.translations.app.assessment_local_data_pending_synchronization]]">
+          </oj-highlight-text>
+        </div>
+      </oj-bind-if>
+      <oj-bind-if test="[[ $variables.pullToRefreshStarted ? true : !$variables.isSyncing ]]">
+        <div class="oj-flex-item oj-sm-width-full">
+          <oj-refresher id="refresher"
+            text="[[$application.translations.app.assessment_list_refresher_in_progress_text]]"
+            refresh-content="[[ $functions.getRefreshFunction() ]]">
+            <oj-list-view data="[[ $variables.assessmentListADP ]]" selection-mode="single" gridlines.item="visible"
+              id="assessmentList" on-selected-changed="[[$listeners.assessmentListSelected]]" class="mainContentView"
+              :aria-label="[[$application.translations.app.assessment_list_view_aria_label]]">
+              <template slot="itemTemplate">
+                <li class="oj-swipeactions-container">
+                  <oj-swipe-actions class="oj-listview-item-layout"
+                    on-oj-action="[[$listeners.ojSwipeActionsPerformed2]]">
+                    <oj-list-item-layout>
+                      <div slot="leading" class="oj-typography-heading-sm">
+                        <oj-bind-text value="[[ $current.index+1 ]]"></oj-bind-text>
+                      </div>
+                      <div class="oj-text-color-primary oj-typography-bold oj-typography-body-lg">
+                        <oj-bind-text value="[[ $current.data.assessmentName ]]"></oj-bind-text>
+                        <div class="oj-text-color-secondary oj-typography-body-md">
+                          <oj-bind-text value="[[ $current.data.deploymentName ]]"></oj-bind-text>
+                        </div>
+                        <div class="oj-text-color-secondary oj-typography-body-md">
+                          <oj-bind-text value="[[ $current.data.status ]]"></oj-bind-text>
+                        </div>
+                        <oj-bind-if
+                          test="[[ $current.data.pendingSync || ($flow.functions.getAllPendingDataActionKeys($application.constants.appId, $application.variables.b2cAccountId, $current.data.id).length > 0) ]]">
+                          <div class="oj-text-color-secondary oj-typography-body-md">
+                            <oj-bind-text
+                              value="[[$application.translations.app.assessment_pending_synchronize_label]]">
+                            </oj-bind-text>
+                          </div>
+                        </oj-bind-if>
+                      </div>
+                    </oj-list-item-layout>
+                    <template slot="end">
+                      <oj-option value="delete" class="oj-swipeactions-danger">
+                        <oj-bind-text value="[[$application.translations.app.delete_button_label]]"></oj-bind-text>
+                        <span slot="startIcon" style="width: auto;" class="oj-ux-ico-trash "></span>
+                      </oj-option>
+                    </template>
+                  </oj-swipe-actions>
+                </li>
+              </template>
+            </oj-list-view>
+          </oj-refresher>
+        </div>
+      </oj-bind-if>
+      <oj-bind-if test="[[ $variables.isSyncing && !$variables.pullToRefreshStarted ]]">
+        <div class="oj-flex-item">
+          <div class='oj-flex oj-sm-justify-content-center'>
+            <oj-progress-circle value="-1"></oj-progress-circle>
+          </div>
+        </div>
+      </oj-bind-if>
+    </div>
+  </div>
+  <oj-dialog style="display:none"
+    dialog-title="[[ $application.translations.format('app', 'assessment_delete_dialog_title', { assessmentName: $variables.assessmentToDelete.assessmentName }) ]]"
+    id="oj-dialog-delete-assesment-confirmation" initial-visibility="[[ $variables.showConfirmation ]]">
+    <div slot="body">
+      <oj-bind-text value="[[$application.translations.app.assessment_delete_confirm]]"></oj-bind-text>
+    </div>
+    <div slot="footer">
+      <oj-button on-oj-action="[[$listeners.buttonAction]]">
+        <oj-bind-text value="[[$application.translations.app.no_button_label]]"></oj-bind-text>
+      </oj-button>
+      <oj-button on-oj-action="[[$listeners.buttonAction2]]" chroming="danger">
+        <oj-bind-text value="[[$application.translations.app.yes_button_label]]"></oj-bind-text>
+      </oj-button>
+    </div>
+  </oj-dialog>
+</div>

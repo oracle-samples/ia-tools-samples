@@ -1,0 +1,73 @@
+{
+  "title": "Shell Drawer",
+  "eventListeners": {
+    "drawerMenuButtonAction": {
+      "chains": [
+        {
+          "chain": "ADVISOR_APP_DRAWER_MENU_BUTTON_ACTION_CHAIN",
+          "parameters": {
+            "event": "[[ $current]]",
+            "actionId": "[[ $current.data.id ]]"
+          }
+        }
+      ]
+    },
+    "onNavigation": {
+      "chains": [
+        {
+          "chain": "navigationHandler",
+          "parameters": {
+            "item": "{{ $event.detail.value }}",
+            "updatedFrom": "{{ $event.detail.updatedFrom }}"
+          }
+        }
+      ]
+    }
+
+  },
+  "events": {
+    "shellDrawerMenuButtonAction": {
+      "propagationBehavior": "container",
+      "description": "Emits to container",
+      "payloadType": {
+        "actionId": "string"
+      }
+    }
+  },
+  "imports": {
+    "components": {
+      "oj-avatar": {
+        "path": "ojs/ojavatar"
+      },
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-list-item-layout": {
+        "path": "ojs/ojlistitemlayout"
+      },
+      "oj-navigation-list": {
+        "path": "ojs/ojnavigationlist"
+      },
+      "oj-popup": {
+        "path": "ojs/ojpopup"
+      },
+      "oj-list-view": {
+        "path": "ojs/ojlistview"
+      }
+
+    },
+    "css": [
+      "/resources/css/shell.css"
+    ]
+  },
+  "metadata": {},
+  "types": {
+  },
+  "variables": {
+    "currentFlow": {
+      "type": "string",
+      "input": "fromCaller",
+      "defaultValue": "[[ $application.variables.navigationData[0].id ]]"
+    }
+  }
+}

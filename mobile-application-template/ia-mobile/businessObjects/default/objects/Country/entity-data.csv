@@ -1,0 +1,246 @@
+id,creationDate,lastUpdateDate,createdBy,lastUpdatedBy,country,latitude,longitude,name
+1,2023-02-21T05:49:38.34,2023-02-21T05:49:38.34,chu.zhang@oracle.com,chu.zhang@oracle.com,AD,42.546245,1.601554,Andorra
+2,2023-02-21T05:49:43.599,2023-02-21T05:49:43.599,chu.zhang@oracle.com,chu.zhang@oracle.com,AE,23.424076,53.847818,United Arab Emirates
+3,2023-02-21T05:49:43.599,2023-02-21T05:49:43.599,chu.zhang@oracle.com,chu.zhang@oracle.com,AF,33.93911,67.709953,Afghanistan
+4,2023-02-21T05:49:43.599,2023-02-21T05:49:43.599,chu.zhang@oracle.com,chu.zhang@oracle.com,AG,17.060816,-61.796428,Antigua and Barbuda
+5,2023-02-21T05:49:43.599,2023-02-21T05:49:43.599,chu.zhang@oracle.com,chu.zhang@oracle.com,AI,18.220554,-63.068615,Anguilla
+6,2023-02-21T05:49:43.599,2023-02-21T05:49:43.599,chu.zhang@oracle.com,chu.zhang@oracle.com,AL,41.153332,20.168331,Albania
+7,2023-02-21T05:49:43.599,2023-02-21T05:49:43.599,chu.zhang@oracle.com,chu.zhang@oracle.com,AM,40.069099,45.038189,Armenia
+8,2023-02-21T05:49:43.599,2023-02-21T05:49:43.599,chu.zhang@oracle.com,chu.zhang@oracle.com,AN,12.226079,-69.060087,Netherlands Antilles
+9,2023-02-21T05:49:43.599,2023-02-21T05:49:43.599,chu.zhang@oracle.com,chu.zhang@oracle.com,AO,-11.202692,17.873887,Angola
+10,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,AQ,-75.250973,-0.071389,Antarctica
+11,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,AR,-38.416097,-63.616672,Argentina
+12,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,AS,-14.270972,-170.132217,American Samoa
+13,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,AT,47.516231,14.550072,Austria
+14,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,AU,-25.274398,133.775136,Australia
+15,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,AW,12.52111,-69.968338,Aruba
+16,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,AZ,40.143105,47.576927,Azerbaijan
+17,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,BA,43.915886,17.679076,Bosnia and Herzegovina
+18,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,BB,13.193887,-59.543198,Barbados
+19,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,BD,23.684994,90.356331,Bangladesh
+20,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,BE,50.503887,4.469936,Belgium
+21,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,BF,12.238333,-1.561593,Burkina Faso
+22,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,BG,42.733883,25.48583,Bulgaria
+23,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,BH,25.930414,50.637772,Bahrain
+24,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,BI,-3.373056,29.918886,Burundi
+25,2023-02-21T05:49:43.6,2023-02-21T05:49:43.6,chu.zhang@oracle.com,chu.zhang@oracle.com,BJ,9.30769,2.315834,Benin
+26,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,BM,32.321384,-64.75737,Bermuda
+27,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,BN,4.535277,114.727669,Brunei
+28,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,BO,-16.290154,-63.588653,Bolivia
+29,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,BR,-14.235004,-51.92528,Brazil
+30,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,BS,25.03428,-77.39628,Bahamas
+31,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,BT,27.514162,90.433601,Bhutan
+32,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,BV,-54.423199,3.413194,Bouvet Island
+33,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,BW,-22.328474,24.684866,Botswana
+34,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,BY,53.709807,27.953389,Belarus
+35,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,BZ,17.189877,-88.49765,Belize
+36,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,CA,56.130366,-106.346771,Canada
+37,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,CC,-12.164165,96.870956,Cocos [Keeling] Islands
+38,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,CD,-4.038333,21.758664,Congo [DRC]
+39,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,CF,6.611111,20.939444,Central African Republic
+40,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,CG,-0.228021,15.827659,Congo [Republic]
+41,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,CH,46.818188,8.227512,Switzerland
+42,2023-02-21T05:49:43.601,2023-02-21T05:49:43.601,chu.zhang@oracle.com,chu.zhang@oracle.com,CI,7.539989,-5.54708,Côte d'Ivoire
+43,2023-02-21T05:49:43.602,2023-02-21T05:49:43.602,chu.zhang@oracle.com,chu.zhang@oracle.com,CK,-21.236736,-159.777671,Cook Islands
+44,2023-02-21T05:49:43.602,2023-02-21T05:49:43.602,chu.zhang@oracle.com,chu.zhang@oracle.com,CL,-35.675147,-71.542969,Chile
+45,2023-02-21T05:49:43.602,2023-02-21T05:49:43.602,chu.zhang@oracle.com,chu.zhang@oracle.com,CM,7.369722,12.354722,Cameroon
+46,2023-02-21T05:49:43.602,2023-02-21T05:49:43.602,chu.zhang@oracle.com,chu.zhang@oracle.com,CN,35.86166,104.195397,China
+47,2023-02-21T05:49:43.602,2023-02-21T05:49:43.602,chu.zhang@oracle.com,chu.zhang@oracle.com,CO,4.570868,-74.297333,Colombia
+48,2023-02-21T05:49:43.602,2023-02-21T05:49:43.602,chu.zhang@oracle.com,chu.zhang@oracle.com,CR,9.748917,-83.753428,Costa Rica
+49,2023-02-21T05:49:43.602,2023-02-21T05:49:43.602,chu.zhang@oracle.com,chu.zhang@oracle.com,CU,21.521757,-77.781167,Cuba
+50,2023-02-21T05:49:43.602,2023-02-21T05:49:43.602,chu.zhang@oracle.com,chu.zhang@oracle.com,CV,16.002082,-24.013197,Cape Verde
+51,2023-02-21T05:49:43.623,2023-02-21T05:49:43.623,chu.zhang@oracle.com,chu.zhang@oracle.com,CX,-10.447525,105.690449,Christmas Island
+52,2023-02-21T05:49:43.623,2023-02-21T05:49:43.623,chu.zhang@oracle.com,chu.zhang@oracle.com,CY,35.126413,33.429859,Cyprus
+53,2023-02-21T05:49:43.623,2023-02-21T05:49:43.623,chu.zhang@oracle.com,chu.zhang@oracle.com,CZ,49.817492,15.472962,Czech Republic
+54,2023-02-21T05:49:43.623,2023-02-21T05:49:43.623,chu.zhang@oracle.com,chu.zhang@oracle.com,DE,51.165691,10.451526,Germany
+55,2023-02-21T05:49:43.623,2023-02-21T05:49:43.623,chu.zhang@oracle.com,chu.zhang@oracle.com,DJ,11.825138,42.590275,Djibouti
+56,2023-02-21T05:49:43.623,2023-02-21T05:49:43.623,chu.zhang@oracle.com,chu.zhang@oracle.com,DK,56.26392,9.501785,Denmark
+57,2023-02-21T05:49:43.623,2023-02-21T05:49:43.623,chu.zhang@oracle.com,chu.zhang@oracle.com,DM,15.414999,-61.370976,Dominica
+58,2023-02-21T05:49:43.623,2023-02-21T05:49:43.623,chu.zhang@oracle.com,chu.zhang@oracle.com,DO,18.735693,-70.162651,Dominican Republic
+59,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,DZ,28.033886,1.659626,Algeria
+60,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,EC,-1.831239,-78.183406,Ecuador
+61,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,EE,58.595272,25.013607,Estonia
+62,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,EG,26.820553,30.802498,Egypt
+63,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,EH,24.215527,-12.885834,Western Sahara
+64,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,ER,15.179384,39.782334,Eritrea
+65,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,ES,40.463667,-3.74922,Spain
+66,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,ET,9.145,40.489673,Ethiopia
+67,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,FI,61.92411,25.748151,Finland
+68,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,FJ,-16.578193,179.414413,Fiji
+69,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,FK,-51.796253,-59.523613,Falkland Islands [Islas Malvinas]
+70,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,FM,7.425554,150.550812,Micronesia
+71,2023-02-21T05:49:43.624,2023-02-21T05:49:43.624,chu.zhang@oracle.com,chu.zhang@oracle.com,FO,61.892635,-6.911806,Faroe Islands
+72,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,FR,46.227638,2.213749,France
+73,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GA,-0.803689,11.609444,Gabon
+74,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GB,55.378051,-3.435973,United Kingdom
+75,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GD,12.262776,-61.604171,Grenada
+76,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GE,42.315407,43.356892,Georgia
+77,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GF,3.933889,-53.125782,French Guiana
+78,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GG,49.465691,-2.585278,Guernsey
+79,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GH,7.946527,-1.023194,Ghana
+80,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GI,36.137741,-5.345374,Gibraltar
+81,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GL,71.706936,-42.604303,Greenland
+82,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GM,13.443182,-15.310139,Gambia
+83,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GN,9.945587,-9.696645,Guinea
+84,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GP,16.995971,-62.067641,Guadeloupe
+85,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GQ,1.650801,10.267895,Equatorial Guinea
+86,2023-02-21T05:49:43.625,2023-02-21T05:49:43.625,chu.zhang@oracle.com,chu.zhang@oracle.com,GR,39.074208,21.824312,Greece
+87,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,GS,-54.429579,-36.587909,South Georgia and the South Sandwich Islands
+88,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,GT,15.783471,-90.230759,Guatemala
+89,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,GU,13.444304,144.793731,Guam
+90,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,GW,11.803749,-15.180413,Guinea-Bissau
+91,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,GY,4.860416,-58.93018,Guyana
+92,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,GZ,31.354676,34.308825,Gaza Strip
+93,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,HK,22.396428,114.109497,Hong Kong
+94,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,HM,-53.08181,73.504158,Heard Island and McDonald Islands
+95,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,HN,15.199999,-86.241905,Honduras
+96,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,HR,45.1,15.2,Croatia
+97,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,HT,18.971187,-72.285215,Haiti
+98,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,HU,47.162494,19.503304,Hungary
+99,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,ID,-0.789275,113.921327,Indonesia
+100,2023-02-21T05:49:43.626,2023-02-21T05:49:43.626,chu.zhang@oracle.com,chu.zhang@oracle.com,IE,53.41291,-8.24389,Ireland
+101,2023-02-21T05:49:43.633,2023-02-21T05:49:43.633,chu.zhang@oracle.com,chu.zhang@oracle.com,IL,31.046051,34.851612,Israel
+102,2023-02-21T05:49:43.633,2023-02-21T05:49:43.633,chu.zhang@oracle.com,chu.zhang@oracle.com,IM,54.236107,-4.548056,Isle of Man
+103,2023-02-21T05:49:43.633,2023-02-21T05:49:43.633,chu.zhang@oracle.com,chu.zhang@oracle.com,IN,20.593684,78.96288,India
+104,2023-02-21T05:49:43.633,2023-02-21T05:49:43.633,chu.zhang@oracle.com,chu.zhang@oracle.com,IO,-6.343194,71.876519,British Indian Ocean Territory
+105,2023-02-21T05:49:43.633,2023-02-21T05:49:43.633,chu.zhang@oracle.com,chu.zhang@oracle.com,IQ,33.223191,43.679291,Iraq
+106,2023-02-21T05:49:43.633,2023-02-21T05:49:43.633,chu.zhang@oracle.com,chu.zhang@oracle.com,IR,32.427908,53.688046,Iran
+107,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,IS,64.963051,-19.020835,Iceland
+108,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,IT,41.87194,12.56738,Italy
+109,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,JE,49.214439,-2.13125,Jersey
+110,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,JM,18.109581,-77.297508,Jamaica
+111,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,JO,30.585164,36.238414,Jordan
+112,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,JP,36.204824,138.252924,Japan
+113,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,KE,-0.023559,37.906193,Kenya
+114,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,KG,41.20438,74.766098,Kyrgyzstan
+115,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,KH,12.565679,104.990963,Cambodia
+116,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,KI,-3.370417,-168.734039,Kiribati
+117,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,KM,-11.875001,43.872219,Comoros
+118,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,KN,17.357822,-62.782998,Saint Kitts and Nevis
+119,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,KP,40.339852,127.510093,North Korea
+120,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,KR,35.907757,127.766922,South Korea
+121,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,KW,29.31166,47.481766,Kuwait
+122,2023-02-21T05:49:43.634,2023-02-21T05:49:43.634,chu.zhang@oracle.com,chu.zhang@oracle.com,KY,19.513469,-80.566956,Cayman Islands
+123,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,KZ,48.019573,66.923684,Kazakhstan
+124,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,LA,19.85627,102.495496,Laos
+125,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,LB,33.854721,35.862285,Lebanon
+126,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,LC,13.909444,-60.978893,Saint Lucia
+127,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,LI,47.166,9.555373,Liechtenstein
+128,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,LK,7.873054,80.771797,Sri Lanka
+129,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,LR,6.428055,-9.429499,Liberia
+130,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,LS,-29.609988,28.233608,Lesotho
+131,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,LT,55.169438,23.881275,Lithuania
+132,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,LU,49.815273,6.129583,Luxembourg
+133,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,LV,56.879635,24.603189,Latvia
+134,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,LY,26.3351,17.228331,Libya
+135,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,MA,31.791702,-7.09262,Morocco
+136,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,MC,43.750298,7.412841,Monaco
+137,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,MD,47.411631,28.369885,Moldova
+138,2023-02-21T05:49:43.635,2023-02-21T05:49:43.635,chu.zhang@oracle.com,chu.zhang@oracle.com,ME,42.708678,19.37439,Montenegro
+139,2023-02-21T05:49:43.636,2023-02-21T05:49:43.636,chu.zhang@oracle.com,chu.zhang@oracle.com,MG,-18.766947,46.869107,Madagascar
+140,2023-02-21T05:49:43.636,2023-02-21T05:49:43.636,chu.zhang@oracle.com,chu.zhang@oracle.com,MH,7.131474,171.184478,Marshall Islands
+141,2023-02-21T05:49:43.636,2023-02-21T05:49:43.636,chu.zhang@oracle.com,chu.zhang@oracle.com,MK,41.608635,21.745275,Macedonia [FYROM]
+142,2023-02-21T05:49:43.636,2023-02-21T05:49:43.636,chu.zhang@oracle.com,chu.zhang@oracle.com,ML,17.570692,-3.996166,Mali
+143,2023-02-21T05:49:43.636,2023-02-21T05:49:43.636,chu.zhang@oracle.com,chu.zhang@oracle.com,MM,21.913965,95.956223,Myanmar [Burma]
+144,2023-02-21T05:49:43.636,2023-02-21T05:49:43.636,chu.zhang@oracle.com,chu.zhang@oracle.com,MN,46.862496,103.846656,Mongolia
+145,2023-02-21T05:49:43.636,2023-02-21T05:49:43.636,chu.zhang@oracle.com,chu.zhang@oracle.com,MO,22.198745,113.543873,Macau
+146,2023-02-21T05:49:43.636,2023-02-21T05:49:43.636,chu.zhang@oracle.com,chu.zhang@oracle.com,MP,17.33083,145.38469,Northern Mariana Islands
+147,2023-02-21T05:49:43.636,2023-02-21T05:49:43.636,chu.zhang@oracle.com,chu.zhang@oracle.com,MQ,14.641528,-61.024174,Martinique
+148,2023-02-21T05:49:43.636,2023-02-21T05:49:43.636,chu.zhang@oracle.com,chu.zhang@oracle.com,MR,21.00789,-10.940835,Mauritania
+149,2023-02-21T05:49:43.637,2023-02-21T05:49:43.637,chu.zhang@oracle.com,chu.zhang@oracle.com,MS,16.742498,-62.187366,Montserrat
+150,2023-02-21T05:49:43.637,2023-02-21T05:49:43.637,chu.zhang@oracle.com,chu.zhang@oracle.com,MT,35.937496,14.375416,Malta
+151,2023-02-21T05:49:43.643,2023-02-21T05:49:43.643,chu.zhang@oracle.com,chu.zhang@oracle.com,MU,-20.348404,57.552152,Mauritius
+152,2023-02-21T05:49:43.643,2023-02-21T05:49:43.643,chu.zhang@oracle.com,chu.zhang@oracle.com,MV,3.202778,73.22068,Maldives
+153,2023-02-21T05:49:43.643,2023-02-21T05:49:43.643,chu.zhang@oracle.com,chu.zhang@oracle.com,MW,-13.254308,34.301525,Malawi
+154,2023-02-21T05:49:43.644,2023-02-21T05:49:43.644,chu.zhang@oracle.com,chu.zhang@oracle.com,MX,23.634501,-102.552784,Mexico
+155,2023-02-21T05:49:43.645,2023-02-21T05:49:43.645,chu.zhang@oracle.com,chu.zhang@oracle.com,MY,4.210484,101.975766,Malaysia
+156,2023-02-21T05:49:43.645,2023-02-21T05:49:43.645,chu.zhang@oracle.com,chu.zhang@oracle.com,MZ,-18.665695,35.529562,Mozambique
+157,2023-02-21T05:49:43.645,2023-02-21T05:49:43.645,chu.zhang@oracle.com,chu.zhang@oracle.com,NA,-22.95764,18.49041,Namibia
+158,2023-02-21T05:49:43.645,2023-02-21T05:49:43.645,chu.zhang@oracle.com,chu.zhang@oracle.com,NC,-20.904305,165.618042,New Caledonia
+159,2023-02-21T05:49:43.645,2023-02-21T05:49:43.645,chu.zhang@oracle.com,chu.zhang@oracle.com,NE,17.607789,8.081666,Niger
+160,2023-02-21T05:49:43.645,2023-02-21T05:49:43.645,chu.zhang@oracle.com,chu.zhang@oracle.com,NF,-29.040835,167.954712,Norfolk Island
+161,2023-02-21T05:49:43.645,2023-02-21T05:49:43.645,chu.zhang@oracle.com,chu.zhang@oracle.com,NG,9.081999,8.675277,Nigeria
+162,2023-02-21T05:49:43.646,2023-02-21T05:49:43.646,chu.zhang@oracle.com,chu.zhang@oracle.com,NI,12.865416,-85.207229,Nicaragua
+163,2023-02-21T05:49:43.646,2023-02-21T05:49:43.646,chu.zhang@oracle.com,chu.zhang@oracle.com,NL,52.132633,5.291266,Netherlands
+164,2023-02-21T05:49:43.646,2023-02-21T05:49:43.646,chu.zhang@oracle.com,chu.zhang@oracle.com,NO,60.472024,8.468946,Norway
+165,2023-02-21T05:49:43.646,2023-02-21T05:49:43.646,chu.zhang@oracle.com,chu.zhang@oracle.com,NP,28.394857,84.124008,Nepal
+166,2023-02-21T05:49:43.646,2023-02-21T05:49:43.646,chu.zhang@oracle.com,chu.zhang@oracle.com,NR,-0.522778,166.931503,Nauru
+167,2023-02-21T05:49:43.646,2023-02-21T05:49:43.646,chu.zhang@oracle.com,chu.zhang@oracle.com,NU,-19.054445,-169.867233,Niue
+168,2023-02-21T05:49:43.646,2023-02-21T05:49:43.646,chu.zhang@oracle.com,chu.zhang@oracle.com,NZ,-40.900557,174.885971,New Zealand
+169,2023-02-21T05:49:43.646,2023-02-21T05:49:43.646,chu.zhang@oracle.com,chu.zhang@oracle.com,OM,21.512583,55.923255,Oman
+170,2023-02-21T05:49:43.647,2023-02-21T05:49:43.647,chu.zhang@oracle.com,chu.zhang@oracle.com,PA,8.537981,-80.782127,Panama
+171,2023-02-21T05:49:43.647,2023-02-21T05:49:43.647,chu.zhang@oracle.com,chu.zhang@oracle.com,PE,-9.189967,-75.015152,Peru
+172,2023-02-21T05:49:43.647,2023-02-21T05:49:43.647,chu.zhang@oracle.com,chu.zhang@oracle.com,PF,-17.679742,-149.406843,French Polynesia
+173,2023-02-21T05:49:43.647,2023-02-21T05:49:43.647,chu.zhang@oracle.com,chu.zhang@oracle.com,PG,-6.314993,143.95555,Papua New Guinea
+174,2023-02-21T05:49:43.648,2023-02-21T05:49:43.648,chu.zhang@oracle.com,chu.zhang@oracle.com,PH,12.879721,121.774017,Philippines
+175,2023-02-21T05:49:43.649,2023-02-21T05:49:43.649,chu.zhang@oracle.com,chu.zhang@oracle.com,PK,30.375321,69.345116,Pakistan
+176,2023-02-21T05:49:43.649,2023-02-21T05:49:43.649,chu.zhang@oracle.com,chu.zhang@oracle.com,PL,51.919438,19.145136,Poland
+177,2023-02-21T05:49:43.65,2023-02-21T05:49:43.65,chu.zhang@oracle.com,chu.zhang@oracle.com,PM,46.941936,-56.27111,Saint Pierre and Miquelon
+178,2023-02-21T05:49:43.65,2023-02-21T05:49:43.65,chu.zhang@oracle.com,chu.zhang@oracle.com,PN,-24.703615,-127.439308,Pitcairn Islands
+179,2023-02-21T05:49:43.65,2023-02-21T05:49:43.65,chu.zhang@oracle.com,chu.zhang@oracle.com,PR,18.220833,-66.590149,Puerto Rico
+180,2023-02-21T05:49:43.65,2023-02-21T05:49:43.65,chu.zhang@oracle.com,chu.zhang@oracle.com,PS,31.952162,35.233154,Palestinian Territories
+181,2023-02-21T05:49:43.65,2023-02-21T05:49:43.65,chu.zhang@oracle.com,chu.zhang@oracle.com,PT,39.399872,-8.224454,Portugal
+182,2023-02-21T05:49:43.65,2023-02-21T05:49:43.65,chu.zhang@oracle.com,chu.zhang@oracle.com,PW,7.51498,134.58252,Palau
+183,2023-02-21T05:49:43.65,2023-02-21T05:49:43.65,chu.zhang@oracle.com,chu.zhang@oracle.com,PY,-23.442503,-58.443832,Paraguay
+184,2023-02-21T05:49:43.651,2023-02-21T05:49:43.651,chu.zhang@oracle.com,chu.zhang@oracle.com,QA,25.354826,51.183884,Qatar
+185,2023-02-21T05:49:43.651,2023-02-21T05:49:43.651,chu.zhang@oracle.com,chu.zhang@oracle.com,RE,-21.115141,55.536384,Réunion
+186,2023-02-21T05:49:43.651,2023-02-21T05:49:43.651,chu.zhang@oracle.com,chu.zhang@oracle.com,RO,45.943161,24.96676,Romania
+187,2023-02-21T05:49:43.651,2023-02-21T05:49:43.651,chu.zhang@oracle.com,chu.zhang@oracle.com,RS,44.016521,21.005859,Serbia
+188,2023-02-21T05:49:43.651,2023-02-21T05:49:43.651,chu.zhang@oracle.com,chu.zhang@oracle.com,RU,61.52401,105.318756,Russia
+189,2023-02-21T05:49:43.651,2023-02-21T05:49:43.651,chu.zhang@oracle.com,chu.zhang@oracle.com,RW,-1.940278,29.873888,Rwanda
+190,2023-02-21T05:49:43.651,2023-02-21T05:49:43.651,chu.zhang@oracle.com,chu.zhang@oracle.com,SA,23.885942,45.079162,Saudi Arabia
+191,2023-02-21T05:49:43.651,2023-02-21T05:49:43.651,chu.zhang@oracle.com,chu.zhang@oracle.com,SB,-9.64571,160.156194,Solomon Islands
+192,2023-02-21T05:49:43.651,2023-02-21T05:49:43.651,chu.zhang@oracle.com,chu.zhang@oracle.com,SC,-4.679574,55.491977,Seychelles
+193,2023-02-21T05:49:43.652,2023-02-21T05:49:43.652,chu.zhang@oracle.com,chu.zhang@oracle.com,SD,12.862807,30.217636,Sudan
+194,2023-02-21T05:49:43.652,2023-02-21T05:49:43.652,chu.zhang@oracle.com,chu.zhang@oracle.com,SE,60.128161,18.643501,Sweden
+195,2023-02-21T05:49:43.652,2023-02-21T05:49:43.652,chu.zhang@oracle.com,chu.zhang@oracle.com,SG,1.352083,103.819836,Singapore
+196,2023-02-21T05:49:43.652,2023-02-21T05:49:43.652,chu.zhang@oracle.com,chu.zhang@oracle.com,SH,-24.143474,-10.030696,Saint Helena
+197,2023-02-21T05:49:43.652,2023-02-21T05:49:43.652,chu.zhang@oracle.com,chu.zhang@oracle.com,SI,46.151241,14.995463,Slovenia
+198,2023-02-21T05:49:43.652,2023-02-21T05:49:43.652,chu.zhang@oracle.com,chu.zhang@oracle.com,SJ,77.553604,23.670272,Svalbard and Jan Mayen
+199,2023-02-21T05:49:43.652,2023-02-21T05:49:43.652,chu.zhang@oracle.com,chu.zhang@oracle.com,SK,48.669026,19.699024,Slovakia
+200,2023-02-21T05:49:43.652,2023-02-21T05:49:43.652,chu.zhang@oracle.com,chu.zhang@oracle.com,SL,8.460555,-11.779889,Sierra Leone
+201,2023-02-21T05:49:43.659,2023-02-21T05:49:43.659,chu.zhang@oracle.com,chu.zhang@oracle.com,SM,43.94236,12.457777,San Marino
+202,2023-02-21T05:49:43.659,2023-02-21T05:49:43.659,chu.zhang@oracle.com,chu.zhang@oracle.com,SN,14.497401,-14.452362,Senegal
+203,2023-02-21T05:49:43.659,2023-02-21T05:49:43.659,chu.zhang@oracle.com,chu.zhang@oracle.com,SO,5.152149,46.199616,Somalia
+204,2023-02-21T05:49:43.659,2023-02-21T05:49:43.659,chu.zhang@oracle.com,chu.zhang@oracle.com,SR,3.919305,-56.027783,Suriname
+205,2023-02-21T05:49:43.659,2023-02-21T05:49:43.659,chu.zhang@oracle.com,chu.zhang@oracle.com,ST,0.18636,6.613081,São Tomé and Príncipe
+206,2023-02-21T05:49:43.659,2023-02-21T05:49:43.659,chu.zhang@oracle.com,chu.zhang@oracle.com,SV,13.794185,-88.89653,El Salvador
+207,2023-02-21T05:49:43.659,2023-02-21T05:49:43.659,chu.zhang@oracle.com,chu.zhang@oracle.com,SY,34.802075,38.996815,Syria
+208,2023-02-21T05:49:43.659,2023-02-21T05:49:43.659,chu.zhang@oracle.com,chu.zhang@oracle.com,SZ,-26.522503,31.465866,Swaziland
+209,2023-02-21T05:49:43.659,2023-02-21T05:49:43.659,chu.zhang@oracle.com,chu.zhang@oracle.com,TC,21.694025,-71.797928,Turks and Caicos Islands
+210,2023-02-21T05:49:43.659,2023-02-21T05:49:43.659,chu.zhang@oracle.com,chu.zhang@oracle.com,TD,15.454166,18.732207,Chad
+211,2023-02-21T05:49:43.66,2023-02-21T05:49:43.66,chu.zhang@oracle.com,chu.zhang@oracle.com,TF,-49.280366,69.348557,French Southern Territories
+212,2023-02-21T05:49:43.66,2023-02-21T05:49:43.66,chu.zhang@oracle.com,chu.zhang@oracle.com,TG,8.619543,0.824782,Togo
+213,2023-02-21T05:49:43.66,2023-02-21T05:49:43.66,chu.zhang@oracle.com,chu.zhang@oracle.com,TH,15.870032,100.992541,Thailand
+214,2023-02-21T05:49:43.66,2023-02-21T05:49:43.66,chu.zhang@oracle.com,chu.zhang@oracle.com,TJ,38.861034,71.276093,Tajikistan
+215,2023-02-21T05:49:43.66,2023-02-21T05:49:43.66,chu.zhang@oracle.com,chu.zhang@oracle.com,TK,-8.967363,-171.855881,Tokelau
+216,2023-02-21T05:49:43.66,2023-02-21T05:49:43.66,chu.zhang@oracle.com,chu.zhang@oracle.com,TL,-8.874217,125.727539,Timor-Leste
+217,2023-02-21T05:49:43.66,2023-02-21T05:49:43.66,chu.zhang@oracle.com,chu.zhang@oracle.com,TM,38.969719,59.556278,Turkmenistan
+218,2023-02-21T05:49:43.66,2023-02-21T05:49:43.66,chu.zhang@oracle.com,chu.zhang@oracle.com,TN,33.886917,9.537499,Tunisia
+219,2023-02-21T05:49:43.66,2023-02-21T05:49:43.66,chu.zhang@oracle.com,chu.zhang@oracle.com,TO,-21.178986,-175.198242,Tonga
+220,2023-02-21T05:49:43.66,2023-02-21T05:49:43.66,chu.zhang@oracle.com,chu.zhang@oracle.com,TR,38.963745,35.243322,Turkey
+221,2023-02-21T05:49:43.66,2023-02-21T05:49:43.66,chu.zhang@oracle.com,chu.zhang@oracle.com,TT,10.691803,-61.222503,Trinidad and Tobago
+222,2023-02-21T05:49:43.661,2023-02-21T05:49:43.661,chu.zhang@oracle.com,chu.zhang@oracle.com,TV,-7.109535,177.64933,Tuvalu
+223,2023-02-21T05:49:43.661,2023-02-21T05:49:43.661,chu.zhang@oracle.com,chu.zhang@oracle.com,TW,23.69781,120.960515,Taiwan
+224,2023-02-21T05:49:43.661,2023-02-21T05:49:43.661,chu.zhang@oracle.com,chu.zhang@oracle.com,TZ,-6.369028,34.888822,Tanzania
+225,2023-02-21T05:49:43.661,2023-02-21T05:49:43.661,chu.zhang@oracle.com,chu.zhang@oracle.com,UA,48.379433,31.16558,Ukraine
+226,2023-02-21T05:49:43.661,2023-02-21T05:49:43.661,chu.zhang@oracle.com,chu.zhang@oracle.com,UG,1.373333,32.290275,Uganda
+227,2023-02-21T05:49:43.661,2023-02-21T05:49:43.661,chu.zhang@oracle.com,chu.zhang@oracle.com,UM,,,U.S. Minor Outlying Islands
+228,2023-02-21T05:49:43.661,2023-02-21T05:49:43.661,chu.zhang@oracle.com,chu.zhang@oracle.com,US,37.09024,-95.712891,United States
+229,2023-02-21T05:49:43.661,2023-02-21T05:49:43.661,chu.zhang@oracle.com,chu.zhang@oracle.com,UY,-32.522779,-55.765835,Uruguay
+230,2023-02-21T05:49:43.662,2023-02-21T05:49:43.662,chu.zhang@oracle.com,chu.zhang@oracle.com,UZ,41.377491,64.585262,Uzbekistan
+231,2023-02-21T05:49:43.662,2023-02-21T05:49:43.662,chu.zhang@oracle.com,chu.zhang@oracle.com,VA,41.902916,12.453389,Vatican City
+232,2023-02-21T05:49:43.662,2023-02-21T05:49:43.662,chu.zhang@oracle.com,chu.zhang@oracle.com,VC,12.984305,-61.287228,Saint Vincent and the Grenadines
+233,2023-02-21T05:49:43.662,2023-02-21T05:49:43.662,chu.zhang@oracle.com,chu.zhang@oracle.com,VE,6.42375,-66.58973,Venezuela
+234,2023-02-21T05:49:43.662,2023-02-21T05:49:43.662,chu.zhang@oracle.com,chu.zhang@oracle.com,VG,18.420695,-64.639968,British Virgin Islands
+235,2023-02-21T05:49:43.662,2023-02-21T05:49:43.662,chu.zhang@oracle.com,chu.zhang@oracle.com,VI,18.335765,-64.896335,U.S. Virgin Islands
+236,2023-02-21T05:49:43.662,2023-02-21T05:49:43.662,chu.zhang@oracle.com,chu.zhang@oracle.com,VN,14.058324,108.277199,Vietnam
+237,2023-02-21T05:49:43.662,2023-02-21T05:49:43.662,chu.zhang@oracle.com,chu.zhang@oracle.com,VU,-15.376706,166.959158,Vanuatu
+238,2023-02-21T05:49:43.662,2023-02-21T05:49:43.662,chu.zhang@oracle.com,chu.zhang@oracle.com,WF,-13.768752,-177.156097,Wallis and Futuna
+239,2023-02-21T05:49:43.662,2023-02-21T05:49:43.662,chu.zhang@oracle.com,chu.zhang@oracle.com,WS,-13.759029,-172.104629,Samoa
+240,2023-02-21T05:49:43.663,2023-02-21T05:49:43.663,chu.zhang@oracle.com,chu.zhang@oracle.com,XK,42.602636,20.902977,Kosovo
+241,2023-02-21T05:49:43.663,2023-02-21T05:49:43.663,chu.zhang@oracle.com,chu.zhang@oracle.com,YE,15.552727,48.516388,Yemen
+242,2023-02-21T05:49:43.663,2023-02-21T05:49:43.663,chu.zhang@oracle.com,chu.zhang@oracle.com,YT,-12.8275,45.166244,Mayotte
+243,2023-02-21T05:49:43.663,2023-02-21T05:49:43.663,chu.zhang@oracle.com,chu.zhang@oracle.com,ZA,-30.559482,22.937506,South Africa
+244,2023-02-21T05:49:43.663,2023-02-21T05:49:43.663,chu.zhang@oracle.com,chu.zhang@oracle.com,ZM,-13.133897,27.849332,Zambia
+245,2023-02-21T05:49:43.663,2023-02-21T05:49:43.663,chu.zhang@oracle.com,chu.zhang@oracle.com,ZW,-19.015438,29.154857,Zimbabwe

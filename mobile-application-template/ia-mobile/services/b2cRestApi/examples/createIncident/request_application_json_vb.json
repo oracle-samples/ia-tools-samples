@@ -1,0 +1,13 @@
+{
+    "primaryContact": {
+        "lookupName": "Test User",
+        "id": 1
+    },
+    "subject": "Image Upload Sample",
+    "fileAttachments": [
+        {
+            "data": "dummyBase64Data",
+            "fileName": "Screenshot 2023-07-28 at 11.37.51.png"
+        }
+    ]
+}

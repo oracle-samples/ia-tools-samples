@@ -1,0 +1,360 @@
+{
+  "id": "intelligentadvisorapp",
+  "description": "Oracle Intelligent Advisor Application",
+  "defaultPage": "shell",
+  "services": {},
+  "translations": {
+    "app": {
+      "path": "./resources/strings/app/nls/app-strings"
+    }
+  },
+  "localization": {
+    "locale": "en"
+  },
+  "events": {
+    "navigateToItem": {
+      "payloadType": {
+        "item": "string"
+      },
+      "description": "Event to configure navigation between items/tabs."
+    },
+    "networkListenerRegistered": {
+      "description": "The event fired when the network status listeners have been registered to the page."
+    },
+    "toggleDrawer": {
+      "description": "Event to toggle the navigation drawer."
+    }
+  },
+  "types": {
+    "AppMenuItem": {
+      "id": "string",
+      "iconClass": "string",
+      "translationBundleKey": "string"
+    },
+    "@decorators.AssessmentItem": {
+      "endpoint": "get_Assessments",
+      "service": "businessObjects",
+      "path": "response"
+    },
+    "@decorators.B2CGetManyResponse": {
+      "endpoint": "getContacts",
+      "service": "b2cRestApi",
+      "path": "response"
+    },
+    "@decorators.getDeploymentsResponse": {
+      "endpoint": "getIaDeployments",
+      "service": "iaHubApi",
+      "path": "response"
+    },
+    "AssessmentItem": {
+      "assessmentName": "string",
+      "deploymentName": "string",
+      "externalDataId": "string",
+      "externalId": "string",
+      "id": "number",
+      "status": "string",
+      "userId": "number"
+    },
+    "B2CGetManyResponse": {
+      "items": [
+        {
+          "id": "number",
+          "lookupName": "string"
+        }
+      ]
+    },
+    "GetDeploymentsResponse": {
+      "items": [
+        {
+          "activeVersionNo": "number",
+          "compatibilityMode": "string",
+          "description": "string",
+          "kind": "string",
+          "name": "string",
+          "workspace": "string"
+        }
+      ]
+    },
+    "DeploymentItem": {
+      "activeVersionNo": "number",
+      "cachedLocally": "boolean",
+      "name": "string"
+    },
+    "FlowDataActionProps": {
+      "controlId": "string",
+      "customProperties": "object",
+      "fileList": "object[]",
+      "geolocation": "any",
+      "returnedDataDefinition": "any",
+      "schemeId": "string",
+      "sentData": "any"
+    }
+  },
+  "variables": {
+    "deploymentList": {
+      "type": "DeploymentItem[]"
+    },
+    "globalHeadersADP": {
+      "type": "vb/ArrayDataProvider2",
+      "description": "The model describing the Global Applications headers",
+      "defaultValue": {
+        "keyAttributes": "id",
+        "data": "{{ $variables.globalHeadersData }}",
+        "itemType": "AppMenuItem"
+      }
+    },
+    "navigationADP": {
+      "type": "vb/ArrayDataProvider2",
+      "description": "The model describing the flows in the app",
+      "defaultValue": {
+        "keyAttributes": "id",
+        "data": "{{ $variables.navigationData }}",
+        "itemType": "AppMenuItem"
+      }
+    },
+    "globalHeadersData": {
+      "type": "AppMenuItem[]",
+      "defaultValue": [
+        {
+          "id": "signout",
+          "iconClass": "oj-ux-ico-logout",
+          "translationBundleKey": "sign_out"
+        }
+      ]
+    },
+    "navigationData": {
+      "type": "AppMenuItem[]",
+      "defaultValue": [
+        {
+          "translationBundleKey": "nav_assessments",
+          "id": "assessment",
+          "iconClass": "oj-ux-ico-flow-play"
+        },
+        {
+          "translationBundleKey": "nav_flows",
+          "id": "deployment",
+          "iconClass": "oj-ux-ico-flow-container"
+        }
+      ]
+    },
+    "b2cAccountId": {
+      "type": "number",
+      "defaultValue": -127,
+      "persisted": "device"
+    },
+    "deploymentListGlobalADP": {
+      "type": "vb/ArrayDataProvider2",
+      "defaultValue": {
+        "textFilterAttributes": [
+          "name"
+        ],
+        "data": "{{ $variables.deploymentList }}",
+        "itemType": "DeploymentItem",
+        "keyAttributes": "name"
+      },
+      "persisted": "none",
+      "description": "To store active deployment list"
+    },
+    "iaSiteUrl": {
+      "type": "string",
+      "description": "The IA site URL that prefixes the IA Hub path \"/opa-hub\"",
+      "persisted": "device"
+    }
+  },
+  "eventListeners": {
+    "vbResourceChanged": {
+      "chains": [
+        {
+          "parameters": {
+            "event": "{{ $event }}"
+          },
+          "chain": "APP_RESOURCE_CHANGED_HANDLER"
+        }
+      ]
+    },
+    "networkListenerRegistered": {
+      "chains": [
+        {
+          "parameters": {},
+          "chain": "ADVISOR_ASSIGN_B2C_ACCOUNT_ID_CHAIN"
+        }
+      ]
+    },
+    "vbEnter": {
+      "chains": [
+        {
+          "chainId": "APP_HIDE_SPINNER"
+        },
+        {
+          "chain": "ADVISOR_ASSIGN_IA_SITE_URL_CHAIN",
+          "parameters": {}
+        },
+        {
+          "chain": "ADVISOR_REGISTER_NETWORK_STATUS_LISTENER_CHAIN",
+          "parameters": {}
+        },
+        {
+          "parameters": {},
+          "chain": "ADVISOR_INIT_INDEXEDDB"
+        }
+      ]
+    }
+  },
+  "userConfig": {
+    "type": "vb/DefaultSecurityProvider",
+    "configuration": {
+      "authentication": {
+        "type": "oraclecloud",
+        "options": {
+          "login": "",
+          "logout": "",
+          "headers": {}
+        }
+      }
+    },
+    "embedding": "deny"
+  },
+  "security": {
+    "access": {
+      "requiresAuthentication": true
+    }
+  },
+  "imports": {
+    "css": [
+      "/resources/css/app.css",
+      "/resources/css/custom.css"
+    ]
+  },
+  "requirejs": {
+    "paths": {
+      "oj-ia": "https://static.oracle.com/cdn/cxia/components/oj-ia/3.0.0/min",
+      "oj-ia-dom-purify": "https://static.oracle.com/cdn/cxia/components/3rdparty/dompurify/3.0.1/dist",
+      "dompurify": "https://static.oracle.com/cdn/cxia/components/3rdparty/dompurify/3.0.1/dist/purify.min",
+      "oj-ia-flows-sdk": "https://static.oracle.com/cdn/cxia/components/3rdparty/flows-sdk/23.2.0",
+      "pdfmake/build/pdfmake": "https://static.oracle.com/cdn/cxia/components/3rdparty/pdfmake/build/pdfmake.min"
+    },
+    "bundles": {
+      "oj-ia/flow-bundle": [
+        "oj-ia/flow-api-lib/IAFlowSessionManager",
+        "oj-ia/flow-api-lib/IAConstants",
+        "oj-ia/flow-api-lib/util/LogUtils",
+        "oj-ia/flow-api-lib/util/CommonUtils",
+        "oj-ia/flow-api-lib/util/IntvUtils",
+        "oj-ia/flow-api-lib/prop/IADataActionProps",
+        "oj-ia/flow-api-lib/prop/FlowLayoutProps",
+        "oj-ia/flow-api-lib/prop/IAControlProps",
+        "oj-ia/flow-api-lib/prop/IASessionProps",
+        "oj-ia/flow-api-lib/control/InterviewController",
+        "oj-ia/intv-session-manager/loader",
+        "oj-ia/intv/flow-api-resource/control/IAControlComponent",
+        "oj-ia/intv/flow-api-resource/util/IAValidators",
+        "oj-ia/intv/loader",
+        "oj-ia/intv/intv-geolocation/loader",
+        "oj-ia/intv/intv-input-boolean-checkbox/loader",
+        "oj-ia/intv/intv-input-calendar/loader",
+        "oj-ia/intv/intv-input-checkbox-set/loader",
+        "oj-ia/intv/intv-input-dropdown/loader",
+        "oj-ia/intv/intv-input-number/loader",
+        "oj-ia/intv/intv-input-radio-button/loader",
+        "oj-ia/intv/intv-input-text-area/loader",
+        "oj-ia/intv/intv-input-text-box/loader",
+        "oj-ia/intv/intv-label/loader",
+        "oj-ia/intv/intv-plain-layout/loader",
+        "oj-ia/intv/intv-plain-layout/intv-plain-control-panel/loader",
+        "oj-ia/intv/intv-plain-layout/intv-plain-page/loader",
+        "oj-ia/intv/intv-plain-layout/intv-plain-page-row/loader",
+        "oj-ia/intv/intv-plain-layout/intv-plain-control-collection/loader",
+        "oj-ia/intv/intv-plain-layout/intv-record-collect/loader",
+        "oj-ia/intv/intv-plain-layout/intv-plain-navigation/loader",
+        "oj-ia/intv/intv-plain-layout/intv-plain-navigation-train/loader",
+        "oj-ia/intv/intv-upload/loader",
+        "oj-ia/intv/intv-switch/loader",
+        "oj-ia/intv/intv-slider/loader",
+        "oj-ia/intv/intv-validation/loader",
+        "oj-ia/intv/intv-signature/loader",
+        "oj-ia/intv/intv-html/loader"
+      ]
+    }
+  },
+  "settings": {
+    "formDataAccess": "resources/formData/{vbFormDataId}"
+  },
+  "@dt": {
+    "applicationTemplateType": "redwood"
+  },
+  "constants": {
+    "appId": {
+      "type": "string",
+      "defaultValue": "[[ $application.functions.getAppId() ]]"
+    },
+    "b2cUserMatchFields": {
+      "type": "string[]",
+      "defaultValue": [
+        "email",
+        "lookupName"
+      ],
+      "uniqueItems": true
+    },
+    "defaultFailureString": {
+      "type": "string",
+      "description": "",
+      "defaultValue": "__FAILURE__"
+    },
+    "errorTypes": {
+      "type": {
+        "b2cCreateAssessment": "string",
+        "b2cCreateIncident": "string",
+        "b2cGetAssessmentById": "string",
+        "b2cGetAssessmentStatusById": "string",
+        "b2cGetContacts": "string",
+        "b2cUpdateAssessment": "string",
+        "boCreateAssessment": "string",
+        "boUpdateAssessment": "string",
+        "createAttachment": "string",
+        "deleteAssessmentFromB2C": "string",
+        "deleteAssessmentFromBO": "string",
+        "getAllassessmentFromB2C": "string",
+        "getAllAssessmentFromBO": "string",
+        "getAllDeployments": "string",
+        "getSampleContacts": "string",
+        "getSampleCountries": "string",
+        "login": "string",
+        "noOfflineDataFound": "string",
+        "startSession": "string"
+      },
+      "defaultValue": {
+        "b2cCreateAssessment": "b2cCreateAssessment",
+        "b2cCreateIncident": "b2cCreateIncident",
+        "getAllDeployments": "getAllDeployments",
+        "noOfflineDataFound": "noOfflineDataFound",
+        "startSession": "startSession",
+        "boCreateAssessment": "boCreateAssessment",
+        "login": "login",
+        "b2cGetAssessmentById": "b2cGetAssessmentById",
+        "deleteAssessmentFromBO": "deleteAssessmentFromBO",
+        "deleteAssessmentFromB2C": "deleteAssessmentFromB2C",
+        "boUpdateAssessment": "boUpdateAssessment",
+        "b2cUpdateAssessment": "b2cUpdateAssessment",
+        "b2cGetAssessmentStatusById": "b2cGetAssessmentStatusById",
+        "createAttachment": "createAttachment",
+        "getAllAssessmentFromBO": "getAllAssessmentFromBO",
+        "getAllassessmentFromB2C": "getAllassessmentFromB2C",
+        "getSampleContacts": "getSampleContacts",
+        "b2cGetContacts": "b2cGetContacts",
+        "getSampleCountries": "getSampleCountries"
+      }
+    },
+    "hubApiVersion": {
+      "type": "string",
+      "defaultValue": "12.2.28"
+    },
+    "useCachedFlow": {
+      "type": "string",
+      "defaultValue": "offline"
+    },
+    "useConfirmationPage": {
+      "type": "boolean",
+      "defaultValue": false
+    }
+  }
+}

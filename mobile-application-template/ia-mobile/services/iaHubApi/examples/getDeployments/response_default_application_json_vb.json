@@ -1,0 +1,80 @@
+{
+    "items": [
+        {
+            "name": "Car Charging",
+            "description": "",
+            "compatibilityMode": "latest",
+            "activeVersionNo": 215,
+            "workspace": "Sample Workspace",
+            "services": [
+                "interview"
+            ],
+            "serviceURLs": {
+                "interview": "https://oia.hub.url/host_path/web-determinations/interview/start/Car%20Charging"
+            },
+            "errors": [],
+            "workspaceReferences": "current",
+            "kind": "flow",
+            "activeVersion": {
+                "links": [
+                    {
+                        "rel": "canonical",
+                        "href": "https://oia.hub.url/host_path/opa-hub/api/12.2.28/deployments/Car%20Charging/activeVersion"
+                    }
+                ]
+            },
+            "versions": {
+                "links": [
+                    {
+                        "rel": "canonical",
+                        "href": "https://oia.hub.url/host_path/opa-hub/api/12.2.28/deployments/Car%20Charging/versions"
+                    }
+                ]
+            },
+            "logs": {
+                "links": [
+                    {
+                        "rel": "canonical",
+                        "href": "https://oia.hub.url/host_path/opa-hub/api/12.2.28/deployments/Car%20Charging/logs"
+                    }
+                ]
+            },
+            "debugLoggingState": {
+                "state": "inactive",
+                "maxLogs": 1000
+            },
+            "debugLogs": {
+                "links": [
+                    {
+                        "rel": "canonical",
+                        "href": "https://oia.hub.url/host_path/opa-hub/api/12.2.28/deployments/Car%20Charging/debugLogs"
+                    }
+                ]
+            },
+            "links": [
+                {
+                    "rel": "canonical",
+                    "href": "https://oia.hub.url/host_path/opa-hub/api/12.2.28/deployments/Car%20Charging"
+                },
+                {
+                    "rel": "describedBy",
+                    "href": "https://oia.hub.url/host_path/opa-hub/api/12.2.28/metadata-catalog/deployment"
+                }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": "canonical",
+            "href": "https://oia.hub.url/host_path/opa-hub/api/12.2.28/deployments"
+        },
+        {
+            "rel": "parent",
+            "href": "https://oia.hub.url/host_path/opa-hub/api/12.2.28"
+        },
+        {
+            "rel": "describedBy",
+            "href": "https://oia.hub.url/host_path/opa-hub/api/12.2.28/metadata-catalog/deployments"
+        }
+    ]
+}

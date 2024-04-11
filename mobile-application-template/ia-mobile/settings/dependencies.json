@@ -1,0 +1,11 @@
+{
+  "component-dependencies": {
+    "oj-ia": {
+      "version": "3.0.0",
+      "components": {
+        "intv": "3.0.0",
+        "intv-session-manager": "3.0.0"
+      }
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "title": "Assessment Creation",
+  "description": "The page to create a new assessment",
+  "variables": {
+    "assessment": {
+      "type": "CreateAssessmentsRequest"
+    },
+    "createAssessmentsChainInProgress": {
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "To store create assessment progress status"
+    }
+
+  },
+  "metadata": {},
+  "types": {
+    "@decorators.createAssessmentsRequest": {
+      "endpoint": "create_Assessments",
+      "service": "businessObjects",
+      "path": "request"
+    },
+    "CreateAssessmentsRequest": {
+      "assessmentName": "string",
+      "deploymentName": "string"
+    }
+  },
+  "eventListeners": {
+    "backButtonClicked": {
+      "chains": [
+        {
+          "chain": "ADVISOR_NAVIGATE_TO_ASSESSMENT_START_PAGE_CHAIN"
+        }
+      ]
+    },
+    "buttonAction": {
+      "chains": [
+        {
+          "chain": "ADVISOR_CREATE_LOCAL_ASSESSMENT_CHAIN"
+        }
+      ]
+    },
+    "buttonAction2": {
+      "chains": [
+        {
+          "chain": "application:APP_TOGGLE_DRAWER_HANDLER"
+        }
+      ]
+    },
+    "vbEnter": {
+      "chains": [
+        {
+          "parameters": {
+            "intvSessionManagerElementId": "ia-intv-session-manager"
+          },
+          "chain": "application:ADVISOR_REFRESH_DEPLOYMENT_STATUS_CHAIN"
+        }
+      ]
+    },
+    "vbExit": {
+      "chains": []
+    }
+  },
+  "imports": {
+    "components": {
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-form-layout": {
+        "path": "ojs/ojformlayout"
+      },
+      "oj-highlight-text": {
+        "path": "ojs/ojhighlighttext"
+      },
+      "oj-ia-intv-session-manager": {
+        "path": "oj-ia/intv-session-manager/loader"
+      },
+      "oj-input-text": {
+        "path": "ojs/ojinputtext"
+      },
+      "oj-list-item-layout": {
+        "path": "ojs/ojlistitemlayout"
+      },
+      "oj-select-single": {
+        "path": "ojs/ojselectsingle"
+      },
+      "oj-validation-group": {
+        "path": "ojs/ojvalidationgroup"
+      }
+    }
+  },
+  "events": {
+  },
+  "layouts": {
+    "containerLayout1": {
+      "label": "Container Rule Set 1",
+      "layoutType": "container",
+      "layouts": {
+        "case1": {
+          "label": "Case 1",
+          "layoutType": "container",
+          "layout": {
+            "sectionTemplateMap": {
+              "template1": "template1"
+            },
+            "displayProperties": [
+              "template1"
+            ]
+          }
+        }
+      },
+      "rules": [
+        "containerLayout1-rule1"
+      ],
+      "templateId": "item"
+    },
+    "containerLayout1-rule1": {
+      "expression": "case1"
+    }
+  },
+  "templates": {
+    "item": {
+      "title": "item",
+      "description": "",
+      "extensible": "byReference",
+      "@dt": {
+        "type": "container",
+        "layout": "containerLayout1"
+      },
+      "dependencies": []
+    },
+    "template1": {
+      "title": "Default Section",
+      "extensible": "byReference",
+      "@dt": {
+        "type": "section",
+        "layout": "containerLayout1"
+      }
+    }
+  }
+}

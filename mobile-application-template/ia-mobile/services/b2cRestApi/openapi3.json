@@ -1,0 +1,1153 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "B2C Service REST API",
+        "version": "1.0.0",
+        "x-vb": {
+            "headers": {
+                "Accept-Language": "en-US",
+                "OSvC-CREST-Application-Context": "AnyString"
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "vb-catalog://backends/b2cService/services/rest/connect/latest",
+            "description": "B2C Service REST API Server"
+        }
+    ],
+    "paths": {
+        "/contacts": {
+            "get": {
+                "operationId": "getContacts",
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetContacts"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/getContacts/response_default_application_json_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-vb": {
+                    "headers": {
+                        "OSvC-CREST-Application-Context": "AnyString"
+                    },
+                    "actionHint": "getMany"
+                },
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "x-vb": {
+                            "defaultValue": "1000"
+                        }
+                    }
+                ]
+            }
+        },
+        "/accounts": {
+            "get": {
+                "operationId": "getAccounts",
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetAccounts"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/getAccounts/response_default_application_json_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-vb": {
+                    "headers": {
+                        "OSvC-CREST-Application-Context": "AnyString"
+                    },
+                    "actionHint": "getMany"
+                },
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/incidents": {
+            "post": {
+                "operationId": "createIncident",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostIncidentsRequest"
+                            },
+                            "examples": {
+                                "vb": {
+                                    "externalValue": "./examples/createIncident/request_application_json_vb.json",
+                                    "summary": "Example stored by VB User"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostIncidentsResponse"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/postIncidents/response_default_application_json_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-vb": {
+                    "headers": {
+                        "OSvC-CREST-Application-Context": "AnyString"
+                    },
+                    "actionHint": "create"
+                }
+            }
+        },
+        "/OPA.MobileAssessment": {
+            "post": {
+                "operationId": "postOPAMobileAssessment",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostOPAMobileAssessmentResponse"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/postOPAMobileAssessment/response_default_application_json_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-vb": {
+                    "actionHint": "create"
+                }
+            }
+        },
+        "/OPA.MobileAssessment/{id}/Status/lookupName": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "get": {
+                "operationId": "getOPAMobileAssessmentIdStatusLookupName",
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetOPAMobileAssessmentIdStatusLookupName"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/getOPAMobileAssessmentIdStatusLookupName/response_default_application_json_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+               },
+                "x-vb": {
+                    "actionHint": "getMany"
+                }
+            }
+        },
+        "/queryResults": {
+            "get": {
+                "operationId": "getListByQuery",
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetQueryResults"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/getListByQuery/response_default_application_json_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-vb": {
+                    "queryParameters": {
+                    },
+                    "actionHint": "getMany"
+                },
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "x-vb": {
+                            "defaultValue": ""
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/OPA.MobileAssessment/{Id}": {
+            "parameters": [
+                {
+                    "name": "Id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    },
+                    "x-vb": {
+                        "defaultValue": ""
+                    }
+                }
+            ],
+            "patch": {
+                "operationId": "patchOPAMobileAssessmentId",
+                "parameters": [
+                    {
+                        "name": "Id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "x-vb": {
+                            "defaultValue": "52"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchOPAMobileAssessmentIdRequest"
+                            },
+                            "examples": {
+                                "vb": {
+                                    "externalValue": "./examples/patchOPAMobileAssessmentId2/request_application_json_vb.json"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {}
+                    }
+                },
+                "x-vb": {
+                    "actionHint": "update"
+                }
+            },
+            "get": {
+                "operationId": "getOPAMobileAssessmentId",
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetOPAMobileAssessmentId"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/getOPAMobileAssessmentId/response_default_application_json_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-vb": {}
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "GetContacts": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "lookupName": {
+                                    "type": "string"
+                                },
+                                "createdTime": {
+                                    "type": "string"
+                                },
+                                "updatedTime": {
+                                    "type": "string"
+                                },
+                                "links": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "rel": {
+                                                "type": "string"
+                                            },
+                                            "href": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "hasMore": {
+                        "type": "boolean"
+                    },
+                    "links": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "rel": {
+                                    "type": "string"
+                                },
+                                "href": {
+                                    "type": "string"
+                                },
+                                "mediaType": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "PostIncidentsRequest": {
+                "type": "object",
+                "properties": {
+
+                    "primaryContact": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "lookupName": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "fileAttachments": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "string"
+                                },
+                                "fileName": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "GetQueryResults": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "tableName": {
+                                    "type": "string"
+                                },
+                                "count": {
+                                    "type": "integer"
+                                },
+                                "columnNames": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "rows": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "nullable": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "links": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "rel": {
+                                    "type": "string"
+                                },
+                                "href": {
+                                    "type": "string"
+                                },
+                                "mediaType": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "PostIncidentsResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "lookupName": {
+                        "type": "string"
+                    },
+                    "createdTime": {
+                        "type": "string"
+                    },
+                    "updatedTime": {
+                        "type": "string"
+                    },
+                    "asset": {
+                        "nullable": true
+                    },
+                    "assignedTo": {
+                        "type": "object",
+                        "properties": {
+                            "account": {
+                                "nullable": true
+                            },
+                            "staffGroup": {
+                                "nullable": true
+                            }
+                        }
+                    },
+                    "banner": {
+                        "type": "object",
+                        "properties": {
+                            "importanceFlag": {
+                                "nullable": true
+                            },
+                            "text": {
+                                "nullable": true
+                            },
+                            "updatedByAccount": {
+                                "nullable": true
+                            },
+                            "updatedTime": {
+                                "nullable": true
+                            }
+                        }
+                    },
+                    "billedMinutes": {
+                        "type": "object",
+                        "properties": {
+                            "links": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rel": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "templated": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "category": {
+                        "nullable": true
+                    },
+                    "channel": {
+                        "nullable": true
+                    },
+                    "chatQueue": {
+                        "nullable": true
+                    },
+                    "closedTime": {
+                        "nullable": true
+                    },
+                    "createdByAccount": {
+                        "type": "object",
+                        "properties": {
+                            "links": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rel": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "mediaType": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "customFields": {
+                        "type": "object",
+                        "properties": {
+                            "Mobile": {
+                                "type": "object",
+                                "properties": {
+                                    "gps_latitude": {
+                                        "type": "string"
+                                    },
+                                    "gps_longitude": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "c": {
+                                "type": "object",
+                                "properties": {
+                                    "imported": {
+                                        "nullable": true
+                                    },
+                                    "cs_accepted_offer_yn": {
+                                        "type": "boolean"
+                                    },
+                                    "cs_accepted_install_yn": {
+                                        "type": "boolean"
+                                    },
+                                    "cs_install_date_dtm": {
+                                        "nullable": true
+                                    },
+                                    "cs_made_offer_yn": {
+                                        "type": "boolean"
+                                    },
+                                    "cs_offer_name_text": {
+                                        "nullable": true
+                                    },
+                                    "cs_offer_price_text": {
+                                        "nullable": true
+                                    },
+                                    "cs_offer_install_price_text": {
+                                        "nullable": true
+                                    },
+                                    "cs_offer_tax_text": {
+                                        "nullable": true
+                                    },
+                                    "cs_offer_total_text": {
+                                        "nullable": true
+                                    },
+                                    "cs_payment_method_menu": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "lookupName": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "status_crosschannelreport": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "lookupName": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "c2fr": {
+                                        "nullable": true
+                                    },
+                                    "c2init_resp": {
+                                        "nullable": true
+                                    },
+                                    "in_service": {
+                                        "nullable": true
+                                    },
+                                    "inc_integer": {
+                                        "nullable": true
+                                    },
+                                    "issue_first_reported": {
+                                        "nullable": true
+                                    },
+                                    "steps_to_repro": {
+                                        "nullable": true
+                                    },
+                                    "no_of_users_affected": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "disposition": {
+                        "nullable": true
+                    },
+                    "fileAttachments": {
+                        "type": "object",
+                        "properties": {
+                            "links": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rel": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "templated": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "initialResponseDueTime": {
+                        "type": "string"
+                    },
+                    "initialSolutionTime": {
+                        "nullable": true
+                    },
+                    "interface": {
+                        "type": "object",
+                        "properties": {
+                            "links": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rel": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "mediaType": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "language": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "lookupName": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "lastResponseTime": {
+                        "nullable": true
+                    },
+                    "lastSurveyScore": {
+                        "nullable": true
+                    },
+                    "mailbox": {
+                        "nullable": true
+                    },
+                    "mailing": {
+                        "nullable": true
+                    },
+                    "milestoneInstances": {
+                        "type": "object",
+                        "properties": {
+                            "links": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rel": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "templated": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "organization": {
+                        "nullable": true
+                    },
+                    "otherContacts": {
+                        "type": "object",
+                        "properties": {
+                            "links": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rel": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "templated": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "primaryContact": {
+                        "type": "object",
+                        "properties": {
+                            "links": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rel": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "mediaType": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "product": {
+                        "nullable": true
+                    },
+                    "queue": {
+                        "nullable": true
+                    },
+                    "referenceNumber": {
+                        "type": "string"
+                    },
+                    "resolutionInterval": {
+                        "nullable": true
+                    },
+                    "responseEmailAddressType": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "lookupName": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "responseInterval": {
+                        "nullable": true
+                    },
+                    "severity": {
+                        "nullable": true
+                    },
+                    "sLAInstance": {
+                        "nullable": true
+                    },
+                    "smartSenseCustomer": {
+                        "nullable": true
+                    },
+                    "smartSenseStaff": {
+                        "nullable": true
+                    },
+                    "source": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "lookupName": {
+                                "type": "string"
+                            },
+                            "parents": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "lookupName": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "statusWithType": {
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "lookupName": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "statusType": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "lookupName": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "subject": {
+                        "type": "string"
+                    },
+                    "threads": {
+                        "type": "object",
+                        "properties": {
+                            "links": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rel": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "templated": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "links": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "rel": {
+                                    "type": "string"
+                                },
+                                "href": {
+                                    "type": "string"
+                                },
+                                "mediaType": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "PostOPAMobileAssessmentResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "lookupName": {
+                        "type": "string"
+                    },
+                    "Account": {
+                        "nullable": true
+                    },
+                    "Deployment": {
+                        "type": "string"
+                    },
+                    "Description": {
+                        "type": "string"
+                    },
+                    "ObjectID": {
+                        "nullable": true
+                    },
+                    "Status": {
+                        "type": "object",
+                        "properties": {
+                            "links": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rel": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "mediaType": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "links": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "rel": {
+                                    "type": "string"
+                                },
+                                "href": {
+                                    "type": "string"
+                                },
+                                "mediaType": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "PatchOPAMobileAssessmentIdRequest": {
+                "type": "object",
+                "properties": {
+                    "Status": {
+                        "type": "object",
+                        "properties": {
+                            "lookupName": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "GetOPAMobileAssessmentIdStatusLookupName": {
+                "type": "object",
+                "properties": {
+                    "lookupName": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GetOPAMobileAssessmentId": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "lookupName": {
+                        "type": "string"
+                    },
+                    "Account": {
+                        "nullable": true
+                    },
+                    "Deployment": {
+                        "type": "string"
+                    },
+                    "Description": {
+                        "type": "string"
+                    },
+                    "ObjectID": {
+                        "nullable": true
+                    },
+                    "Status": {
+                        "type": "object",
+                        "properties": {
+                            "links": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rel": {
+                                            "type": "string"
+                                        },
+                                        "href": {
+                                            "type": "string"
+                                        },
+                                        "mediaType": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "links": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "rel": {
+                                    "type": "string"
+                                },
+                                "href": {
+                                    "type": "string"
+                                },
+                                "mediaType": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "GetAccounts": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "lookupName": {
+                                    "type": "string"
+                                },
+                                "links": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "rel": {
+                                                "type": "string"
+                                            },
+                                            "href": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "hasMore": {
+                        "type": "boolean"
+                    },
+                    "links": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "rel": {
+                                    "type": "string"
+                                },
+                                "href": {
+                                    "type": "string"
+                                },
+                                "mediaType": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

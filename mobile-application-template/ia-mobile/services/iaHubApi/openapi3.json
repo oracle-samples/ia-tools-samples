@@ -1,0 +1,368 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Intelligent Advisor Hub API Service",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "vb-catalog://backends/intelligentAdvisorHub",
+            "description": "Intelligent Advisor Hub API Server URL Prefixing \"/opa-hub\""
+        }
+    ],
+    "paths": {
+        "/auth": {
+        },
+        "/opa-hub/api/{apiVersion}/deployments": {
+            "get": {
+                "operationId": "getIaDeployments",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "x-vb": {
+                            "defaultValue": "{\"kind\":\"flow\"}"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetDeployments"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/getDeployments/response_default_application_json_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-vb": {
+                    "headers": {},
+                    "actionHint": "getMany"
+                },
+                "summary": "Get All Deployments from IA Hub"
+            },
+            "parameters": [
+                {
+                    "name": "apiVersion",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    },
+                    "x-vb": {
+                        "defaultValue": "12.2.28"
+                    }
+                }
+            ]
+        },
+        "/web-determinations/flow/start": {
+            "post": {
+                "summary": "Acquire Flow Start JWT",
+                "operationId": "iaFlowStart",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostWeb-determinationsFlowStartRequest"
+                            },
+                            "examples": {
+                                "vb": {
+                                    "externalValue": "./examples/iaFlowStart/request_application_json_vb.json"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "Response for default",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostWeb-determinationsFlowStartResponse"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/iaFlowStart/response_default_application_json_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-vb": {
+                    "actionHint": "create"
+                }
+            }
+        },
+        "/web-determinations/flow/recordOffline/v1": {
+            "post": {
+                "summary": "Record offline activity for Flow Sessions",
+                "operationId": "flowRecordOffline",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostRequest"
+                            },
+                            "examples": {
+                                "vb": {
+                                    "externalValue": "./examples/flowRecordOffline/request_application_json_vb.json"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "Default response",
+                        "content": {
+                            "application/x-www-form-urlencoded": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostWeb-determinationsFlowRecordOfflineV1Response"
+                                },
+                                "examples": {
+                                    "vb": {
+                                        "summary": "Example stored by VB User",
+                                        "externalValue": "./examples/flowRecordOffline/response_default_application_x-www-form-urlencoded_vb.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-vb": {
+                    "actionHint": "update"
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "GetDeployments": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "compatibilityMode": {
+                                    "type": "string"
+                                },
+                                "activeVersionNo": {
+                                    "type": "integer"
+                                },
+                                "workspace": {
+                                    "type": "string"
+                                },
+                                "services": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "serviceURLs": {
+                                    "type": "object",
+                                    "properties": {
+                                        "interview": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "errors": {
+                                    "type": "array",
+                                    "items": {}
+                                },
+                                "workspaceReferences": {
+                                    "type": "string"
+                                },
+                                "kind": {
+                                    "type": "string"
+                                },
+                                "activeVersion": {
+                                    "type": "object",
+                                    "properties": {
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "rel": {
+                                                        "type": "string"
+                                                    },
+                                                    "href": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "versions": {
+                                    "type": "object",
+                                    "properties": {
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "rel": {
+                                                        "type": "string"
+                                                    },
+                                                    "href": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "logs": {
+                                    "type": "object",
+                                    "properties": {
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "rel": {
+                                                        "type": "string"
+                                                    },
+                                                    "href": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "debugLoggingState": {
+                                    "type": "object",
+                                    "properties": {
+                                        "state": {
+                                            "type": "string"
+                                        },
+                                        "maxLogs": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "debugLogs": {
+                                    "type": "object",
+                                    "properties": {
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "rel": {
+                                                        "type": "string"
+                                                    },
+                                                    "href": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "links": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "rel": {
+                                                "type": "string"
+                                            },
+                                            "href": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    },
+                    "links": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "rel": {
+                                    "type": "string"
+                                },
+                                "href": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "PostWeb-determinationsFlowStartRequest": {
+                "type": "object",
+                "properties": {
+                    "action": {
+                        "type": "string"
+                    },
+                    "deployment": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PostWeb-determinationsFlowStartResponse": {
+                "type": "object",
+                "properties": {
+                    "jwt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PostRequest": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "sessionJWT": {
+                            "type": "string"
+                        },
+                        "interactionCount": {
+                            "type": "integer"
+                        },
+                        "tier3Count": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            },
+            "PostWeb-determinationsFlowRecordOfflineV1Response": {
+                "type": "object",
+                "properties": {
+                    "No Response Message, Status 202": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

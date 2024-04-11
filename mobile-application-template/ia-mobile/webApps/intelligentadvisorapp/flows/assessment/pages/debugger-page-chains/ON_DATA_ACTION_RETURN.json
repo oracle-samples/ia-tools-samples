@@ -1,0 +1,29 @@
+{
+  "root": "callComponentIaIntvSetDataActionReturnedData",
+  "description": "To set the return value of a flow assessment data action",
+  "variables": {
+    "dataActionId": {
+      "type": "string",
+      "required": true,
+      "input": "fromCaller"
+    },
+    "returnData": {
+      "type": "any",
+      "required": true,
+      "input": "fromCaller"
+    }
+  },
+  "actions": {
+    "callComponentIaIntvSetDataActionReturnedData": {
+      "module": "vb/action/builtin/callComponentMethodAction",
+      "parameters": {
+        "component": "{{ document.getElementById('ia-debug') }}",
+        "method": "setDataActionReturnedData",
+        "params": [
+          "{{ $variables.dataActionId }}",
+          "{{ $variables.returnData }}"
+        ]
+      }
+    }
+  }
+}

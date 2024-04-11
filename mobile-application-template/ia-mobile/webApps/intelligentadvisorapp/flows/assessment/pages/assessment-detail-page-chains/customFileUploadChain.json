@@ -1,0 +1,23 @@
+{
+  "root": "callFunctionOnFilePicker",
+  "description": "To handle the file upload process for the custom file upload control slot",
+  "variables": {
+    "control": {
+      "type": "any",
+      "required": false,
+      "input": "fromCaller"
+    }
+  },
+  "actions": {
+    "callFunctionOnFilePicker": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "onFilePicker",
+        "params": [
+          "{{ $variables.control }}"
+        ]
+      }
+    }
+  }
+}

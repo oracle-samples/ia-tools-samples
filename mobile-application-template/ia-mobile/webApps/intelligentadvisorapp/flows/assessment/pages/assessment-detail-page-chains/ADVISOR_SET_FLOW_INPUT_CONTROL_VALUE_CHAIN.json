@@ -1,0 +1,29 @@
+{
+  "root": "callComponentIaIntvSetInputControlValue",
+  "description": "To set the value of a flow assessment input control",
+  "variables": {
+    "controlId": {
+      "type": "string",
+      "required": true,
+      "input": "fromCaller"
+    },
+    "controlValue": {
+      "type": "any",
+      "required": true,
+      "input": "fromCaller"
+    }
+  },
+  "actions": {
+    "callComponentIaIntvSetInputControlValue": {
+      "module": "vb/action/builtin/callComponentMethodAction",
+      "parameters": {
+        "component": "{{ document.getElementById('ia-intv') }}",
+        "method": "setInputControlValue",
+        "params": [
+          "{{ $variables.controlId }}",
+          "{{ $variables.controlValue }}"
+        ]
+      }
+    }
+  }
+}

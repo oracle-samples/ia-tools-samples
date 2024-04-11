@@ -1,0 +1,3 @@
+Copyright (c) 2022, Oracle and/or its affiliates. All rights reserved.
+
+Licensed under the Oracle Cloud Services Agreement as shown at https://www.oracle.com/us/corporate/contracts/saas-online-csa-us-1894130.pdf.

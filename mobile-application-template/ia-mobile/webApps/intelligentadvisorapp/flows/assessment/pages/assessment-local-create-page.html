@@ -1,0 +1,84 @@
+<!-- Mobile only header and page title -->
+<header role="banner" class="oj-sm-flex-initial vb-web-applayout-header oj-md-hide">
+  <div class="oj-flex-bar oj-sm-align-items-center vb-web-applayout-header-content">
+    <!-- Navigator toggle button will render only if we have a drawer -->
+    <oj-bind-if test="[[ document.querySelector('oj-vb-fragment[name=\'shell-drawer\']') ]]">
+      <div class="oj-flex-bar">
+        <oj-button chroming="borderless" display="icons" on-oj-action="[[$listeners.buttonAction2]]">
+          <span slot="startIcon" class="oj-ux-ico-menu"></span>
+          <span><oj-bind-text value="[[$application.translations.app.app_title_navigation_drawer]]"></oj-bind-text></span>
+        </oj-button>
+      </div>
+    </oj-bind-if>
+    <!-- Page specific title and actions with overflow menu displayed -->
+    <div class="oj-sm-margin-2x-horizontal oj-sm-align-items-center oj-md-hide oj-sm-flex-1">
+      <div class="vb-content-header oj-flex-bar oj-sm-flex-items-initial oj-sm-align-items-center">
+        <div class="oj-flex-bar-start">
+          <div class="oj-typography-body-lg oj-typography-semi-bold">
+            <oj-bind-text value="[[ $application.translations.app.assessment_local_create_page_title ]]"></oj-bind-text>
+          </div>
+        </div>
+        <div class="oj-flex-bar-end">
+          <oj-button on-oj-action="[[$listeners.backButtonClicked]]"
+            label="[[$application.translations.app.cancel_button_label]]" id="create-assessment-cancel-mobile"
+            class="oj-button-sm"></oj-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Page specific title and actions for desktop formfactor -->
+<div class="vb-content-header oj-flex-bar oj-sm-flex-1 oj-sm-only-hide oj-sm-align-items-center">
+  <div class="oj-flex-bar-start">
+    <div class="oj-typography-body-lg oj-typography-semi-bold">
+      <oj-bind-text value="[[ $application.translations.app.assessment_local_create_page_title ]]"></oj-bind-text>
+    </div>
+  </div>
+  <div class="oj-flex-bar-end">
+    <!-- Add Page specific actions etc -->
+    <oj-button on-oj-action="[[$listeners.backButtonClicked]]"
+      label="[[$application.translations.app.cancel_button_label]]" id="create-assessment-cancel"
+      class="oj-button-sm"></oj-button>
+  </div>
+</div>
+<div class="oj-flex oj-sm-flex-direction-column">
+  <div class="oj-flex-item oj-sm-flex-initial">
+    <div class="oj-panel oj-panel-shadow-md oj-sm-margin-3x-vertical">
+      <oj-validation-group id="validation-group">
+        <oj-form-layout class="oj-formlayout-full-width oj-sm-margin-4x">
+          <oj-select-single label-hint="[[$application.translations.app.flow_name_hint_text]]" item-text="name"
+            placeholder="[[$application.translations.app.flow_deployment_selection_placeholder]]"
+            value="{{ $variables.assessment.deploymentName }}" required="true"
+            data="[[ $application.variables.deploymentListGlobalADP ]]" id="deployment-single-select">
+            <template slot="itemTemplate" data-oj-as="item">
+              <oj-list-item-layout class="oj-listitemlayout-padding-off">
+                <span class="oj-typography-body-md oj-text-color-primary">
+                  <oj-highlight-text
+                    text='[[item.data.name]]'
+                    match-text="[[item.data.name]]"></oj-highlight-text>
+                </span>
+                <oj-bind-if test="[[ item.data.cachedLocally ]]">
+                  <span slot="secondary" class="oj-typography-body-sm oj-text-color-secondary">
+                  <oj-highlight-text
+                    text="[[$application.translations.app.flow_saved_for_offline_use_label]]"
+                    match-text="[[$application.translations.app.flow_saved_for_offline_use_label]]"></oj-highlight-text>
+                </span>
+                </oj-bind-if>
+              </oj-list-item-layout>
+            </template>
+          </oj-select-single>
+          <oj-input-text value="{{ $variables.assessment.assessmentName }}"
+            label-hint="[[$application.translations.app.assessment_name_hint_text]]" required="true"></oj-input-text>
+          <oj-button label="[[$application.translations.app.save_button_label]]" class="oj-button-full-width"
+            on-oj-action="[[$listeners.buttonAction]]" disabled="[[ $variables.createAssessmentsChainInProgress ]]"
+            chroming="callToAction" id="ia-create-local-assessment-button"></oj-button>
+        </oj-form-layout>
+      </oj-validation-group>
+    </div>
+  </div>
+  <div class="oj-flex-item">
+    <oj-ia-intv-session-manager id="ia-intv-session-manager" ia-site-url="[[ $application.variables.iaSiteUrl ]]">
+    </oj-ia-intv-session-manager>
+  </div>
+</div>

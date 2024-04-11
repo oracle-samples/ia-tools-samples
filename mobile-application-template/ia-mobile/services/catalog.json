@@ -1,0 +1,75 @@
+{
+    "backends": {
+        "vbprocess": {
+            "serviceType": "vbprocess",
+            "servers": [
+                {
+                    "url": "vb-catalog://backends.tenant/vbprocess",
+                    "description": "Player Target Server",
+                    "x-vb": {
+                        "headers": {
+                            "pcs_mode": "dev"
+                        }
+                    }
+                },
+                {
+                    "url": "vb-catalog://backends.tenant/vbprocess",
+                    "description": "Default Target Server",
+                    "x-vb": {}
+                }
+            ]
+        },
+        "intelligentAdvisorHub": {
+            "description": "Oracle Intelligent Advisor Hub Backend",
+            "servers": [
+                {
+                    "url": "https://{hubHost}",
+                    "description": "Intelligent Advisor Hub Server",
+                    "variables": {
+                        "hubHost": {
+                            "default": "IAServerName"
+                        }
+                    },
+                    "x-vb": {
+                        "authentication": {
+                            "authenticated": {
+                                "type": "oauth2_client_credentials",
+                                "clientIdCredentials": "vb_4d4b1bfc-af3d-413c-84b5-03760c09f513",
+                                "scope": "offline_access",
+                                "authUrl": "https://{IAServerName}/opa-hub/api/12.2.28/auth"
+                            }
+                        },
+                        "anonymousAccess": false,
+                        "forceProxy": "always"
+                    }
+                }
+            ]
+        },
+        "b2cService": {
+            "description": "Oracle B2C Service Backend",
+            "headers": {},
+            "servers": [
+                {
+                    "url": "https://{b2cHost}",
+                    "description": "B2C Service Site Server",
+                    "variables": {
+                        "b2cHost": {
+                            "default": "addb2Cserverhere"
+                        }
+                    },
+                    "x-vb": {
+                        "headers": {},
+                        "authentication": {
+                            "authenticated": {
+                                "type": "basic",
+                                "credentials": "vb_ed0b3b68-1956-4f78-a4b7-e33058ff044a"
+                            }
+                        },
+                        "forceProxy": "always",
+                        "anonymousAccess": false
+                    }
+                }
+            ]
+        }
+      }
+}

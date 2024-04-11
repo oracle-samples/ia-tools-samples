@@ -1,0 +1,34 @@
+{
+  "root": "if3",
+  "variables": {
+    "assessmentId": {
+      "type": "string",
+      "required": true,
+      "input": "fromCaller"
+    }
+  },
+  "actions": {
+    "navigateToDetail": {
+      "module": "vb/action/builtin/navigateAction",
+      "parameters": {
+        "page": "assessment-detail",
+        "params": {
+          "offlineMode": "{{ $application.constants.useCachedFlow.toLowerCase() === 'always' }}",
+          "assessmentId": "{{ Number($variables.assessmentId) }}"
+        }
+      }
+    },
+    "if3": {
+      "module": "vb/action/builtin/ifAction",
+      "parameters": {
+        "condition": "[[ $variables.assessmentId && !$page.variables.pullToRefreshStarted ]]"
+      },
+      "outcomes": {
+        "true": "navigateToDetail"
+      },
+      "label": "Check if assessment id available",
+      "description": "Check if assessment id available"
+    }
+  },
+  "description": "Navigate to assessment detail page"
+}

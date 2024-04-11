@@ -1,0 +1,9 @@
+{
+  "public": false,
+  "private": true,
+  "noCache": false,
+  "noStore": false,
+  "mustRevalidate": false,
+  "maxAge": true,
+  "maxAgeSeconds": 3
+}
