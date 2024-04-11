@@ -1,0 +1,68 @@
+{
+  "title": "Shell Header",
+  "eventListeners": {
+
+    "drawerToggle": {
+      "chains": [
+        {
+          "chain": "toggleDrawer"
+        }
+      ]
+    },
+    "headerMenuButtonAction": {
+      "chains": [
+        {
+          "chain": "ADVISOR_APP_HEADER_MENU_BUTTON_ACTION_CHAIN",
+          "parameters": {
+            "event": "[[ $current.data ]]",
+            "actionId": "[[ $event.detail.selectedValue ]]"
+          }
+        }
+      ]
+    }
+
+  },
+  "events": {
+    "shellHeaderMenuButtonAction": {
+      "propagationBehavior": "container",
+      "description": "Emits to container",
+      "payloadType": {
+        "actionId": "string"
+      }
+    }
+  },
+  "imports": {
+    "components": {
+      "oj-avatar": {
+        "path": "ojs/ojavatar"
+      },
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-menu": {
+        "path": "ojs/ojmenu"
+      },
+      "oj-menu-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-navigation-list": {
+        "path": "ojs/ojnavigationlist"
+      },
+      "oj-option": {
+        "path": "ojs/ojoption"
+      },
+      "oj-popup": {
+        "path": "ojs/ojpopup"
+      },
+      "oj-toolbar": {
+        "path": "ojs/ojtoolbar"
+      }
+    },
+    "css": [
+      "/resources/css/shell.css"
+    ]
+  },
+  "metadata": {},
+  "types": {},
+  "variables": {}
+}

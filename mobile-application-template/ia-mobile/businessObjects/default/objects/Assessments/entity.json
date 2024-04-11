@@ -1,0 +1,101 @@
+{
+    "fields": [
+        {
+            "type": "number",
+            "name": "id",
+            "key": true,
+            "oid": "b8d75aa9-bd18-410a-8b9c-19e5a0d2e7bf",
+            "required": true,
+            "unique": true,
+            "displayLabel": "Id"
+        },
+        {
+            "type": "datetime",
+            "name": "creationDate",
+            "oid": "46a558f9-e306-4337-8195-a74ebd525727",
+            "displayLabel": "Created",
+            "historyType": "timeCreated"
+        },
+        {
+            "type": "datetime",
+            "name": "lastUpdateDate",
+            "oid": "6d26095f-a67e-492b-9d04-1a7a50d369f9",
+            "displayLabel": "Last Updated",
+            "historyType": "timeUpdated"
+        },
+        {
+            "type": "string",
+            "name": "createdBy",
+            "oid": "d3797269-1ca7-4e1e-bb15-8fc96ef8c1e0",
+            "displayLabel": "Created By",
+            "historyType": "createdBy"
+        },
+        {
+            "type": "string",
+            "name": "lastUpdatedBy",
+            "oid": "7bf4be14-57cf-415f-9ebe-6024975a0330",
+            "displayLabel": "Last Updated By",
+            "historyType": "updatedBy"
+        },
+{
+            "type": "number",
+            "name": "abcsChangeNumber",
+            "oid": "986e1358-80ff-4ba8-9174-d1f95e6db2fe",
+            "displayLabel": "Version Number",
+            "historyType": "versionNumber"
+        },
+        {
+            "type": "string",
+            "name": "deploymentName",
+            "oid": "c8ffdb5a-6377-40c3-aed8-bcae591559c0",
+            "displayLabel": "Deployment Name",
+            "required": true
+        }        ,
+{
+            "type": "string",
+            "name": "assessmentName",
+            "oid": "0cd5dde9-4711-475d-b614-538f501b047a",
+            "displayLabel": "Assessment Name",
+            "required": true
+        },
+{
+            "type": "string",
+            "name": "externalId",
+            "oid": "9f9dbd46-445b-4523-ba1a-2b584ddc325d",
+            "displayLabel": "External ID",
+            "required": true,
+            "description": "The identifier of the external assessment metadata."
+        },
+{
+            "type": "string",
+            "defaultValue": {
+                "server": {
+                    "type": "static",
+                    "value": "In Progress"
+                }
+            },
+            "name": "status",
+            "oid": "cd429edf-30df-4aa3-b8db-51804e618284",
+            "displayLabel": "Status",
+            "required": true
+        },
+        {
+            "type": "string",
+            "description": "The identifier of the external data source linked with the assessment.",
+            "name": "externalDataId",
+            "oid": "5900e54b-0794-450a-a0c1-ea91b8c401c7",
+            "displayLabel": "External Data ID"
+
+        },
+        {
+            "type": "number",
+            "name": "userId",
+            "oid": "d764d300-8275-45b9-9bed-273737372415",
+            "displayLabel": "User ID",
+            "required": true
+        }
+    ],
+    "name": "Assessments",
+    "oid": "460f9f64-c74e-4f1c-a10d-7188d21abdfd",
+    "displayLabel": "Assessments"
+}

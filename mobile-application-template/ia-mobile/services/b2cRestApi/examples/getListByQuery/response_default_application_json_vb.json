@@ -1,0 +1,57 @@
+{
+    "items": [
+        {
+            "tableName": "Table0",
+            "count": 3,
+            "columnNames": [
+                "lookupName",
+                "Description",
+                "Deployment",
+                "ObjectID",
+                "id",
+                "Status"
+            ],
+            "rows": [
+                [
+                    "In Progress",
+                    "Sample 1",
+                    "Car Charging",
+                    null,
+                    "31",
+                    "2"
+                ],
+                [
+                    "Complete",
+                    "Sample 2",
+                    "Car Charging",
+                    "test-reference-1",
+                    "32",
+                    "3"
+                ],
+                [
+                    "In Progress",
+                    "Sample 3",
+                    "New Car Charging",
+                    null,
+                    "269",
+                    "2"
+                ]
+            ]
+        }
+    ],
+    "links": [
+        {
+            "rel": "self",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/queryResults?query=SELECT%20Status.lookupName%2CDescription%2CDeployment%2CObjectID%2Cid%2CStatus%20from%20OPA.MobileAssessment"
+        },
+        {
+            "rel": "canonical",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/queryResults"
+        },
+        {
+            "rel": "describedby",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/metadata-catalog/queryResults",
+            "mediaType": "application/schema+json"
+        }
+    ]
+}

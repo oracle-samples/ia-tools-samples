@@ -1,0 +1,260 @@
+{
+  "title": "Assessment Detail",
+  "description": "The page to display the flow content of an assessment",
+  "variables": {
+    "assessmentDetails": {
+      "type": "flow:LocalAssessmentItem",
+      "input": "none"
+    },
+    "assessmentId": {
+      "type": "number",
+      "required": true,
+      "input": "fromUrl"
+    },
+    "currentIaSessionDetails": {
+      "type": "CurrentIaSessionDetails",
+      "defaultValue": {
+        "currentPosition": 0
+      }
+    },
+    "flowTokenDetails": {
+      "type": "FlowTokenDetails",
+      "defaultValue": {
+        "sessionJwt": "__offline_dummy__"
+      },
+      "persisted": "none"
+    },
+    "intvStyleOptions": {
+      "type": "IntvStyleOptions",
+      "defaultValue": {
+        "pageNavigationLevels": 0,
+        "backLabel": "Back",
+        "forwardLabel": "Continue",
+        "saveLabel": "Save",
+        "submitLabel": "Submit",
+        "hideHeader": false,
+        "hideSaveButton": false,
+        "hideSubmitButton": false,
+        "hideGroupPanels": false,
+        "useTrainNavigation": "responsive",
+        "useStrictStage": false
+      }
+    },
+    "offlineMode": {
+      "type": "boolean",
+      "defaultValue": false,
+      "required": false,
+      "input": "fromUrl"
+    },
+    "showContent": {
+      "type": "boolean",
+      "defaultValue": false
+    }
+  },
+  "metadata": {},
+  "types": {
+    "CurrentIaSessionDetails": {
+      "actionSource": "string",
+      "currentIaSession": "string",
+      "currentPosition": "number",
+      "currentVisited": "string[]"
+    },
+    "FlowTokenDetails": {
+      "sessionJwt": "string"
+    },
+    "IntvStyleOptions": {
+      "pageNavigationLevels": "number",
+      "backLabel": "string",
+      "forwardLabel": "string",
+      "saveLabel": "string",
+      "submitLabel": "string",
+      "hideHeader": "boolean",
+      "hideSaveButton": "boolean",
+      "hideSubmitButton": "boolean",
+      "hideGroupPanels": "boolean",
+      "useStrictStage": "boolean",
+      "useTrainNavigation": "string"
+    }
+  },
+  "eventListeners": {
+    "buttonAction7": {
+      "chains": [
+        {
+          "chain": "application:APP_TOGGLE_DRAWER_HANDLER"
+        }
+      ]
+    },
+    "customBooleanControlNoButtonAction": {
+      "chains": [
+        {
+          "chainId": "ADVISOR_SET_FLOW_INPUT_CONTROL_VALUE_CHAIN",
+          "parameters": {
+            "controlId": "[[ $current.id ]]",
+            "controlValue": false
+          }
+        }
+      ]
+    },
+    "customBooleanControlYesButtonAction": {
+      "chains": [
+        {
+          "chainId": "ADVISOR_SET_FLOW_INPUT_CONTROL_VALUE_CHAIN",
+          "parameters": {
+            "controlId": "[[ $current.id ]]",
+            "controlValue": true
+          }
+        }
+      ]
+    },
+    "customFilePickerAction": {
+      "chains": [
+        {
+          "chainId": "customFileUploadChain",
+          "parameters": {
+            "control": "{{$current}}"
+          }
+        }
+      ]
+    },
+    "customTallyCounterValueUpdated": {
+      "chains": [
+        {
+          "chainId": "ADVISOR_SET_FLOW_INPUT_CONTROL_VALUE_CHAIN",
+          "parameters": {
+            "controlValue": "{{ $event.detail.value }}",
+            "controlId": "{{ $current.id }}"
+          }
+        }
+      ]
+    },
+    "customTextAreaValueUpdated": {
+      "chains": [
+        {
+          "chainId": "ADVISOR_SET_FLOW_INPUT_CONTROL_VALUE_CHAIN",
+          "parameters": {
+            "controlId": "[[ $current.id ]]",
+            "controlValue": "[[ $event.detail.value ]]"
+          }
+        }
+      ]
+    },
+    "homeButtonClicked": {
+      "chains": [
+        {
+          "chain": "application:ADVISOR_NAVIGATE_TO_HOME_CHAIN"
+        }
+      ]
+    },
+    "iaIntvFlowCompleted": {
+      "chains": [
+        {
+          "chain": "ADVISOR_FLOW_COMPLETED_CHAIN"
+        }
+      ]
+    },
+    "intelligentAdvisorEmbeddedInterviewSessionUpdated": {
+      "chains": [
+        {
+          "parameters": {
+            "currentSession": "{{ $event.detail }}"
+          },
+          "chain": "ADVISOR_FLOW_SESSION_UPDATED_CHAIN"
+        }
+      ]
+    },
+    "intelligentAdvisorEmbeddedInterviewCustomDataAction": {
+      "chains": [
+        {
+          "chain": "ADVISOR_ON_FLOW_DATA_ACTION_CHAIN",
+          "parameters": {
+            "dataActionDetail": "[[ $event.detail ]]",
+            "assessmentDetail": "[[ $variables.assessmentDetails ]]"
+          }
+        }
+      ]
+    },
+    "onFileSelected": {
+      "chains": [
+        {
+          "parameters": {
+            "dataActionId": "{{ $event.dataActionId }}",
+            "returnData": "{{ $event.returnData }}"
+          },
+          "chainId": "ADVISOR_SET_FLOW_DATA_ACTION_RETURN_VALUE_CHAIN"
+        }
+      ]
+    },
+    "vbEnter": {
+      "chains": [
+        {
+          "parameters": {},
+          "chain": "ADVISOR_LOAD_ASSESSMENT_DETAIL_CHAIN"
+        }
+      ],
+      "@dt": {
+        "showInDiagram": "off"
+      }
+    },
+    "vbExit": {
+      "chains": [
+        {
+          "parameters": {},
+          "chain": "ADVISOR_CLOSE_FLOW_NAVIGATION_CHAIN"
+        }
+      ]
+    }
+
+  },
+  "imports": {
+    "components": {
+      "oj-bind-dom": {
+        "path": "ojs/ojbinddom"
+      },
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-chart": {
+        "path": "ojs/ojchart"
+      },
+      "oj-chart-item": {
+        "path": "ojs/ojchart"
+      },
+      "oj-dialog": {
+        "path": "ojs/ojdialog"
+      },
+      "oj-file-picker": {
+        "path": "ojs/ojfilepicker"
+      },
+      "oj-highlight-text": {
+        "path": "ojs/ojhighlighttext"
+      },
+      "oj-ia-intv": {
+        "path": "oj-ia/intv/loader"
+      },
+      "oj-input-number": {
+        "path": "ojs/ojinputnumber"
+      },
+      "oj-ia-intv-session-manager": {
+        "path": "oj-ia/intv-session-manager/loader"
+      },
+      "oj-label": {
+        "path": "ojs/ojlabel"
+      },
+      "oj-progress-circle": {
+        "path": "ojs/ojprogress-circle"
+      },
+      "oj-text-area": {
+        "path": "ojs/ojinputtext"
+      }
+    }
+  },
+  "constants": {},
+  "events": {
+    "onFileSelected": {
+      "payloadType": {
+        "dataActionId": "string",
+        "returnData": "any"
+      }
+    }
+  }
+}

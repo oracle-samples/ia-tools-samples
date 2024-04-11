@@ -1,0 +1,231 @@
+{
+    "id": 68056,
+    "lookupName": "221026-000093",
+    "createdTime": "2022-10-27T01:39:55.000Z",
+    "updatedTime": "2022-10-27T01:39:55.000Z",
+    "asset": null,
+    "assignedTo": {
+        "account": null,
+        "staffGroup": null
+    },
+    "banner": {
+        "importanceFlag": null,
+        "text": null,
+        "updatedByAccount": null,
+        "updatedTime": null
+    },
+    "billedMinutes": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056/billedMinutes"
+            },
+            {
+                "rel": "full",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056/billedMinutes/{billedMinute_id}",
+                "templated": true
+            }
+        ]
+    },
+    "category": null,
+    "channel": null,
+    "chatQueue": null,
+    "closedTime": null,
+    "createdByAccount": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/accounts/605"
+            },
+            {
+                "rel": "canonical",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/accounts/605"
+            },
+            {
+                "rel": "describedby",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/metadata-catalog/accounts",
+                "mediaType": "application/schema+json"
+            }
+        ]
+    },
+    "customFields": {
+        "Mobile": {
+            "gps_latitude": "37.774929",
+            "gps_longitude": "-122.419418"
+        },
+        "c": {
+            "imported": null,
+            "cs_accepted_offer_yn": false,
+            "cs_accepted_install_yn": true,
+            "cs_install_date_dtm": null,
+            "cs_made_offer_yn": false,
+            "cs_offer_name_text": null,
+            "cs_offer_price_text": null,
+            "cs_offer_install_price_text": null,
+            "cs_offer_tax_text": null,
+            "cs_offer_total_text": null,
+            "cs_payment_method_menu": {
+                "id": 1,
+                "lookupName": "Visa ending in 4421"
+            },
+            "status_crosschannelreport": {
+                "id": 4,
+                "lookupName": "Unresolved"
+            },
+            "c2fr": null,
+            "c2init_resp": null,
+            "in_service": null,
+            "inc_integer": null,
+            "issue_first_reported": null,
+            "steps_to_repro": null,
+            "no_of_users_affected": 99
+        }
+    },
+    "disposition": null,
+    "fileAttachments": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056/fileAttachments"
+            },
+            {
+                "rel": "full",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056/fileAttachments/{fileAttachment_id}",
+                "templated": true
+            }
+        ]
+    },
+    "initialResponseDueTime": "2022-10-27T23:00:00.000Z",
+    "initialSolutionTime": null,
+    "interface": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/siteInterfaces/1"
+            },
+            {
+                "rel": "canonical",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/siteInterfaces/1"
+            },
+            {
+                "rel": "describedby",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/metadata-catalog/siteInterfaces",
+                "mediaType": "application/schema+json"
+            }
+        ]
+    },
+    "language": {
+        "id": 1,
+        "lookupName": "en_US"
+    },
+    "lastResponseTime": null,
+    "lastSurveyScore": null,
+    "mailbox": null,
+    "mailing": null,
+    "milestoneInstances": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056/milestoneInstances"
+            },
+            {
+                "rel": "full",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056/milestoneInstances/{milestoneInstance_id}",
+                "templated": true
+            }
+        ]
+    },
+    "organization": null,
+    "otherContacts": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056/otherContacts"
+            },
+            {
+                "rel": "full",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056/otherContacts/{otherContact_id}",
+                "templated": true
+            }
+        ]
+    },
+    "primaryContact": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/contacts/4"
+            },
+            {
+                "rel": "canonical",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/contacts/4"
+            },
+            {
+                "rel": "describedby",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/metadata-catalog/contacts",
+                "mediaType": "application/schema+json"
+            }
+        ]
+    },
+    "product": null,
+    "queue": null,
+    "referenceNumber": "221026-000093",
+    "resolutionInterval": null,
+    "responseEmailAddressType": {
+        "id": 0,
+        "lookupName": "Email - Primary"
+    },
+    "responseInterval": null,
+    "severity": null,
+    "sLAInstance": null,
+    "smartSenseCustomer": null,
+    "smartSenseStaff": null,
+    "source": {
+        "id": 6016,
+        "lookupName": "Connect Web Services - REST",
+        "parents": [
+            {
+                "id": 32007,
+                "lookupName": "Public API"
+            }
+        ]
+    },
+    "statusWithType": {
+        "status": {
+            "id": 1,
+            "lookupName": "Unresolved"
+        },
+        "statusType": {
+            "id": 1,
+            "lookupName": "Unresolved"
+        }
+    },
+    "subject": "Incident Subject 10/26/2022 II",
+    "threads": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056/threads"
+            },
+            {
+                "rel": "full",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056/threads/{thread_id}",
+                "templated": true
+            }
+        ]
+    },
+    "links": [
+        {
+            "rel": "self",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056"
+        },
+        {
+            "rel": "canonical",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/incidents/68056"
+        },
+        {
+            "rel": "describedby",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/metadata-catalog/incidents",
+            "mediaType": "application/schema+json"
+        }
+    ]
+}

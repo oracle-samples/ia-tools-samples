@@ -1,0 +1,211 @@
+{
+  "id": "assessment",
+  "description": "Assessment",
+  "defaultPage": "assessment-start",
+  "services": {},
+  "types": {
+    "@decorators.B2CCreateIncidentRequest": {
+      "endpoint": "createIncident",
+      "service": "b2cRestApi",
+      "path": "request"
+    },
+    "@decorators.B2CCreateIncidentResponse": {
+      "endpoint": "createIncident",
+      "service": "b2cRestApi",
+      "path": "response"
+    },
+    "@decorators.GetAllSampleCountry": {
+      "endpoint": "getall_Country",
+      "service": "businessObjects",
+      "path": "response"
+    },
+    "LocalAssessmentItem": {
+      "assessmentName": "string",
+      "deploymentName": "string",
+      "externalDataId": "any",
+      "externalId": "any",
+      "id": "any",
+      "pendingSync": "boolean",
+      "status": "string",
+      "userId": "number"
+    },
+    "B2CContactReturnData": {
+      "items": [
+        {
+          "id": "string",
+          "lookupName": "string"
+        }
+      ]
+    },
+    "B2CCreateIncidentRequest": {
+      "fileAttachments": [
+        {
+          "data": "string",
+          "fileName": "string"
+        }
+      ],
+      "primaryContact": {
+        "id": "number",
+        "lookupName": "string"
+      },
+      "subject": "string"
+    },
+    "B2CCreateIncidentResponse": {
+      "asset": "any",
+      "assignedTo": {
+        "account": "any",
+        "staffGroup": "any"
+      },
+      "banner": {
+        "importanceFlag": "any",
+        "text": "any",
+        "updatedByAccount": "any",
+        "updatedTime": "any"
+      },
+      "billedMinutes": {
+        "links": [
+          {
+            "href": "string",
+            "rel": "string",
+            "templated": "boolean"
+          }
+        ]
+      },
+      "category": "any",
+      "channel": "any",
+      "chatQueue": "any",
+      "closedTime": "any",
+      "createdByAccount": {
+        "links": [
+          {
+            "href": "string",
+            "mediaType": "string",
+            "rel": "string"
+          }
+        ]
+      },
+      "createdTime": "string",
+      "disposition": "any",
+      "fileAttachments": {
+        "links": [
+          {
+            "href": "string",
+            "rel": "string",
+            "templated": "boolean"
+          }
+        ]
+      },
+      "id": "number",
+      "initialResponseDueTime": "string",
+      "initialSolutionTime": "any",
+      "interface": {
+        "links": [
+          {
+            "href": "string",
+            "mediaType": "string",
+            "rel": "string"
+          }
+        ]
+      },
+      "language": {
+        "id": "number",
+        "lookupName": "string"
+      },
+      "lastResponseTime": "any",
+      "lastSurveyScore": "any",
+      "links": [
+        {
+          "href": "string",
+          "mediaType": "string",
+          "rel": "string"
+        }
+      ],
+      "lookupName": "string",
+      "mailbox": "any",
+      "mailing": "any",
+      "milestoneInstances": {
+        "links": [
+          {
+            "href": "string",
+            "rel": "string",
+            "templated": "boolean"
+          }
+        ]
+      },
+      "organization": "any",
+      "primaryContact": {
+        "links": [
+          {
+            "href": "string",
+            "mediaType": "string",
+            "rel": "string"
+          }
+        ]
+      },
+      "product": "any",
+      "queue": "any",
+      "referenceNumber": "string",
+      "resolutionInterval": "any",
+      "responseEmailAddressType": {
+        "id": "number",
+        "lookupName": "string"
+      },
+      "responseInterval": "any",
+      "severity": "any",
+      "sLAInstance": "any",
+      "smartSenseCustomer": "any",
+      "smartSenseStaff": "any",
+      "source": {
+        "id": "number",
+        "lookupName": "string",
+        "parents": [
+          {
+            "id": "number",
+            "lookupName": "string"
+          }
+        ]
+      },
+      "statusWithType": {
+        "status": {
+          "id": "number",
+          "lookupName": "string"
+        },
+        "statusType": {
+          "id": "number",
+          "lookupName": "string"
+        }
+      },
+      "subject": "string",
+      "threads": {
+        "links": [
+          {
+            "href": "string",
+            "rel": "string",
+            "templated": "boolean"
+          }
+        ]
+      },
+      "updatedTime": "string"
+    },
+    "GeolocationResponse": {
+      "latitude": "number",
+      "longitude": "number"
+    },
+    "GetAllSampleCountry": {
+      "items": [
+        {
+          "country": "string",
+          "id": "number",
+          "latitude": "number",
+          "longitude": "number",
+          "name": "string"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "chartADP": {
+      "type": "vb/ArrayDataProvider2"
+    }
+  }
+}

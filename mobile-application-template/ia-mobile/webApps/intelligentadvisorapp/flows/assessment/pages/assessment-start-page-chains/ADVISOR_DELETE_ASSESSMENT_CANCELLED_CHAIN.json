@@ -1,0 +1,27 @@
+{
+  "description": "Action for delete confirmation \"No\"",
+  "root": "resetVariablesAssessmentToDelete",
+  "actions": {
+    "callFunctionCloseConfirmation": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "closeConfirmation"
+      },
+      "label": "Close delete confirmation modal",
+      "description": "Close delete confirmation modal"
+    },
+    "resetVariablesAssessmentToDelete": {
+      "module": "vb/action/builtin/resetVariablesAction",
+      "parameters": {
+        "variables": [
+          "$page.variables.assessmentToDelete"
+        ]
+      },
+      "outcomes": {
+        "success": "callFunctionCloseConfirmation"
+      }
+    }
+  },
+  "variables": {}
+}

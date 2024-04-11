@@ -1,0 +1,35 @@
+{
+  "root": "callFunctionGetLocalValue",
+  "description": "To fetch geolocation and return back to oj-ia-intv component",
+  "variables": {
+    "dataActionDetail": {
+      "type": "application:FlowDataActionProps",
+      "required": true,
+      "input": "fromCaller"
+    }
+  },
+  "actions": {
+
+    "return": {
+      "module": "vb/action/builtin/returnAction",
+      "parameters": {
+        "outcome": "success",
+        "payload": "{{ {pdf_value:$chain.results.callFunctionGetLocalValue} }}"
+      }
+    },
+    "callFunctionGetLocalValue": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $application.functions ]]",
+        "functionName": "getLocalValue",
+        "params": [
+          "pdfReport",
+          "{{ $variables.dataActionDetail.sentData.pdf_id }}"
+        ]
+      },
+      "outcomes": {
+        "success": "return"
+      }
+    }
+  }
+}

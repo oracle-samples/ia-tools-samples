@@ -1,0 +1,40 @@
+{
+  "description": "Handle the files uploaded by a file-upload data action",
+  "root": "callFunctionGetFileContents",
+  "actions": {
+    "return": {
+      "module": "vb/action/builtin/returnAction",
+      "parameters": {
+        "outcome": "success",
+        "payload": "{{ $chain.results.callFunctionGetFileContents }}"
+      }
+    },
+    "callFunctionGetFileContents": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $flow.functions ]]",
+        "functionName": "getFileContents",
+        "params": [
+          "{{ $variables.dataActionDetail.fileList }}"
+        ]
+      },
+      "outcomes": {
+        "success": "return"
+      },
+      "label": "Get File Content",
+      "description": "Function to get name and content of files"
+    }
+  },
+  "variables": {
+    "assessmentDetail": {
+      "type": "application:AssessmentItem",
+      "required": true,
+      "input": "fromCaller"
+    },
+    "dataActionDetail": {
+      "type": "application:FlowDataActionProps",
+      "required": true,
+      "input": "fromCaller"
+    }
+  }
+}

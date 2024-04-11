@@ -1,0 +1,80 @@
+{
+  "root": "callRestGetallCountry",
+  "description": "Return sample country data from Business Object API",
+  "variables": {
+    "assessmentDetail": {
+      "type": "application:AssessmentItem",
+      "required": true,
+      "input": "fromCaller"
+    },
+    "dataActionDetail": {
+      "type": "application:FlowDataActionProps",
+      "required": true,
+      "input": "fromCaller"
+    },
+    "returnedData": {
+      "type": "any"
+    }
+  },
+  "actions": {
+    "callChainGLOBALERRORHANDLERCHAIN": {
+      "module": "vb/action/builtin/callChainAction",
+      "label": "Call Global Error Handler",
+      "description": "Invoke global error handler action chain",
+      "parameters": {
+        "id": "application:GLOBAL_ERROR_HANDLER_CHAIN",
+        "params": {
+          "response": "{{ $chain.results.callRestGetallCountry }}",
+          "type": "{{ $application.constants.errorTypes.b2cGetContacts }}"
+        }
+      },
+      "outcomes": {
+        "success": "return2"
+      }
+    },
+    "return": {
+      "module": "vb/action/builtin/returnAction",
+      "label": "Return Retrieved Data",
+      "parameters": {
+        "outcome": "success",
+        "payload": "{{ $variables.returnedData }}"
+      }
+    },
+    "return2": {
+      "module": "vb/action/builtin/returnAction",
+      "parameters": {
+        "outcome": "failure",
+        "payload": "{{ $chain.results.callRestGetallCountry }}"
+      }
+    },
+    "assignVariablesReturnedData": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "label": "Transform Response",
+      "description": "Convert response body to a different format if needed",
+      "parameters": {
+        "$variables.returnedData": {
+          "source": "{{ $chain.results.callRestGetallCountry.body }}"
+        }
+      },
+      "outcomes": {
+        "success": "return"
+      }
+    },
+    "callRestGetallCountry": {
+      "module": "vb/action/builtin/restAction",
+      "label": "Call Sample Country BO API",
+      "parameters": {
+        "endpoint": "businessObjects/getall_Country",
+        "responseBodyFormat": "json",
+        "responseType": "flow:GetAllSampleCountry",
+        "uriParams": {
+          "limit": 99999
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesReturnedData",
+        "failure": "callChainGLOBALERRORHANDLERCHAIN"
+      }
+    }
+  }
+}

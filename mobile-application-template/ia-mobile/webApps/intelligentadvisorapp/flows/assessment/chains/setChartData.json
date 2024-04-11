@@ -1,0 +1,48 @@
+{
+  "root": "callFunctionFormatChartData",
+  "description": "Set bar chart custom control data",
+  "variables": {
+    "dataActionDetail": {
+      "type": "any",
+      "input": "fromCaller"
+    }
+  },
+  "actions": {
+
+    "callFunctionFormatChartData": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $flow.functions  ]]",
+        "functionName": "formatChartData",
+        "params": [
+          "{{ $variables.dataActionDetail }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesChartADP"
+      }
+    },
+    "assignVariablesChartADP": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$flow.variables.chartADP": {
+          "source": {
+            "data": "{{ $chain.results.callFunctionFormatChartData }}"
+          },
+          "reset": "toDefault",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "fireDataProviderEventChartADP"
+      }
+    },
+    "fireDataProviderEventChartADP": {
+      "module": "vb/action/builtin/fireDataProviderEventAction",
+      "parameters": {
+        "target": "[[ $flow.variables.chartADP ]]",
+        "refresh": null
+      }
+    }
+  }
+}

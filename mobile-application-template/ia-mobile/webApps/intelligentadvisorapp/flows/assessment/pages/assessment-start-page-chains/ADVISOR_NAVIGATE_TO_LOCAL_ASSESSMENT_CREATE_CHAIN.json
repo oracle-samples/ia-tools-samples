@@ -1,0 +1,16 @@
+{
+  "root": "navigateToDeploymentsCreateAssessments",
+  "actions": {
+    "navigateToDeploymentsCreateAssessments": {
+      "module": "vb/action/builtin/navigateAction",
+      "parameters": {
+        "page": "assessment-local-create",
+        "history": "push"
+      },
+      "@dt": {
+        "targetType": "page"
+      }
+    }
+  },
+  "description": "Navigation to assessment creation page"
+}

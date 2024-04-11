@@ -1,0 +1,264 @@
+{
+  "app_name_text": "Oracle Intelligent Advisor Template",
+  "@app_name_text": {
+    "description": "The application name"
+  },
+  "app_title_navigation_drawer": "Application Navigation Drawer",
+  "@app_title_navigation_drawer": {
+    "description": "Title for Application Navigation Drawer"
+  },
+  "app_menu_item": {
+    "sign_out": "Sign Out",
+    "@sign_out": {
+      "description": "Text on menu option to log out of the application"
+    },
+    "nav_assessments": "Assessments",
+    "@nav_assessments": {
+      "description": "Text on menu option to navigate to the assessment management"
+    },
+    "nav_flows": "Flows",
+    "@nav_flows": {
+      "description": "Text on menu option to navigate to the flow management"
+    }
+  },
+  "app_footer_about_link": "About",
+  "@app_footer_about_link": {
+    "description": "About link on shell footer"
+  },
+  "app_footer_image_stripe_label": "Application Footer Image Stripe",
+  "@app_footer_image_stripe_label": {
+    "description": "The aria label for the application footer image stripe"
+  },
+  "app_footer_copyright": "Created with Visual Builder, Copyright © 2022",
+  "@app_footer_copyright": {
+    "description": "Copyright text on shell footer"
+  },
+  "app_home_button_label": "Home",
+  "@app_home_button_label": {
+    "description": "The label for the button to navigate to the home page"
+  },
+  "app_logo_hint_text": "Application Logo",
+  "@app_logo_hint_text": {
+    "description": "The hint text for the application logo"
+  },
+  "app_name_hint_text": "Application Name",
+  "@app_name_hint_text": {
+    "description": "The hint text for the application name"
+  },
+  "device_is_offline_summary": "Device is Offline",
+  "@device_is_offline_summary": {
+    "description": "Summary to indicate that the device is offline"
+  },
+  "ok_button_label": "OK",
+  "@ok_button_label": {
+    "description": "Button label for OK"
+  },
+  "yes_button_label": "Yes",
+  "@yes_button_label": {
+    "description": "Button label for Yes"
+  },
+  "no_button_label": "No",
+  "@no_button_label": {
+    "description": "Button label for No"
+  },
+  "create_button_label": "Create",
+  "@create_button_label": {
+    "description": "The label for the button to trigger a create action"
+  },
+  "delete_button_label": "Delete",
+  "@delete_button_label": {
+    "description": "The label for the button to trigger a delete action"
+  },
+  "save_button_label": "Save",
+  "@save_button_label": {
+    "description": "The label for the button to trigger a save action"
+  },
+  "synchronize_button_label": "Synchronize",
+  "@synchronize_button_label": {
+    "description": "The label for the button to trigger a synchronization action"
+  },
+  "synchronize_button_aria_label": "Synchronize assessments with the external assessment management",
+  "@synchronize_button_aria_label": {
+    "description": "The aria label for the button to synchronize assessments with the external assessment management"
+  },
+  "cancel_button_label": "Cancel",
+  "@cancel_button_label": {
+    "description": "The label for the button to trigger a cancellation action"
+  },
+  "assessment_detail_page_title": "Assessment",
+  "@assessment_detail_page_title": {
+    "description": "The assessment detail page title"
+  },
+  "assessment_local_create_page_title": "Create Assessment",
+  "@assessment_local_create_page_title": {
+    "description": "The assessment local create page title"
+  },
+  "assessment_start_page_title": "Assessments",
+  "@assessment_start_page_title": {
+    "description": "The assessment start page title"
+  },
+  "assessment_delete_dialog_title": "Delete {assessmentName}",
+  "@assessment_delete_dialog_title": {
+    "description": "Dialog title to ask for assessment deletion confirmation"
+  },
+  "assessment_delete_confirm": "Are you sure you want to delete this assessment? This will permanently delete all data linked with the assessment locally.",
+  "@assessment_delete_confirm": {
+    "description": "Text to ask for assessment deletion confirmation"
+  },
+  "assessment_deleted_title": "Assessment Deleted",
+  "@assessment_deleted_title": {
+    "description": "Title to confirm that the assessment has been deleted"
+  },
+  "assessment_deleted_message": "The assessment {assessmentName} has been deleted locally. Please synchronize with the server.",
+  "@assessment_deleted_message": {
+    "description": "Message to confirm that the assessment has been deleted"
+  },
+  "assessment_name_hint_text": "Assessment Name",
+  "@assessment_name_hint_text": {
+    "description": "The hint text for the assessment name"
+  },
+  "flow_name_hint_text": "Flow Name",
+  "@flow_name_hint_text": {
+    "description": "The hint text for the flow name"
+  },
+  "assessment_missing_object_id_summary": "Assessment Missing External Object ID",
+  "@assessment_missing_object_id_summary": {
+    "description": "Title to notify the user that the Object ID field of the assessment metadata does not have a valid value"
+  },
+  "assessment_missing_object_id_message": "The assessment is not associated with any external object ID. It might affect the assessment's data actions.",
+  "@assessment_missing_object_id_message": {
+    "description": "Message to notify the user that the Object ID field of the assessment metadata does not have a valid value"
+  },
+  "assessment_detail_not_editable_dialog_title": "Assessment Not Editable",
+  "@assessment_detail_not_editable_dialog_title": {
+    "description": "Dialog title to indicate that the current assessment is not editable anymore"
+  },
+  "assessment_detail_not_editable_dialog_message": "The current assessment is not in progress or does not exist anymore. Please select another one.",
+  "@assessment_detail_not_editable_dialog_message": {
+    "description": "Dialog message to indicate that the current assessment is not editable anymore"
+  },
+  "assessment_requires_network_message": "The assessment requires network connection to continue.",
+  "@assessment_requires_network_message": {
+    "description": "Message to indicate that the assessment requires network connection to continue"
+  },
+  "assessment_data_action_returned_data_not_available_summary": "Assessment Required Data Not Available",
+  "@assessment_data_action_returned_data_not_available_summary": {
+    "description": "Summary to indicate that the expected returned data is not available for the data action"
+  },
+  "assessment_list_refresher_in_progress_text": "Synchronizing Assessments",
+  "@assessment_list_refresher_in_progress_text": {
+    "description": "The display text to indicate that the assessment list is being synchornized"
+  },
+  "assessment_pending_synchronize_label": "Pending Synchronization",
+  "@assessment_pending_synchronize_label": {
+    "description": "The label to indicate that the assessment is pending synchronization"
+  },
+  "assessment_local_data_pending_synchronization": "There are local changes. Please pull down the list to synchronize.",
+  "@assessment_local_data_pending_synchronization": {
+    "description": "Status text for local changes"
+  },
+  "assessment_list_view_aria_label": "Assessment List",
+  "@assessment_list_view_aria_label": {
+    "description": "The aria label of the assessment list view"
+  },
+  "deployment_start_page_title": "Manage Offline Flows",
+  "@deployment_start_page_title": {
+    "description": "The deployment start page title"
+  },
+  "deployment_list_view_aria_label": "Flow List",
+  "@deployment_list_view_aria_label": {
+    "description": "The aria label of the flow deployment list view"
+  },
+  "data_management_start_page_title": "Manage Data",
+  "@data_management_start_page_title": {
+    "description": "The data management start page title"
+  },
+  "cache_flow_button_text": "Cache Flow For Offline Use",
+  "@cache_flow_button_text": {
+    "description": "The button text for cache flow for offline use"
+  },
+  "clear_flow_cache_text": "Clear Flow Cache",
+  "@clear_flow_cache_text": {
+    "description": "The button text for clear flow cache"
+  },
+  "refresh_flow_cache_text": "Refresh Flow Cache",
+  "@refresh_flow_cache_text": {
+    "description": "The button text for refresh flow cache"
+  },
+  "ia_hub_user_unauthorized_summary": "Hub User Unauthorized",
+  "@ia_hub_user_unauthorized_summary": {
+    "description": "Title to indicate that Intelligent Advisor Hub user authorization failed"
+  },
+  "retry_then_contact_admin_if_issue_persist_message": "Please retry. If the issue persists, please contact the application administrator.",
+  "@retry_then_contact_admin_if_issue_persist_message": {
+    "description": "Message to ask the user to retry and contact the app admin if the issue persists"
+  },
+  "b2c_account_get_failure_summary": "B2C Service Account Info Retrieval Failed",
+  "@b2c_account_get_failure_summary": {
+    "description": "The warning to indicate that B2C Service account REST call failed"
+  },
+  "flow_saved_for_offline_use_label": "Saved for offline use",
+  "@flow_saved_for_offline_use_label": {
+    "description": "The label to indicate the flow has been saved for offline use"
+  },
+  "flow_deployment_selection_placeholder": "Select flow for assessment",
+  "@flow_deployment_selection_placeholder": {
+    "description": "The placeholder text for flow deployment selection"
+  },
+  "custom_text_area_max_characters_allowed_hint_text_prefix": "Maximum characters allowed is",
+  "@custom_text_area_max_characters_allowed_hint_text_prefix": {
+    "description": "The hint text prefix for the maximum characters allowed in the custom text area control"
+  },
+  "assessment_progress_saved_locally": "Assessment Saved",
+  "@assessment_progress_saved_locally": {
+    "description": "To indicate that the assessment progress has been saved "
+  },
+  "app_network_unavailable_summary": "Network Connection Unavailable",
+  "@app_network_unavailable_summary": {
+    "description": "The summary to indicate that the app does not have network connection"
+  },
+  "assessment_sync_requires_network_message": "Synchronization requires network connection",
+  "@assessment_sync_requires_network_message": {
+    "description": "The message to indicate that the assessment synchronization requires network connection"
+  },
+  "assessment_sync_unexpected_error_summary": "Unexpected Assessment Synchronization Error",
+  "@assessment_sync_unexpected_error_summary": {
+    "description": "The summary to indicate that the assessment sync encountered an unexpected error"
+  },
+  "assessment_sync_initial_data_action_failure_summary": "Assessment Initial Data Action Failure",
+  "@assessment_sync_initial_data_action_failure_summary": {
+    "description": "The summary to indicate that the assessment initial data action invocation has failed"
+  },
+  "assessment_sync_initial_data_action_failure_message": "The initial data action invocation for {assessmentName} has failed with: {message}",
+  "@assessment_sync_initial_data_action_failure_message": {
+    "description": "The message to indicate that the assessment initial data action invocation has failed"
+  },
+  "deployment_not_locally_available_summary": "Flow {deploymentName} Not Available Offline",
+  "@deployment_not_locally_available_summary": {
+    "description": "The summary to indicate that the flow is not cached locally"
+  },
+  "deployment_not_available_in_hub_summary": "Flow Deployment {deploymentName} Not Available in Hub",
+  "@deployment_not_available_in_hub_summary": {
+    "description": "The summary to indicate that the flow deployment does not exist in the Intelligent Advisor Hub"
+  },
+  "app_is_offline_or_in_offline_flow_mode_message": "The app is offline or only uses offline flow",
+  "@app_is_offline_or_in_offline_flow_mode_message": {
+    "description": "The message to indicate that the application is offline or is forced to only use flow cached locally"
+  },
+  "deployment_cache_failure_summary": "Failed to Download Latest Flow Version for {deploymentName}",
+  "@deployment_cache_failure_summary": {
+    "description": "The summary to indicate that the flow deployment caching has failed"
+  },
+  "navigation_list_aria_label": "Navigation List",
+  "@navigation_list_aria_label": {
+    "description": "The list of available navigation options"
+  },
+  "list_view_aria_label": "Account Options",
+  "@list_view_aria_label": {
+    "description": "The list of logged-in account actions"
+  },
+  "app_account_options_label": "Account Options",
+  "@app_account_options_label": {
+    "description": ""
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "vbcs.dt.version": "20231205-24.04.2",
+    "dependencies": {
+        "upgrade": "micro",
+        "paths": {
+            "jet": "https://static.oracle.com/cdn/jet/14.1.8",
+            "telemetry": "https://static.oracle.com/cdn/trace/7.4.1",
+            "oracleImageGallery": "https://static.oracle.com/cdn/fnd/gallery/2310.0.1",
+            "visualRuntime": "https://static.oracle.com/cdn/vb/2310.1.0"
+        }
+    },
+    "source.version": "2310",
+    "rootURL": "intelligentadvisorflow",
+    "version": "1"
+}

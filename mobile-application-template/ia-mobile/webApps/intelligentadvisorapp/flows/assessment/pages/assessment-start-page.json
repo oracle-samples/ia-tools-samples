@@ -1,0 +1,185 @@
+{
+  "title": "Assessment Management",
+  "description": "The page to manage existing assessments",
+  "variables": {
+    "assessmentList": {
+      "type": "flow:LocalAssessmentItem[]",
+      "description": "To store locally saved assessments"
+    },
+    "assessmentListADP": {
+      "type": "vb/ArrayDataProvider2",
+      "defaultValue": {
+
+        "textFilterAttributes": [
+          "id"
+        ],
+        "itemType": "flow:LocalAssessmentItem",
+        "keyAttributes": "id"
+      },
+      "persisted": "none",
+      "description": "The representation layer for the assessmentList variable"
+    },
+    "assessmentToDelete": {
+      "type": "flow:LocalAssessmentItem"
+    },
+    "isSyncing": {
+      "type": "boolean",
+      "description": "To store B2C syncing progress status",
+      "defaultValue": true
+    },
+    "pullToRefreshStarted": {
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "To store pull to refresh progress status"
+    },
+    "showConfirmation": {
+      "type": "string",
+      "defaultValue": "hide",
+      "description": "To show and hide delete confirmation modal"
+    }
+
+  },
+  "metadata": {},
+  "types": {
+    "@decorators.getallAssessmentsResponse": {
+      "endpoint": "getall_Assessments",
+      "service": "businessObjects",
+      "path": "response"
+    },
+    "GetAllAssessmentsResponse": {
+      "items": "application:AssessmentItem[]"
+    }
+  },
+  "eventListeners": {
+    "assessmentListSelected": {
+      "chains": [
+        {
+          "chainId": "ADVISOR_NAVIGATE_TO_ASSESSMENT_DETAIL_CHAIN",
+          "parameters": {
+            "assessmentId": "{{ Array.from($event.detail.value.values()).pop() }}"
+          }
+        }
+      ]
+    },
+    "buttonAction": {
+      "chains": [
+        {
+          "chainId": "ADVISOR_DELETE_ASSESSMENT_CANCELLED_CHAIN"
+        }
+      ]
+    },
+    "buttonAction2": {
+      "chains": [
+        {
+          "parameters": {},
+          "chain": "ADVISOR_DELETE_ASSESSMENT_CONFIRMED_CHAIN"
+        }
+      ]
+    },
+    "buttonAction3": {
+      "chains": [
+        {
+          "parameters": {
+            "pullToRefresh": false,
+            "forcedSync": true
+          },
+          "chain": "ADVISOR_ASSESSMENT_SYNCHRONIZATION_ROOT_CHAIN"
+        }
+      ]
+    },
+    "buttonAction4": {
+      "chains": [
+        {
+          "chain": "application:APP_TOGGLE_DRAWER_HANDLER"
+        }
+      ]
+    },
+    "createAssessmentsButtonClicked": {
+      "chains": [
+        {
+          "chainId": "ADVISOR_NAVIGATE_TO_LOCAL_ASSESSMENT_CREATE_CHAIN"
+        }
+      ]
+    },
+    "customRefreshContentsEvent": {
+      "chains": [
+        {
+          "parameters": {
+            "pullToRefresh": true,
+            "forcedSync": true
+          },
+          "chain": "ADVISOR_ASSESSMENT_SYNCHRONIZATION_ROOT_CHAIN"
+        }
+      ]
+    },
+    "ojSwipeActionsPerformed2": {
+      "chains": [
+        {
+          "chainId": "ADVISOR_ASSESSMENT_ENTRY_LEFT_SWIPE_OPERATION_CHAIN",
+          "parameters": {
+            "navigationItem": "[[$event.target.value]]",
+            "assessmentDetails": "[[ $current.data ]]"
+          }
+        }
+      ]
+    },
+    "vbEnter": {
+      "chains": [
+{
+          "parameters": {
+            "forcedSync": false,
+            "pullToRefresh": false
+          },
+          "chain": "ADVISOR_ASSESSMENT_SYNCHRONIZATION_ROOT_CHAIN"
+        },
+        {
+          "parameters": {
+            "intvSessionManagerElementId": "ia-session-manager-seed"
+          },
+          "chain": "application:ADVISOR_REFRESH_DEPLOYMENT_STATUS_CHAIN"
+        }
+      ]
+    }
+
+  },
+  "imports": {
+    "components": {
+      "oj-dialog": {
+        "path": "ojs/ojdialog"
+      },
+      "oj-highlight-text": {
+        "path": "ojs/ojhighlighttext"
+      },
+      "oj-ia-intv-session-manager": {
+        "path": "oj-ia/intv-session-manager/loader"
+      },
+      "oj-list-item-layout": {
+        "path": "ojs/ojlistitemlayout"
+      },
+      "oj-list-view": {
+        "path": "ojs/ojlistview"
+      },
+      "oj-option": {
+        "path": "ojs/ojoption"
+      },
+      "oj-progress-circle": {
+        "path": "ojs/ojprogress-circle"
+      },
+      "oj-refresher": {
+        "path": "ojs/ojrefresher"
+      },
+      "oj-swipe-actions": {
+        "path": "ojs/ojswipeactions"
+      },
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-vb-list-item": {
+        "path": "vb/components/list-item/loader"
+      }
+    }
+  },
+  "events": {
+    "customRefreshContentsEvent": {}
+  }
+}

@@ -1,0 +1,49 @@
+<div class="oj-contrast-marker vb-nav-drawer">
+  <oj-button
+    class="oj-md-hide vb-nav-drawer-close-button oj-sm-float-end oj-sm-margin-3x-top"
+    display="icons"
+    chroming="borderless"
+    on-oj-action="[[$fragment.functions.closeDrawer]]">
+    <span slot="startIcon" class="oj-ux-ico-close"></span>
+      <oj-bind-text value="Close"></oj-bind-text>
+  </oj-button>
+  <div class="oj-md-hide oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap oj-sm-align-items-center oj-sm-margin-6x-vertical">
+    <oj-avatar id="drawer-avatar" role="img" icon-class="oj-ux-ico-contact" size="md" background="orange"
+               :aria-label="[[ $application.user.fullName ]]" :title="[[ $application.user.fullName ]]">
+    </oj-avatar>
+    <h2 class="oj-sm-margin-2x-horizontal oj-typography-heading-md">
+      <oj-bind-text value="[[ $application.user.fullName ]]"></oj-bind-text>
+    </h2>
+    <h3 class="oj-sm-margin-2x-horizontal oj-typography-subheading-xs">
+      <oj-bind-text value="[[ $application.user.username ]]"></oj-bind-text>
+    </h3>
+  </div>
+  <oj-navigation-list edge="start"
+    on-click="[[$application.responsive.smOnly ? $fragment.functions.closeDrawer : undefined]]"
+    on-selection-changed="[[$listeners.onNavigation]]" data="[[ $application.variables.navigationADP ]]"
+    selection="{{ $variables.currentFlow }}" :aria-label="[[$application.translations.app.navigation_list_aria_label]]">
+    <template slot="itemTemplate">
+      <!-- Template for rendering navigation items -->
+      <li :aria-label="[[ $application.translations.app.app_menu_item[$current.data.translationBundleKey] ]]">
+        <a href="#">
+          <span :class="[['oj-navigationlist-item-icon oj-typography-body-md oj-sm-padding-3x-horizontal ' + $current.data.iconClass]]"></span>
+          <oj-bind-text value="[[ $application.translations.app.app_menu_item[$current.data.translationBundleKey] ]]"></oj-bind-text>
+        </a>
+      </li>
+    </template>
+  </oj-navigation-list>
+  <hr class="oj-md-hide">
+  <!-- Avatar menu items moved to the offcanvas for phones -->
+  <oj-list-view class="oj-md-hide" on-click="[[ $fragment.functions.closeDrawer ]]"
+    data="[[ $application.variables.globalHeadersADP ]]"
+    :aria-label="[[$application.translations.app.list_view_aria_label]]">
+    <template slot="itemTemplate" data-oj-as="current">
+      <oj-list-item-layout>
+        <oj-button chroming="borderless" class="oj-sm-flex-0" on-oj-action="[[ $listeners.drawerMenuButtonAction ]]">
+          <span :class="[[ 'oj-navigationlist-item-icon oj-typography-body-md ' + $current.item.data.iconClass ]]" slot="startIcon"></span>
+          <oj-bind-text value="[[ $application.translations.app.app_menu_item[$current.item.data.translationBundleKey] ]]"></oj-bind-text>
+        </oj-button>
+      </oj-list-item-layout>
+    </template>  
+  </oj-list-view>
+</div>

@@ -1,0 +1,40 @@
+{
+    "id": 36,
+    "lookupName": "36",
+    "Account": null,
+    "Deployment": "Car Charging",
+    "Description": "Sample 4",
+    "ObjectID": null,
+    "Status": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/OPA.AssessmentStatus/2"
+            },
+            {
+                "rel": "canonical",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/OPA.AssessmentStatus/2"
+            },
+            {
+                "rel": "describedby",
+                "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/metadata-catalog/OPA.AssessmentStatus",
+                "mediaType": "application/schema+json"
+            }
+        ]
+    },
+    "links": [
+        {
+            "rel": "self",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/OPA.MobileAssessment/36"
+        },
+        {
+            "rel": "canonical",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/OPA.MobileAssessment/36"
+        },
+        {
+            "rel": "describedby",
+            "href": "https://oia-mobile-test.rightnowdemo.com/services/rest/connect/latest/metadata-catalog/OPA.MobileAssessment",
+            "mediaType": "application/schema+json"
+        }
+    ]
+}

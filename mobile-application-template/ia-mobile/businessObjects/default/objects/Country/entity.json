@@ -1,0 +1,83 @@
+{
+    "displayLabel": "Country",
+    "fields": [
+        {
+            "displayLabel": "Id",
+            "key": true,
+            "name": "id",
+            "oid": "332b2432-be27-4c57-9fee-3baae9141972",
+            "required": true,
+            "type": "number",
+            "unique": true
+        },
+        {
+            "displayLabel": "Created",
+            "historyType": "timeCreated",
+            "name": "creationDate",
+            "oid": "ee96f261-6f1f-417d-afc4-54467e2a7f4b",
+            "type": "datetime"
+        },
+        {
+            "displayLabel": "Last Updated",
+            "historyType": "timeUpdated",
+            "name": "lastUpdateDate",
+            "oid": "0f252215-0460-46c1-856f-ca260c7d247c",
+            "type": "datetime"
+        },
+        {
+            "displayLabel": "Created By",
+            "historyType": "createdBy",
+            "name": "createdBy",
+            "oid": "0e87d993-498a-40d7-9646-ae09534eba96",
+            "type": "string"
+        },
+        {
+            "displayLabel": "Last Updated By",
+            "historyType": "updatedBy",
+            "name": "lastUpdatedBy",
+            "oid": "5bb5ea28-f748-4a1d-9e41-307659e5df67",
+            "type": "string"
+        },
+        {
+            "displayLabel": "Version Number",
+            "historyType": "versionNumber",
+            "name": "versionNumber",
+            "oid": "b6ceaaf9-79c4-4236-ba60-d029f10904e6",
+            "type": "number"
+        },
+        {
+            "displayLabel": "Country Code",
+            "name": "country",
+            "oid": "e471ce3b-94f8-410a-8c1c-07c3947bdf56",
+            "required": true,
+            "type": "string"
+        },
+        {
+            "displayLabel": "Latitude",
+            "name": "latitude",
+            "oid": "5e3906ff-1420-44d4-9c54-b185760e6351",
+            "required": false,
+            "scale": 6,
+            "type": "number"
+        },
+        {
+            "displayLabel": "Longitude",
+            "name": "longitude",
+            "oid": "a12b4525-3348-4533-abbb-b60ac0377c93",
+            "required": false,
+            "scale": 6,
+            "type": "number"
+        },
+        {
+            "displayLabel": "Country Name",
+            "name": "name",
+            "oid": "5b994268-a6f5-4017-8519-0096acd69d50",
+            "required": true,
+            "type": "string"
+        }
+    ],
+    "hidden": false,
+    "name": "Country",
+    "oid": "7d198a50-4339-46a4-9407-f144565ded98",
+    "setupData": true
+}

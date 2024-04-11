@@ -1,0 +1,124 @@
+{
+    "displayLabel": "Contact",
+    "fields": [
+        {
+            "displayLabel": "Id",
+            "key": true,
+            "name": "id",
+            "oid": "28d861ce-1cf3-40f9-95af-e4f056f9d1c3",
+            "required": true,
+            "type": "number",
+            "unique": true
+        },
+        {
+            "displayLabel": "Created",
+            "historyType": "timeCreated",
+            "name": "creationDate",
+            "oid": "547bfcdd-9ff9-42c7-b72e-57421d3a7a85",
+            "type": "datetime"
+        },
+        {
+            "displayLabel": "Last Updated",
+            "historyType": "timeUpdated",
+            "name": "lastUpdateDate",
+            "oid": "b60272f0-cce4-4dda-bb58-88a65cb4e19a",
+            "type": "datetime"
+        },
+        {
+            "displayLabel": "Created By",
+            "historyType": "createdBy",
+            "name": "createdBy",
+            "oid": "72b7b1aa-0f27-4dc7-85f9-72f3944e346a",
+            "type": "string"
+        },
+        {
+            "displayLabel": "Last Updated By",
+            "historyType": "updatedBy",
+            "name": "lastUpdatedBy",
+            "oid": "fe0e1716-31a2-4c6c-9d57-51b7aeb47ad4",
+            "type": "string"
+        },
+        {
+            "displayLabel": "Version Number",
+            "historyType": "versionNumber",
+            "name": "versionNumber",
+            "oid": "330aa850-7c08-4282-9705-b0051ff65ff3",
+            "type": "number"
+        },
+        {
+            "displayLabel": "First Name",
+            "name": "firstName",
+            "oid": "c58b7548-b8db-4a7f-b4ad-dadf80bbe6f5",
+            "required": true,
+            "type": "string"
+        },
+        {
+            "displayLabel": "Last Name",
+            "name": "lastName",
+            "oid": "6aee18d6-7f26-41b6-9707-6ed6e7f16404",
+            "required": true,
+            "type": "string"
+        },
+        {
+            "displayLabel": "Company Name",
+            "name": "companyName",
+            "oid": "ed861102-7e7d-4e0a-ae18-2409114175c7",
+            "type": "string"
+        },
+        {
+            "displayLabel": "Address",
+            "name": "address",
+            "oid": "cb7394e8-0480-4fa5-9e50-d5a620cec262",
+            "type": "string"
+        },
+        {
+            "displayLabel": "City",
+            "name": "city",
+            "oid": "08d6b3fa-5299-4f1c-ac18-6578aae4a742",
+            "type": "string"
+        },
+        {
+            "displayLabel": "County",
+            "name": "county",
+            "oid": "5407aad5-8a92-46e8-8f7d-263a897f4ab9",
+            "type": "string"
+        },
+        {
+            "displayLabel": "State",
+            "name": "state",
+            "oid": "44b62ed2-2a80-439b-9722-82c50b7a7c3a",
+            "type": "string"
+        },
+        {
+            "displayLabel": "Zip Code",
+            "name": "zipCode",
+            "oid": "1f2468c7-8a44-486d-847c-0bfdb2cbed2d",
+            "required": true,
+            "type": "number"
+        },
+        {
+            "displayLabel": "Alternative Phone",
+            "name": "otherPhone",
+            "oid": "48214ade-71ed-43d3-b68a-6a640eca694a",
+            "type": "string"
+        },
+        {
+            "displayLabel": "Phone",
+            "name": "phone",
+            "oid": "7c35b1c4-6b65-4f59-a3ea-a1cfd81edc9b",
+            "required": true,
+            "type": "string"
+        },
+        {
+            "displayLabel": "Email",
+            "name": "email",
+            "oid": "e0762db4-addf-4505-95a8-f0854c2bb3d4",
+            "required": true,
+            "type": "string"
+        }
+    ],
+    "hidden": false,
+    "name": "Contact",
+    "oid": "635e22ba-9078-4c1b-a059-e6dd5463db95",
+    "setupData": true
+}

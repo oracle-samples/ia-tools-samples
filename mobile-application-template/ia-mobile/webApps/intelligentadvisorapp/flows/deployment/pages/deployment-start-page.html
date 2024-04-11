@@ -1,0 +1,104 @@
+<!-- Mobile only header and page title -->
+<header role="banner" class="oj-sm-flex-initial vb-web-applayout-header oj-md-hide">
+  <div class="oj-flex-bar oj-sm-align-items-center vb-web-applayout-header-content">
+    <!-- Navigator toggle button will render only if we have a drawer -->
+    <oj-bind-if test="[[ document.querySelector('oj-vb-fragment[name=\'shell-drawer\']') ]]">
+      <div class="oj-flex-bar">
+        <oj-button chroming="borderless" display="icons" on-oj-action="[[$listeners.buttonAction]]" disabled="[[ $variables.isListLoading||$variables.isDeploymentSaving ]]">
+          <span slot="startIcon" class="oj-ux-ico-menu"></span>
+          <span><oj-bind-text value="[[$application.translations.app.app_title_navigation_drawer]]"></oj-bind-text></span>
+        </oj-button>
+      </div>
+    </oj-bind-if>
+    <!-- Page specific title and actions with overflow menu displayed -->
+    <div class="oj-sm-margin-2x-horizontal oj-sm-align-items-center oj-md-hide oj-sm-flex-1">
+      <div class="vb-content-header oj-flex-bar oj-sm-flex-items-initial oj-sm-align-items-center">
+        <div class="oj-flex-bar-start">
+          <div class="oj-typography-body-lg oj-typography-semi-bold">
+            <oj-bind-text value="[[$application.translations.app.deployment_start_page_title]]"></oj-bind-text>
+          </div>
+        </div>
+        <div class="oj-flex-bar-end">
+          <oj-button on-oj-action="[[$listeners.deploymentStartHomeAction]]"
+            id="deployment-start-home-mobile" label="[[ $application.translations.app.app_home_button_label ]]"
+            class="oj-button-sm">
+          </oj-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Page specific title and actions for desktop formfactor -->
+<div class="vb-content-header oj-flex-bar oj-sm-flex-1 oj-sm-only-hide oj-sm-align-items-center">
+  <div class="oj-flex-bar-start">
+    <div class="oj-typography-body-lg oj-typography-semi-bold">
+      <oj-bind-text value="[[$application.translations.app.deployment_start_page_title]]"></oj-bind-text>
+    </div>
+  </div>
+  <div class="oj-flex-bar-end">
+    <oj-button display="icons" id="deployment-start-home"
+      label="[[ $application.translations.app.app_home_button_label ]]" class="oj-button-sm"
+      on-oj-action="[[$listeners.deploymentStartHomeAction]]">
+    </oj-button>
+  </div>
+</div>
+
+<div class="oj-flex oj-sm-flex-direction-column">
+  <div class="oj-flex-item">
+    <oj-ia-intv-session-manager ia-site-url="[[ $application.variables.iaSiteUrl ]]" id="ia-session-manager-seed">
+    </oj-ia-intv-session-manager>
+  </div>
+  <div class="oj-flex-item oj-sm-width-full">
+    <div class="oj-panel oj-panel-shadow-md oj-flex oj-sm-flex-direction-column">
+      <oj-bind-if test="[[ !$variables.isListLoading ]]">
+        <oj-list-view class="oj-flex-item oj-sm-padding-1x mainContentView" selection-mode="single"
+          gridlines.item="visible" data="[[ $application.variables.deploymentListGlobalADP ]]"
+          :aria-label="[[$application.translations.app.deployment_list_view_aria_label]]">
+          <template slot="itemTemplate" data-oj-as="item">
+            <li :aria-label="[[ $current.data.name ]]">
+              <div class="oj-flex oj-sm-justify-content-space-between oj-sm-align-items-center oj-sm-padding-2x-vertical">
+                <span class="oj-sm-flex-1 oj-text-color-primary oj-typography-body-lg">
+                  <oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text>
+                </span>
+                <div class="oj-flex oj-sm-align-items-center">
+                  <oj-bind-if
+                    test="[[ $variables.isDeploymentSaving && $current.index == $variables.currentDeploymentIndex ]]">
+                    <oj-progress-circle class="oj-flex-item oj-sm-flex-initial" size="sm" value="-1">
+                    </oj-progress-circle>
+                  </oj-bind-if>
+
+                  <oj-bind-if
+                    test="[[ !$current.data.cachedLocally && !($variables.isDeploymentSaving && $current.index == $variables.currentDeploymentIndex) ]]">
+                    <oj-button data-oj-clickthrough="disabled" class="oj-button-sm oj-sm-margin-1x-horizontal" display="icons"
+                      on-oj-action="[[$listeners.buttonAction6]]"><oj-bind-text value="[[$application.translations.app.cache_flow_button_text]]"></oj-bind-text>
+                      <span slot="startIcon" class="oj-ux-ico-cloud-download"></span></oj-button>
+                  </oj-bind-if>
+                  <oj-bind-if
+                    test="[[ $current.data.cachedLocally && !($variables.isDeploymentSaving && $current.index == $variables.currentDeploymentIndex) ]]">
+                    <oj-button data-oj-clickthrough="disabled" class="oj-button-sm oj-sm-margin-1x-horizontal" display="icons"
+                      on-oj-action="[[$listeners.buttonAction6]]"><oj-bind-text value="[[$application.translations.app.refresh_flow_cache_text]]"></oj-bind-text>
+                      <span slot="startIcon" class=" oj-ux-ico-refresh"></span></oj-button>
+                  </oj-bind-if>
+                  <oj-bind-if
+                    test="[[ $current.data.cachedLocally && !($variables.isDeploymentSaving && $current.index == $variables.currentDeploymentIndex) ]]">
+                    <oj-button data-oj-clickthrough="disabled" class="oj-button-sm oj-sm-margin-1x-horizontal" display="icons"
+                      on-oj-action="[[$listeners.buttonAction7]]"><oj-bind-text value="[[$application.translations.app.clear_flow_cache_text]]"></oj-bind-text>
+                      <span slot="startIcon" class="oj-ux-ico-trash"></span></oj-button>
+                  </oj-bind-if>
+                </div>
+              </div>
+            </li>
+          </template>
+        </oj-list-view>
+      </oj-bind-if>
+      <oj-bind-if test="[[$variables.isListLoading]]">
+        <div class="oj-flex-item">
+          <div class='oj-flex oj-sm-justify-content-center'>
+            <oj-progress-circle value="-1"></oj-progress-circle>
+          </div>
+        </div>
+      </oj-bind-if>
+    </div>
+  </div>
+</div>

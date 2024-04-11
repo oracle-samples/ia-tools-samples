@@ -1,0 +1,100 @@
+{
+  "description": "",
+  "routerFlow": "assessment",
+  "variables": {
+    "messagesADP": {
+      "type": "vb/ArrayDataProvider2",
+      "defaultValue": {
+        "keyAttributes": "id",
+        "itemType": "page:messageType"
+      }
+    }
+  },
+  "metadata": {},
+  "types": {
+    "messageType": {
+      "id": "string",
+      "severity": "string",
+      "category": "string",
+      "summary": "string",
+      "detail": "string",
+      "timestamp": "string",
+      "autoTimeout": "number"
+    }
+  },
+  "eventListeners": {
+    "application:navigateToItem": {
+      "chains": [
+        {
+          "chain": "navigationHandler",
+          "parameters": {
+            "item": "{{ $event.item }}",
+            "updatedFrom": "{{ $event.updatedFrom }}"
+          }
+        }
+      ]
+    },
+    "application:toggleDrawer": {
+      "chains": [
+        {
+          "chain": "toggleDrawer",
+          "parameters": {}
+        }
+      ]
+    },
+    "onShellDrawerMenuButtonAction": {
+      "chains": [
+        {
+          "chain": "ADVISOR_FRAGMENT_MENU_BUTTON_CLICK_HANDLER_CHAIN",
+          "parameters": {
+            "actionId": "[[ $event.detail.actionId ]]"
+          }
+        }
+      ]
+    },
+    "onShellHeaderMenuButtonAction": {
+      "chains": [
+        {
+          "chain": "ADVISOR_FRAGMENT_MENU_BUTTON_CLICK_HANDLER_CHAIN",
+          "parameters": {
+            "actionId": "[[ $event.detail.actionId ]]"
+          }
+        }
+      ]
+    },
+    "vbNotification": {
+      "chains": [
+        {
+          "chain": "showNotification",
+          "parameters": {
+            "eventPayload": "{{ { id: $event.key, summary: $event.summary, detail: $event.message, severity: $event.type, autoTimeout: $event.displayMode === 'transient' ? 0 : -1 } }}"
+          }
+        }
+      ]
+    },
+    "onMessageClose": {
+      "chains": [
+        {
+          "chain": "closeNotificationHandler",
+          "parameters": {
+            "eventMessage": "{{ $event.detail.message }}"
+          }
+        }
+      ]
+    }
+
+  },
+  "imports": {
+    "components": {
+      "oj-messages": {
+        "path": "ojs/ojmessages"
+      },
+      "oj-drawer-layout": {
+        "path": "ojs/ojdrawerlayout"
+      }
+    },
+    "css": [
+      "/resources/css/shell.css"
+    ]
+  }
+}

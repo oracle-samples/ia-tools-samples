@@ -1,0 +1,54 @@
+{
+  "root": "switch",
+  "variables": {
+    "assessmentDetails": {
+      "type": "object",
+      "required": true,
+      "input": "fromCaller"
+    },
+    "navigationItem": {
+      "type": "string",
+      "required": true,
+      "input": "fromCaller"
+    }
+ 
+  },
+  "actions": {
+    "switch": {
+      "module": "vb/action/builtin/switchAction",
+      "parameters": {
+        "caseValue": "[[$chain.variables.navigationItem]]",
+        "possibleValues": [
+          "delete"
+        ]
+      },
+      "outcomes": {
+        "delete": "assignVariablesAssessmentToDelete"
+      }
+    },
+    "callFunctionOpenConfirmation": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "openConfirmation"
+      },
+      "label": "Open confirmation modal for delete",
+      "description": "Open confirmation modal for delete"
+    },
+    "assignVariablesAssessmentToDelete": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.assessmentToDelete": {
+          "source": "{{ $variables.assessmentDetails }}",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "callFunctionOpenConfirmation"
+      },
+      "label": "Assigning current selected item to variable",
+      "description": "Assigning current selected item to variable"
+    }
+  },
+  "description": "Swipe left operation on list item"
+}

@@ -1,0 +1,50 @@
+<header role="banner" class="oj-sm-flex-initial vb-web-applayout-header oj-sm-only-hide">
+  <div class="oj-flex-bar oj-sm-align-items-center vb-web-applayout-header-content">
+    <!-- Navigator toggle button -->
+    <div class="oj-flex-bar">
+      <oj-button on-oj-action="[[$listeners.drawerToggle]]" chroming="borderless" display="icons">
+        <span slot="startIcon" class="oj-ux-ico-menu"></span>
+        <span><oj-bind-text value="[[$application.translations.app.app_title_navigation_drawer]]"></oj-bind-text></span>
+      </oj-button>
+    </div>
+
+    <!-- Company logo and application title only displayed in desktop mode -->
+    <div class="oj-flex-bar-middle oj-sm-margin-4x-horizontal oj-sm-align-items-center">
+      <!-- Please Change the following for company specific logo   -->
+      <span class="oj-typography-heading-lg oj-sm-margin-2x-end oj-icon-color-warning oj-ux-ico-box"
+        :alt="[[ $application.translations.app.app_logo_hint_text ]]"
+        :title="[[ $application.translations.app.app_logo_hint_text ]]">
+      </span>
+      <h1 class="oj-typography-body-md oj-typography-semi-bold"
+        :title="[[ $application.translations.app.app_name_hint_text ]]">
+        <oj-bind-text value="[[ $application.translations.app.app_name_text ]]"></oj-bind-text>
+      </h1>
+    </div>
+
+    <!-- Global toolbar only displayed in desktop form-factor -->
+    <div class="oj-flex-bar-end">
+      <oj-toolbar>
+        <oj-menu-button display="icons" chroming="borderless">
+          <oj-bind-text value="[[$application.translations.app.app_account_options_label]]"></oj-bind-text>
+          <oj-avatar id="header-avatar" slot="endIcon" role="img" icon-class="oj-ux-ico-contact oj-typography-body-lg"
+            size="xs" background="orange" :aria-label="[[$application.user.fullName]]"
+            :title="[[$application.user.fullName]]">
+          </oj-avatar>
+          <oj-menu slot="menu" on-oj-menu-action="[[$listeners.headerMenuButtonAction]]">
+            <oj-bind-for-each data="[[ $application.variables.globalHeadersADP ]]">
+              <template>
+                <oj-option :id="[[ $current.data.id ]]" value="[[ $current.data.id ]]">
+                  <span :class="[[ $current.data.iconClass ]]" slot="startIcon"></span>
+                  <oj-bind-text
+                    value="[[ $application.translations.app.app_menu_item[$current.data.translationBundleKey] ]]">
+                  </oj-bind-text>
+                </oj-option>
+              </template>
+            </oj-bind-for-each>
+          </oj-menu>
+        </oj-menu-button>
+
+      </oj-toolbar>
+    </div>
+  </div>
+</header>

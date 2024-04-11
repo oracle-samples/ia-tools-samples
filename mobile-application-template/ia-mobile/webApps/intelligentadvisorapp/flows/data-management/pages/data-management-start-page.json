@@ -1,0 +1,16 @@
+{
+  "title": "Data Management",
+  "description": "The page to manage the external data for assessments",
+  "variables": {},
+  "metadata": {},
+  "types": {},
+  "eventListeners": {
+  },
+  "imports": {
+    "components": {
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      }
+    }
+  }
+}

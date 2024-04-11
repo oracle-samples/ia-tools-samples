@@ -1,0 +1,80 @@
+{
+  "root": "callRestGetContacts",
+  "description": "Return B2C contact data from B2C Service Public API",
+  "variables": {
+    "assessmentDetail": {
+      "type": "application:AssessmentItem",
+      "required": true,
+      "input": "fromCaller"
+    },
+    "b2cContactReturnedData": {
+      "type": "flow:B2CContactReturnData"
+    },
+    "dataActionDetail": {
+      "type": "application:FlowDataActionProps",
+      "required": true,
+      "input": "fromCaller"
+    }
+  },
+  "actions": {
+    "callRestGetContacts": {
+      "module": "vb/action/builtin/restAction",
+      "label": "Call B2C Contacts API",
+      "parameters": {
+        "endpoint": "b2cRestApi/getContacts",
+        "responseBodyFormat": "json",
+        "responseType": "application:B2CGetManyResponse"
+      },
+      "outcomes": {
+        "success": "assignVariablesB2cContactReturnedData",
+        "failure": "callChainGLOBALERRORHANDLERCHAIN"
+      }
+    },
+    "callChainGLOBALERRORHANDLERCHAIN": {
+      "module": "vb/action/builtin/callChainAction",
+      "label": "Call Global Error Handler",
+      "description": "Invoke global error handler action chain",
+      "parameters": {
+        "id": "application:GLOBAL_ERROR_HANDLER_CHAIN",
+        "params": {
+          "response": "{{ $chain.results.callRestGetContacts }}",
+          "type": "{{ $application.constants.errorTypes.b2cGetContacts }}"
+        }
+      },
+      "outcomes": {
+        "success": "return2"
+      }
+    },
+    "return": {
+      "module": "vb/action/builtin/returnAction",
+      "label": "Return Retrieved Data",
+      "parameters": {
+        "outcome": "success",
+        "payload": "{{ $variables.b2cContactReturnedData }}"
+      }
+    },
+    "return2": {
+      "module": "vb/action/builtin/returnAction",
+      "parameters": {
+        "outcome": "failure",
+        "payload": "{{ $chain.results.callRestGetContacts }}"
+      }
+    },
+    "assignVariablesB2cContactReturnedData": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "label": "Transform Response",
+      "description": "Convert response body to a different format if needed",
+      "parameters": {
+        "$variables.b2cContactReturnedData": {
+          "source": {
+              "items": "{{ $chain.results.callRestGetContacts.body.items }}"            },
+          "reset": "none",
+          "auto": "always"
+        }
+      },
+      "outcomes": {
+        "success": "return"
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "title": "Flow Management",
+  "description": "The page to manage flows used by assessments",
+  "variables": {
+    "currentDeploymentIndex": {
+      "type": "number"
+    },
+    "isDeploymentSaving": {
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "isListLoading": {
+      "type": "boolean",
+      "defaultValue": false
+    }
+  },
+  "metadata": {},
+  "types": {},
+  "eventListeners": {
+    "buttonAction": {
+      "chains": [
+        {
+          "chain": "application:APP_TOGGLE_DRAWER_HANDLER"
+        }
+      ]
+    },
+    "buttonAction6": {
+      "chains": [
+        {
+          "parameters": {
+            "currentDeploymentData": "{{ $current.data }}",
+            "index": "[[ $current.index ]]",
+            "key": "[[ $current.key ]]"
+          },
+          "chain": "ADVISOR_DOWNLOAD_COMPILED_DEPLOYMENT_CHAIN"
+        }
+      ]
+    },
+    "buttonAction7": {
+      "chains": [
+        {
+          "parameters": {
+            "currentDeploymentData": "{{ $current.data }}",
+            "index": "[[ $current.index ]]",
+            "key": "[[ $current.key ]]"
+          },
+          "chain": "ADVISOR_DELETE_CACHED_LOCAL_DEPLOYMENT_CHAIN"
+        }
+      ]
+    },
+    "deploymentStartHomeAction": {
+      "chains": [
+        {
+          "chain": "application:ADVISOR_NAVIGATE_TO_HOME_CHAIN",
+          "parameters": {}
+        }
+      ]
+    },
+    "vbEnter": {
+      "chains": [
+        {
+          "parameters": {},
+          "chain": "ADVISOR_REFRESH_ACTIVE_DEPLOYMENT_LIST_CHAIN"
+        }
+      ]
+    }
+  },
+  "imports": {
+    "components": {
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-ia-intv-session-manager": {
+        "path": "oj-ia/intv-session-manager/loader"
+      },
+      "oj-list-view": {
+        "path": "ojs/ojlistview"
+      },
+      "oj-progress-circle": {
+        "path": "ojs/ojprogress-circle"
+      }
+    }
+  }
+}

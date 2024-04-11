@@ -11,6 +11,7 @@ Directory | Description
 [`samples/`](samples/) | Code samples demonstrating methods of integrating 3rd-party applications with Oracle Intelligent Advisor.
 [`tools/`](tools/) | Standalone utilities for working with Oracle Intelligent Advisor. Supplied in source form to encourage project-specific enhancements.
 [`llm/`](llm/) | Code samples demonstrating how to use OpenAI SDK with an Oracle Intelligent Advisor-powered tool to provide accurate answers.
+[`mobile-application-template/`](mobile-application-template/) | Oracle Visual Builder application template for a Progressive Web Application (PWA) for managing and running Intelligent Advisor flow assessments. 
 
 ## Help
 
@@ -34,7 +35,7 @@ respective open source licenses.
 
 ## License
 
-Copyright (c) 2023 Oracle and/or its affiliates.
+Copyright (c) 2024 Oracle and/or its affiliates.
 
 Released under the Universal Permissive License v1.0 as shown at
 <https://oss.oracle.com/licenses/upl/>.

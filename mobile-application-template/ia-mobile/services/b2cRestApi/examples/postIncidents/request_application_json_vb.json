@@ -1,0 +1,17 @@
+{
+    "customFields": {
+        "Mobile": {
+            "gps_latitude": "37.774929",
+            "gps_longitude": "-122.419418"
+        },
+        "c": {
+            "cs_accepted_install_yn": true,
+            "no_of_users_affected": 99
+        }
+    },
+    "subject": "Incident Subject 10/26/2022 II",
+    "primaryContact": {
+        "id": 4,
+        "lookupName": "Chris Fellows"
+    }
+}
