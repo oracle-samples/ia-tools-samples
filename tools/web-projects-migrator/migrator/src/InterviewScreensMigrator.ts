@@ -372,6 +372,11 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
                 if (settingsFlowControls.input && settingsFlowControls.input[attributeType] && settingsFlowControls.input[attributeType][opmInputStyle]) {
                     inputControl.schemeId = settingsFlowControls.input[attributeType][opmInputStyle];
                     inputControl.inputStyle = schemeIdToInputStyle[inputControl.schemeId];
+                    if (!inputControl.inputStyle) {
+                        logDocumentMigrationWarning("Invalid Scheme ID '" + inputControl.schemeId + "' referenced in settings file");
+                        inputControl.inputStyle = inputDataTypeToDefaultSchemeId[attributeType]["inputStyle"];
+                        inputControl.schemeId = inputDataTypeToDefaultSchemeId[attributeType]["id"];
+                    }
                 } else {
                     inputControl.inputStyle = inputDataTypeToDefaultSchemeId[attributeType]["inputStyle"];
                     inputControl.schemeId = inputDataTypeToDefaultSchemeId[attributeType]["id"];
@@ -561,6 +566,11 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
                 if (settingsFlowControls.referenceRelationship && settingsFlowControls.referenceRelationship.toOne && settingsFlowControls.referenceRelationship.toOne[opmInputStyle]) {
                     referenceControl.schemeId = settingsFlowControls.referenceRelationship.toOne[opmInputStyle];
                     referenceControl.inputStyle = schemeIdToInputStyle[referenceControl.schemeId];
+                    if (!referenceControl.inputStyle) {
+                        logDocumentMigrationWarning("Invalid Scheme ID '" + referenceControl.schemeId + "' referenced in settings file");
+                        referenceControl.inputStyle = inputDataTypeToDefaultSchemeId["record"]["inputStyle"];
+                        referenceControl.schemeId = inputDataTypeToDefaultSchemeId["record"]["id"];
+                    }
                 } else {
                     referenceControl.inputStyle = inputDataTypeToDefaultSchemeId["record"]["inputStyle"];
                     referenceControl.schemeId = inputDataTypeToDefaultSchemeId["record"]["id"];
@@ -588,6 +598,11 @@ export function migrateScreens(interviewModelXml: XmlElement, flowProject: FlowP
                 if (settingsFlowControls.referenceRelationship && settingsFlowControls.referenceRelationship.toMany && settingsFlowControls.referenceRelationship.toMany[opmInputStyle]) {
                     referenceControl.schemeId = settingsFlowControls.referenceRelationship.toMany[opmInputStyle];
                     referenceControl.inputStyle = schemeIdToInputStyle[referenceControl.schemeId];
+                    if (!referenceControl.inputStyle) {
+                        logDocumentMigrationWarning("Invalid Scheme ID '" + referenceControl.schemeId + "' referenced in settings file");
+                        referenceControl.inputStyle = "checkBox";
+                        referenceControl.schemeId = kindToDefaultSchemeId["referenceList"];
+                    }
                 } else {
                     referenceControl.inputStyle = "checkBox"; // Input style has to be checkbox
                     referenceControl.schemeId = kindToDefaultSchemeId["referenceList"];
