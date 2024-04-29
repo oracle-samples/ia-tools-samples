@@ -61,7 +61,7 @@
             },
             "text":
             {
-                "text-area": "text-textarea",
+                "text-area": "text-area",
                 "password": "text-password",
                 "masked": "text-masked"
             },
