@@ -19,7 +19,7 @@ To set up these samples:
 1. In Intelligent Advisor Hub, use the Action menu on the Projects page to
     1. Import the scheme project file Scheme for Student Benefits.json
     1. Import the flow project file Student Benefits.json
-For more information, see [Import an existing project](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Manage_projects/Import_existing_project.htm).
+For more information, see [Import an existing project](https://docs.oracle.com/en/cloud/saas/intelligent-advisor/admin-intelligent-advisor/Content/Guides/Use_Intelligent_Advisor/Manage_projects/Import_existing_project.htm).
 1. In Intelligent Advisor Hub, use the Permissions view to
     1. Create an API Client user with the Interview APIs role. Remember the client id and client secret you choose
     1. Use the Actions/Access Settings menu to give http://localhost:8081 access to both Interviews and Hub
@@ -45,10 +45,10 @@ Global input data was also defined:
 * defined-genders
 
 For more information, see:
-* [Create a new project](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Manage_projects/Create_a_new_project.htm)
-* [Add or edit a control in a flow scheme](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Author_flow_schemes/Add_edit_control_flow_scheme.htm)
-* [Add or edit a custom data action in a flow scheme](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Author_flow_schemes/Add_edit_custom_data_action_flow_scheme.htm)
-* [Add or edit input data in a flow scheme](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Author_flow_schemes/Add_edit_input_data_flow_scheme.htm)
+* [Create a new project](https://docs.oracle.com/en/cloud/saas/intelligent-advisor/admin-intelligent-advisor/Content/Guides/Use_Intelligent_Advisor/Manage_projects/Create_a_new_project.htm)
+* [Add or edit a control in a flow scheme](https://docs.oracle.com/en/cloud/saas/intelligent-advisor/using-intelligent-advisor/Content/Guides/Use_Intelligent_Advisor/Author_flow_schemes/Add_edit_control_flow_scheme.htm)
+* [Add or edit a custom data action in a flow scheme](https://docs.oracle.com/en/cloud/saas/intelligent-advisor/using-intelligent-advisor/Content/Guides/Use_Intelligent_Advisor/Author_flow_schemes/Add_edit_custom_data_action_flow_scheme.htm)
+* [Add or edit input data in a flow scheme](https://docs.oracle.com/en/cloud/saas/intelligent-advisor/using-intelligent-advisor/Content/Guides/Use_Intelligent_Advisor/Author_flow_schemes/Add_edit_input_data_flow_scheme.htm)
 
 ### Global input data
 The global input data allows the rendering project to supply values for each of the properties after the session has been created.
@@ -99,7 +99,7 @@ The Return fields for this custom data action are defined as follows: TYPE INTEG
 
 ## Flow project
 When you create a flow project, you select a scheme upon which the controls, data actions and other settings are defined in. The Students Benefits flow project uses the Scheme for Students Benefits flow scheme.
-For more information, see [Create a new project](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Manage_projects/Create_a_new_project.htm).
+For more information, see [Create a new project](https://docs.oracle.com/en/cloud/saas/intelligent-advisor/admin-intelligent-advisor/Content/Guides/Use_Intelligent_Advisor/Manage_projects/Create_a_new_project.htm).
 
 ### Flow
 The flow project, as defined on the Flow tab, has the following page groups (these are equivalent to stages in a Policy Modeling interview): Eligibility, Student Details, Immigration Status, Education, Declarations and Conclusion.
@@ -111,13 +111,13 @@ These page groups contain the following pages (these are equivalent to screens i
 * Declarations: Declarations
 * Conclusion: Congratulations you are Eligible for Student Aid, Details Saved, Not Eligible for Student Aid
 
-For more information, see [Add a page to a flow](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Author_flows/Add_a_page_to_flow.htm).
+For more information, see [Add a page to a flow](https://docs.oracle.com/en/cloud/saas/intelligent-advisor/using-intelligent-advisor/Content/Guides/Use_Intelligent_Advisor/Author_flows/Add_a_page_to_flow.htm).
 
 Various standard input controls, such as Text, Number, Currency, Date, Radio group, Radio yes/no, Dropdown list, are used on these pages. Note that when adding inputs to pages, a control of a particular type must be placed on the page and then the "Set value for" property of the control defines the name of the field.
 
 There is also label text (Paragraph). Some label text contains text substitution.
 
-For more information, see [Add an input to a flow](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Author_flows/Add_an_input_to_flow.htm).
+For more information, see [Add an input to a flow](https://docs.oracle.com/en/cloud/saas/intelligent-advisor/using-intelligent-advisor/Content/Guides/Use_Intelligent_Advisor/Author_flows/Add_an_input_to_flow.htm).
 
 Comments are used to explain the implementation in the flow (these are not displayed in the runtime).
 

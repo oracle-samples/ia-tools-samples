@@ -203,8 +203,8 @@ In a Flow project migrated from an Oracle Policy modeling project, page groups a
 
 See the following help topics from the Policy Modeling user documentation to understand this behaviour:
 
-- [Understand what entity a screen belongs to](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Use_Policy_Modeling/Screens/Understand_what_entity_screen_belongs_to.htm)
-- [Control the order of entity-level screens](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Use_Intelligent_Advisor/Use_Policy_Modeling/Screens/Control_order_entity_level_screens.htm)
+- [Understand what entity a screen belongs to](https://docs.oracle.com/en/cloud/saas/intelligent-advisor/using-policy-modeling/Content/Guides/Use_Intelligent_Advisor/Use_Policy_Modeling/Screens/Understand_what_entity_screen_belongs_to.htm)
+- [Control the order of entity-level screens](https://docs.oracle.com/en/cloud/saas/intelligent-advisor/using-policy-modeling/Content/Guides/Use_Intelligent_Advisor/Use_Policy_Modeling/Screens/Control_order_entity_level_screens.htm)
 
 ### Unsupported Features
 The following features in Oracle Policy Modeling interviews are not supported. Usages of these features will be ignored by the migrator and associated warnings will be logged to the console:
