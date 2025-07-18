@@ -6,4 +6,4 @@ The Intelligent Advisor application created from this Oracle Visual Builder temp
 
 Please refer to the Intelligent Advisor Documentation for guidance regarding the configuration and usage of this template:
 
-[Using the Intelligent Advisor mobile application template in Visual Builder](https://documentation.custhelp.com/euf/assets/devdocs/unversioned/IntelligentAdvisor/en/Content/Guides/Customize_extend/Web_Interviews/Integration/Using_mobile_app_template_in_VBCS.htm)
+[Using the Intelligent Advisor mobile application template in Visual Builder](https://docs.oracle.com/en/cloud/saas/intelligent-advisor/config-intelligent-advisor/Content/Guides/Customize_extend/Web_Interviews/Integration/Using_mobile_app_template_in_VBCS.htm)
