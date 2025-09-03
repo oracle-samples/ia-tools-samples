@@ -29,20 +29,20 @@ public class Main {
                 System.out.println("Username: " + username);
 
                 try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    try (java.sql.Connection conn = java.sql.DriverManager.getConnection(dbUrl, username, password)) {
+                    Exporter exporter = new Exporter();
+                    try (java.sql.Connection conn = exporter.establishConnection(dbUrl, username, password)) {
                         try (
                             FileOutputStream fos = new FileOutputStream("exported.zip");
                             BufferedOutputStream bos = new BufferedOutputStream(fos);
                             ZipOutputStream zos = new ZipOutputStream(bos)
                         ) {
-                            new Exporter().doExport(conn, zos);
+                            exporter.doExport(conn, zos);
                             zos.flush();
                             System.out.println("Exported data to exported.zip");
                         }
                     }
                 } catch (ClassNotFoundException e) {
-                    System.err.println("MySQL JDBC Driver not found. Please add it to the classpath.");
+                    System.err.println("JDBC Driver not found for URL: " + dbUrl + ". Ensure the appropriate MySQL or Oracle JDBC driver is on the classpath.");
                 } catch (java.sql.SQLException e) {
                     System.err.println("Failed to connect to the database: " + e.getMessage());
                 } catch (Exception e) {

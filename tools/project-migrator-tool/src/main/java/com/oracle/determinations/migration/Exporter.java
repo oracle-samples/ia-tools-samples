@@ -20,6 +20,18 @@ public class Exporter {
 
     private Set<String> exportedSnapshotIds;
 
+    public Connection establishConnection(String dbUrl, String username, String password) throws SQLException, ClassNotFoundException {
+        String urlLower = dbUrl == null ? "" : dbUrl.toLowerCase();
+        if (urlLower.startsWith("jdbc:mysql:")) {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } else if (urlLower.startsWith("jdbc:oracle:")) {
+            Class.forName("oracle.jdbc.OracleDriver");
+        } else {
+            System.out.println("Unrecognized JDBC URL scheme: " + dbUrl + ". Attempting to connect without explicit driver load.");
+        }
+        return DriverManager.getConnection(dbUrl, username, password);
+    }
+
     public void doExport(Connection connection, ZipOutputStream zos) {
         exportedSnapshotIds = new HashSet<>();
         try {
@@ -54,7 +66,7 @@ public class Exporter {
         JSONArray versions = new JSONArray();
         String versionSql = "SELECT pv.project_version_id, p.project_id, p.project_name, pv.project_version, pv.project_snapshot_id, pv.version_uuid, pv.activatable, pv.user_name,\n"
                 + "pv.opa_version, pv.description, pv.creation_date, pv.deleted_timestamp, pv.project_inclusions, pv.description_updated,\n"
-                + "pv.description_author, pv.runtime_dependency_ref_type FROM opa_source.PROJECT_VERSION pv, opa_source.PROJECT p WHERE p.project_id = pv.project_id AND pv.deleted_timestamp IS NULL ORDER BY pv.project_version_id ASC;";
+                + "pv.description_author, pv.runtime_dependency_ref_type FROM PROJECT_VERSION pv, PROJECT p WHERE p.project_id = pv.project_id AND pv.deleted_timestamp IS NULL ORDER BY pv.project_version_id ASC";
         try (
                 Statement versionStmt = connection.createStatement();
                 ResultSet versionRs = versionStmt.executeQuery(versionSql)
