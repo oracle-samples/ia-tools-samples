@@ -206,7 +206,7 @@ public class Exporter {
         String sql = "SELECT project_id, project_name, project_description, last_updated,\n"
                 + " (SELECT p.project_name FROM PROJECT p, PROJECT_VERSION pv WHERE PROJECT.from_project_version_id = pv.project_version_id AND p.project_id = pv.project_id) AS from_project_name,\n"
                 + " (SELECT pv.project_version FROM PROJECT_VERSION pv WHERE PROJECT.from_project_version_id = pv.project_version_id) AS from_project_version_number,\n"
-                + " latest_version, deleted_timestamp FROM PROJECT WHERE deleted_timestamp IS NULL";
+                + " latest_version, deleted_timestamp FROM PROJECT WHERE deleted_timestamp IS NULL ORDER BY project_id ASC";
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         while (rs.next()) {
@@ -228,7 +228,7 @@ public class Exporter {
         String sql = "SELECT m.module_id, m.module_name, m.module_kind, m.module_is_template, " +
                 "m.module_from_version_id, mv.module_id AS from_module_id, mv.version_number AS from_version_number " +
                 "FROM MODULE m " +
-                "LEFT JOIN MODULE_VERSION mv ON m.module_from_version_id = mv.module_version_id";
+                "LEFT JOIN MODULE_VERSION mv ON m.module_from_version_id = mv.module_version_id ORDER BY m.module_id ASC";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
