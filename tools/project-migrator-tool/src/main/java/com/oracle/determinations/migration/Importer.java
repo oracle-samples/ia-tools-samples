@@ -299,87 +299,26 @@ public class Importer {
     private void uploadModules(String iaHostUrl, String oAuthToken, JSONArray modules, JSONArray moduleVersions) throws Exception {
         // Group all versions for each module
         Map<String, JSONObject> moduleByName = new HashMap<>();
-        Map<String, JSONArray> versionsByModuleName = new HashMap<>();
+
+        String url = iaHostUrl + "/opa-hub/api/experimental/opm_projects";
 
         for (int i = 0; i < modules.length(); i++) {
             JSONObject module = modules.getJSONObject(i);
             String moduleName = module.getString("module_name");
             moduleByName.put(moduleName, module);
-            versionsByModuleName.put(moduleName, new JSONArray());
         }
-        for (int i = 0; i < moduleVersions.length(); i++) {
+
+        for (int i=0; i < moduleVersions.length(); i++) {
             JSONObject moduleVersion = moduleVersions.getJSONObject(i);
             String moduleName = moduleVersion.getString("module_name");
-            if (versionsByModuleName.containsKey(moduleName)) {
-                versionsByModuleName.get(moduleName).put(moduleVersion);
-            }
-        }
-
-        for (String moduleName : moduleByName.keySet()) {
             JSONObject module = moduleByName.get(moduleName);
-            JSONArray versionsArr = versionsByModuleName.get(moduleName);
 
-            if (versionsArr == null || versionsArr.length() == 0) {
-                continue; // No versions to import
+            JSONObject postBody = new JSONObject(moduleVersion);
+            postBody.put("migrator_tool", true);
+            if (module.has("from_module_name")) {
+                postBody.put("from_module_name", module.getString("from_module_name"));
+                postBody.put("from_version_number", module.getInt("from_version_number"));   
             }
-
-            // Prepare project POST body
-            JSONObject projectPost = new JSONObject();
-            projectPost.put("name", moduleName);
-
-            // Map module_kind to OIA project kind
-            int kindId = module.has("module_kind") ? module.getInt("module_kind") : 1;
-            // Assume: 1→"decision", (add more mappings as needed)
-            String kind = (kindId == 1) ? "decision" : "policy-model";
-            projectPost.put("kind", kind);
-
-            // Handle isTemplate
-            boolean isTemplate = module.optInt("module_is_template", 0) != 0;
-            projectPost.put("isTemplate", isTemplate);
-
-            // Single workspace assignment
-            String workspace = null;
-            JSONArray workspaces = module.optJSONArray("workspaces");
-            if (workspaces != null && workspaces.length() > 0) {
-                workspace = workspaces.getString(0);
-            } else {
-                workspace = "";
-            }
-
-            // Build versions array for project POST API
-            JSONArray projectVersionsArr = new JSONArray();
-            for (int vi = 0; vi < versionsArr.length(); vi++) {
-                JSONObject ver = versionsArr.getJSONObject(vi);
-                JSONObject versionObj = new JSONObject();
-
-                versionObj.put("description", ver.optString("description", null));
-
-                // Parse definition (module_version.definition is a stringified JSON)
-                String definitionText = ver.optString("definition", null);
-                JSONObject definitionJson = null;
-                if (definitionText != null) {
-                    try {
-                        definitionJson = new JSONObject(definitionText);
-                        versionObj.put("definition", definitionJson); // Object not string!
-                    } catch (Exception e) {
-                        throw new RuntimeException("Invalid module definition JSON: " + definitionText, e);
-                    }
-                }
-
-                versionObj.put("isDraft", false);
-
-                projectVersionsArr.put(versionObj);
-            }
-            JSONObject versionsObj = new JSONObject();
-            versionsObj.put("items", projectVersionsArr);
-            projectPost.put("versions", versionsObj);
-
-            // Assign single workspace and POST to /projects
-            projectPost.put("workspace", workspace);
-
-            String url = iaHostUrl;
-            if (url.endsWith("/")) url = url.substring(0, url.length() - 1);
-            url += "/opa-hub/api/12.2.39/projects";
 
             // POST the project using Apache HttpClient
             int statusCode;
@@ -389,7 +328,7 @@ public class Importer {
                 httpPost.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + oAuthToken);
                 httpPost.setHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
                 httpPost.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
-                httpPost.setEntity(new StringEntity(projectPost.toString(), "UTF-8"));
+                httpPost.setEntity(new StringEntity(postBody.toString(), "UTF-8"));
 
                 try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
                     statusCode = response.getStatusLine().getStatusCode();
@@ -401,7 +340,8 @@ public class Importer {
             if (statusCode < 200 || statusCode >= 300) {
                 throw new RuntimeException("Module import failed. HTTP code: " + statusCode + "\nResponse: " + responseText);
             }
-            System.out.println("Imported module: " + moduleName + " (" + versionsArr.length() + " version(s))");
+            System.out.println("Imported module: " + moduleName + " version: " + moduleVersion.getInt("version_number"));
+                     
         }
     }
 

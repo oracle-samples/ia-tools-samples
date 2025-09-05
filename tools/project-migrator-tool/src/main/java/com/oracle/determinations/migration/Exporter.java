@@ -225,8 +225,9 @@ public class Exporter {
     // Export all modules as modules.json
     private String exportModules(Connection connection) throws SQLException {
         JSONArray jsonArray = new JSONArray();
-        String sql = "SELECT m.module_id, m.module_name, m.module_kind, m.module_is_template, " +
-                "m.module_from_version_id, mv.module_id AS from_module_id, mv.version_number AS from_version_number " +
+        String sql = "SELECT m.module_id, m.module_name, m.module_kind," +
+                "(SELECT module_name FROM MODULE WHERE module_id = mv.module_id) AS from_module_name," +
+                "mv.version_number AS from_version_number " +
                 "FROM MODULE m " +
                 "LEFT JOIN MODULE_VERSION mv ON m.module_from_version_id = mv.module_version_id ORDER BY m.module_id ASC";
         try (Statement stmt = connection.createStatement();
@@ -238,12 +239,11 @@ public class Exporter {
                 System.out.println("Exporting module: " + moduleName);
                 jo.put("module_name", moduleName);
                 jo.put("module_kind", rs.getInt("module_kind"));
-                jo.put("module_is_template", rs.getInt("module_is_template"));
 
                 // Optionally, add source module/version info if present
-                int fromModuleId = rs.getInt("from_module_id");
+                String fromModuleName = rs.getString("from_module_name");
                 if (!rs.wasNull()) {
-                    jo.put("from_module_id", fromModuleId);
+                    jo.put("from_module_name", fromModuleName);
                 }
                 int fromVersionNumber = rs.getInt("from_version_number");
                 if (!rs.wasNull()) {
@@ -251,17 +251,15 @@ public class Exporter {
                 }
 
                 // Add collections ("workspaces") for this module
-                JSONArray workspaces = new JSONArray();
                 String collSql = "SELECT c.collection_name FROM MODULE_COLL mc, COLLECTION c WHERE mc.collection_id = c.collection_id AND mc.module_id = ?";
                 try (PreparedStatement ps = connection.prepareStatement(collSql)) {
                     ps.setInt(1, moduleId);
                     try (ResultSet collRs = ps.executeQuery()) {
                         while (collRs.next()) {
-                            workspaces.put(collRs.getString("collection_name"));
+                            jo.put("workspace", collRs.getString("collection_name"));
                         }
                     }
                 }
-                jo.put("workspaces", workspaces);
 
                 jsonArray.put(jo);
             }
@@ -296,19 +294,6 @@ public class Exporter {
                 jo.put("description", rs.getString("description"));
                 jo.put("description_updated", formatTimestamp(rs.getTimestamp("description_updated")));
                 jo.put("description_author", rs.getString("description_author"));
-
-                // Add workspaces this module appears in (from MODULE_COLL)
-                JSONArray workspaces = new JSONArray();
-                String collSql = "SELECT c.collection_name FROM MODULE_COLL mc, COLLECTION c WHERE mc.collection_id = c.collection_id AND mc.module_id = ?";
-                try (PreparedStatement ps = connection.prepareStatement(collSql)) {
-                    ps.setInt(1, moduleId);
-                    try (ResultSet collRs = ps.executeQuery()) {
-                        while (collRs.next()) {
-                            workspaces.put(collRs.getString("collection_name"));
-                        }
-                    }
-                }
-                jo.put("workspaces", workspaces);
 
                 jsonArray.put(jo);
             }
