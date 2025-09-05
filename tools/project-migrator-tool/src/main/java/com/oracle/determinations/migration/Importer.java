@@ -320,6 +320,24 @@ public class Importer {
                 postBody.put("from_version_number", module.getInt("from_version_number"));   
             }
 
+            postBody.put("module_name", moduleName);
+            postBody.put("workspace", module.getString("workspace"));
+            postBody.put("create_timestamp", moduleVersion.getString("create_timestamp"));
+            postBody.put("module_imported", moduleVersion.getInt("module_imported"));
+            postBody.put("user_name", moduleVersion.getString("user_name"));
+            postBody.put("version_number", moduleVersion.getInt("version_number"));
+            postBody.put("definition", moduleVersion.getString("definition"));
+            if (moduleVersion.has("description")) {
+                postBody.put("description", moduleVersion.getString("description"));
+            }
+            if (moduleVersion.has("description_updated")) {
+                postBody.put("description_updated", moduleVersion.getString("description_updated"));
+            }
+            if (moduleVersion.has("description_author")) {
+                postBody.put("description_author", moduleVersion.getString("description_author"));
+            }
+            postBody.put("fingerprint_sha256", moduleVersion.getString("fingerprint_sha256"));
+
             // POST the project using Apache HttpClient
             int statusCode;
             String responseText;
