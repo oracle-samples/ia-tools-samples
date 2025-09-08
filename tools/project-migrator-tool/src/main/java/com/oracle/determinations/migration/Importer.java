@@ -313,6 +313,8 @@ public class Importer {
             String moduleName = moduleVersion.getString("module_name");
             JSONObject module = moduleByName.get(moduleName);
 
+            int versionNumber = moduleVersion.getInt("version_number");
+
             JSONObject postBody = new JSONObject(moduleVersion);
             postBody.put("migrator_tool", true);
             if (module.has("from_module_name")) {
@@ -358,7 +360,7 @@ public class Importer {
             if (statusCode < 200 || statusCode >= 300) {
                 throw new RuntimeException("Module import failed. HTTP code: " + statusCode + "\nResponse: " + responseText);
             }
-            System.out.println("Imported module: " + moduleName + " version: " + moduleVersion.getInt("version_number"));
+            System.out.println("Imported module: " + moduleName + " version: " + (versionNumber == 0 ? "draft" : versionNumber));
                      
         }
     }

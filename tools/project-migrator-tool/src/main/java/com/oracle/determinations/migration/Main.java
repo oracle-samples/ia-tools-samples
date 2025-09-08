@@ -82,7 +82,7 @@ public class Main {
         System.out.println("  java -jar project-migration-tool.jar --export <dbUrl> <username> <password>");
         System.out.println("      - Exports source database contents to exported.zip using the given database connection.");
         System.out.println();
-        System.out.println("  java -jar project-migration-tool.jar --import <IAHostUrl> <username> <password> <exportedPayloadPath>");
+        System.out.println("  java -jar project-migration-tool.jar --import <IAHostUrl> <API client identifier> <API client secret> <exportedPayloadPath>");
         System.out.println("      - Imports the exported.zip payload into the given Intelligent Advisor server.");
     }
 
