@@ -50,8 +50,8 @@ public class Main {
                 }
                 break;
             case "--import":
-                // Expect: --import <IAHostUrl> <username> <password> <exportedPayloadPath>
-                if (args.length != 5) {
+                // Expect: --import <IAHostUrl> <username> <password> <exportedPayloadPath> [resumeJournalPath]
+                if (args.length != 5 && args.length != 6) {
                     printUsage();
                     return;
                 }
@@ -59,14 +59,19 @@ public class Main {
                 String iaUsername = args[2];
                 String iaPassword = args[3];
                 String exportedPayloadPath = args[4];
+                String resumeJournalPath = args.length == 6 ? args[5] : null;
+
                 System.out.println("Import Mode Selected.");
                 System.out.println("Intelligent Advisor Host URL: " + iaHostUrl);
                 System.out.println("Username: " + iaUsername);
                 System.out.println("Password: (provided, hidden for security)");
                 System.out.println("Exported Data Payload Path: " + exportedPayloadPath);
+                if (resumeJournalPath != null) {
+                    System.out.println("Resume Journal: " + resumeJournalPath);
+                }
 
                 try {
-                    new Importer().doImport(iaHostUrl, iaUsername, iaPassword, exportedPayloadPath);
+                    new Importer().doImport(iaHostUrl, iaUsername, iaPassword, exportedPayloadPath, resumeJournalPath);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -82,8 +87,9 @@ public class Main {
         System.out.println("  java -jar project-migration-tool.jar --export <dbUrl> <username> <password>");
         System.out.println("      - Exports source database contents to exported.zip using the given database connection.");
         System.out.println();
-        System.out.println("  java -jar project-migration-tool.jar --import <IAHostUrl> <API client identifier> <API client secret> <exportedPayloadPath>");
+        System.out.println("  java -jar project-migration-tool.jar --import <IAHostUrl> <API client identifier> <API client secret> <exportedPayloadPath> [resumeJournalPath]");
         System.out.println("      - Imports the exported.zip payload into the given Intelligent Advisor server.");
+        System.out.println("      - If resumeJournalPath is provided, validates journal entries against the payload and resumes by skipping versions already imported.");
     }
 
     
