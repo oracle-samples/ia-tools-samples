@@ -12,7 +12,14 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.entity.ContentType;
 import org.apache.http.HttpEntity;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -36,7 +43,7 @@ public class Importer {
         // Read all entities up front
         ZipEntry projectsEntry = zip.getEntry("projects.json");
         List<Project> projects;
-        try (java.io.InputStream is = zip.getInputStream(projectsEntry)) {
+        try (InputStream is = zip.getInputStream(projectsEntry)) {
             String json = new String(readAllBytes(is), StandardCharsets.UTF_8);
             JSONArray arr = new JSONArray(json);
             projects = new ArrayList<>();
@@ -45,21 +52,21 @@ public class Importer {
             }
         }
         ZipEntry projectVersionsEntry = zip.getEntry("project_versions.json");
-        List<ProjectVersion> projectVersions;
-        try (java.io.InputStream is = zip.getInputStream(projectVersionsEntry)) {
+        List<OPMProjectVersion> projectVersions;
+        try (InputStream is = zip.getInputStream(projectVersionsEntry)) {
             String json = new String(readAllBytes(is), StandardCharsets.UTF_8);
             JSONArray arr = new JSONArray(json);
             projectVersions = new ArrayList<>();
             for (int i = 0; i < arr.length(); i++) {
-                projectVersions.add(ProjectVersion.fromJson(arr.getJSONObject(i)));
+                projectVersions.add(OPMProjectVersion.fromJson(arr.getJSONObject(i)));
             }
         }
         ZipEntry modulesEntry = zip.getEntry("modules.json");
         ZipEntry moduleVersionsEntry = zip.getEntry("module_versions.json");
         List<Module> modules = null;
-        List<ModuleVersion> moduleVersions = null;
+        List<DecisionServiceVersion> moduleVersions = null;
         if (modulesEntry != null && moduleVersionsEntry != null) {
-            try (java.io.InputStream is = zip.getInputStream(modulesEntry)) {
+            try (InputStream is = zip.getInputStream(modulesEntry)) {
                 String json = new String(readAllBytes(is), StandardCharsets.UTF_8);
                 JSONArray arr = new JSONArray(json);
                 modules = new ArrayList<>();
@@ -67,18 +74,25 @@ public class Importer {
                     modules.add(Module.fromJson(arr.getJSONObject(i)));
                 }
             }
-            try (java.io.InputStream is = zip.getInputStream(moduleVersionsEntry)) {
+            try (InputStream is = zip.getInputStream(moduleVersionsEntry)) {
                 String json = new String(readAllBytes(is), StandardCharsets.UTF_8);
                 JSONArray arr = new JSONArray(json);
                 moduleVersions = new ArrayList<>();
                 for (int i = 0; i < arr.length(); i++) {
-                    moduleVersions.add(ModuleVersion.fromJson(arr.getJSONObject(i)));
+                    moduleVersions.add(DecisionServiceVersion.fromJson(arr.getJSONObject(i)));
                 }
             }
         }
  
         // Optional resume from journal
         if (resumeJournalPath != null && !resumeJournalPath.trim().isEmpty()) {
+            List<ProjectVersion> resumeEntries = parseJournalEntries(resumeJournalPath);
+
+            // todo - compare resume entries with list of project versions + module versions - is the former a prefix? If they match exactly, nothing to do and terminate
+            // todo pull versions from hub, group hub and resume entries by module and sort. Then compare. Fail if any differences. Need a different compare method as Hub REST API doesnt
+            //.   include all fields in GET response
+            // todo - add any resume journal entries to start of new journal file, to allow another resume if this new import process also fails!
+
             ResumeInfo resume = validateJournalAgainstPayload(iaHostUrl, oAuthToken, resumeJournalPath, projectVersions, moduleVersions);
             if (resume.projectSkip > 0) {
                 if (resume.projectSkip > projectVersions.size()) {
@@ -166,12 +180,12 @@ public class Importer {
         }
     }
 
-    private void uploadVersions(String iaHostUrl, String oAuthToken, List<Project> projects, List<ProjectVersion> projectVersions, ZipFile zip, Journal journal) throws Exception {
+    private void uploadVersions(String iaHostUrl, String oAuthToken, List<Project> projects, List<OPMProjectVersion> projectVersions, ZipFile zip, Journal journal) throws Exception {
         for (Project project : projects) {
             projectsByName.put(project.projectName, project);
         }
 
-        for (ProjectVersion projectVersion : projectVersions) {
+        for (OPMProjectVersion projectVersion : projectVersions) {
             String projectName = projectVersion.projectName;
             int projectVersionNumber = projectVersion.projectVersionNumber;
             String versionDescription = projectVersion.description;
@@ -184,7 +198,7 @@ public class Importer {
             String descriptionAuthor = projectVersion.descriptionAuthor;
 
             // Get snapshot fingerprint
-            String fingerprint = projectVersion.snapshotFingerprintSha256;
+            String fingerprint = projectVersion.fingerprintSha256;
 
             // Read snapshot bytes from zip
             ZipEntry snapshotEntry = zip.getEntry(fingerprint);
@@ -192,7 +206,7 @@ public class Importer {
                 throw new RuntimeException("Snapshot file not found in zip: " + fingerprint);
             }
             byte[] snapshotBytes;
-            try (java.io.InputStream is = zip.getInputStream(snapshotEntry)) {
+            try (InputStream is = zip.getInputStream(snapshotEntry)) {
                 snapshotBytes = readAllBytes(is);
             }
 
@@ -295,7 +309,7 @@ public class Importer {
     }
 
     // Upload modules and all their versions (batched) as projects using /projects endpoint
-    private void uploadModules(String iaHostUrl, String oAuthToken, List<Module> modules, List<ModuleVersion> moduleVersions, Journal journal) throws Exception {
+    private void uploadModules(String iaHostUrl, String oAuthToken, List<Module> modules, List<DecisionServiceVersion> moduleVersions, Journal journal) throws Exception {
         // Group all versions for each module
         Map<String, Module> moduleByName = new HashMap<>();
 
@@ -306,7 +320,7 @@ public class Importer {
             moduleByName.put(moduleName, module);
         }
 
-        for (ModuleVersion moduleVersion : moduleVersions) {
+        for (DecisionServiceVersion moduleVersion : moduleVersions) {
             String moduleName = moduleVersion.moduleName;
             Module module = moduleByName.get(moduleName);
 
@@ -369,8 +383,8 @@ public class Importer {
 
             StringBuilder form = new StringBuilder();
             form.append("grant_type=client_credentials");
-            form.append("&client_id=").append(java.net.URLEncoder.encode(iaUsername, "UTF-8"));
-            form.append("&client_secret=").append(java.net.URLEncoder.encode(iaPassword, "UTF-8"));
+            form.append("&client_id=").append(URLEncoder.encode(iaUsername, "UTF-8"));
+            form.append("&client_secret=").append(URLEncoder.encode(iaPassword, "UTF-8"));
 
             Map<String, String> headers = new HashMap<>();
             headers.put(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
@@ -405,14 +419,58 @@ public class Importer {
         }
     }
 
-    private ResumeInfo validateJournalAgainstPayload(String iaHostUrl, String oAuthToken, String journalPath, List<ProjectVersion> projectVersions, List<ModuleVersion> moduleVersions) throws Exception {
+    private List<ProjectVersion> parseJournalEntries(String journalPath) {
+        List<ProjectVersion> journalEntries = new ArrayList<>();
+
+        boolean inModuleSection = false;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(journalPath), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String trimmed = line.trim();
+                if (trimmed.isEmpty()) {
+                    continue;
+                }
+                JSONObject obj;
+                try {
+                    obj = new JSONObject(trimmed);
+                } catch (Exception ex) {
+                    throw new RuntimeException("Invalid journal file");
+                }
+
+                boolean isProject = obj.has("project_name") && obj.has("project_version_number");
+                boolean isModule = obj.has("module_name") && obj.has("version_number");
+                if (!isProject && !isModule) {
+                    throw new RuntimeException("Invalid journal file");
+                }
+
+                if (isProject) {
+                    if (inModuleSection) {
+                        throw new RuntimeException("Invalid journal file");
+                    }
+                    OPMProjectVersion pv = OPMProjectVersion.fromJson(obj);
+                    journalEntries.add(pv);
+                } else {
+                    inModuleSection = true;
+                    DecisionServiceVersion mv = DecisionServiceVersion.fromJson(obj);
+                    journalEntries.add(mv);
+                }
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException("Error reading journal file");
+        }
+
+        return journalEntries;
+    }
+
+    // TODO - can probably simplify this by building up lists of objects, ensuring correct sorting, then doing a compare over the entire lists
+    private ResumeInfo validateJournalAgainstPayload(String iaHostUrl, String oAuthToken, String journalPath, List<OPMProjectVersion> projectVersions, List<DecisionServiceVersion> moduleVersions) throws Exception {
         // Parse journal into domain objects (must be projects first, then modules)
-        java.util.List<ProjectVersion> journalProjects = new java.util.ArrayList<>();
-        java.util.List<ModuleVersion> journalModules = new java.util.ArrayList<>();
+        List<OPMProjectVersion> journalProjects = new ArrayList<>();
+        List<DecisionServiceVersion> journalModules = new ArrayList<>();
         boolean inModuleSection = false;
         int lineNo = 0;
 
-        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(journalPath), StandardCharsets.UTF_8))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(journalPath), StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
                 lineNo++;
@@ -437,11 +495,11 @@ public class Importer {
                     if (inModuleSection) {
                         throw new RuntimeException("Journal entry for a project version found after module entries at line " + lineNo + ". Journal must list all project versions first, then module versions.");
                     }
-                    ProjectVersion pv = ProjectVersion.fromJson(obj);
+                    OPMProjectVersion pv = OPMProjectVersion.fromJson(obj);
                     journalProjects.add(pv);
                 } else {
                     inModuleSection = true;
-                    ModuleVersion mv = ModuleVersion.fromJson(obj);
+                    DecisionServiceVersion mv = DecisionServiceVersion.fromJson(obj);
                     journalModules.add(mv);
                 }
             }
@@ -452,8 +510,8 @@ public class Importer {
             throw new RuntimeException("Journal lists " + journalProjects.size() + " project version(s), but payload contains only " + projectVersions.size() + ".");
         }
         for (int i = 0; i < journalProjects.size(); i++) {
-            ProjectVersion expected = projectVersions.get(i);
-            ProjectVersion actual = journalProjects.get(i);
+            OPMProjectVersion expected = projectVersions.get(i);
+            OPMProjectVersion actual = journalProjects.get(i);
             if (!expected.equals(actual)) {
                 throw new RuntimeException(
                         "Journal project mismatch vs payload at position " + (i + 1) +
@@ -468,8 +526,8 @@ public class Importer {
         }
         if (moduleVersions != null) {
             for (int i = 0; i < journalModules.size(); i++) {
-                ModuleVersion expected = moduleVersions.get(i);
-                ModuleVersion actual = journalModules.get(i);
+                DecisionServiceVersion expected = moduleVersions.get(i);
+                DecisionServiceVersion actual = journalModules.get(i);
                 if (!expected.equals(actual)) {
                     throw new RuntimeException(
                             "Journal module mismatch vs payload at position " + (i + 1) +
@@ -484,20 +542,20 @@ public class Importer {
         HubVersions hub = fetchHubVersions(iaHostUrl, oAuthToken);
 
         // Build journal maps grouped by name to compare exact version lists per name
-        Map<String, java.util.List<ProjectVersion>> journalProjectsByName = new HashMap<>();
-        for (ProjectVersion pv : journalProjects) {
-            journalProjectsByName.computeIfAbsent(pv.projectName, k -> new java.util.ArrayList<>()).add(pv);
+        Map<String, List<OPMProjectVersion>> journalProjectsByName = new HashMap<>();
+        for (OPMProjectVersion pv : journalProjects) {
+            journalProjectsByName.computeIfAbsent(pv.projectName, k -> new ArrayList<>()).add(pv);
         }
-        Map<String, java.util.List<ModuleVersion>> journalModulesByName = new HashMap<>();
-        for (ModuleVersion mv : journalModules) {
-            journalModulesByName.computeIfAbsent(mv.moduleName, k -> new java.util.ArrayList<>()).add(mv);
+        Map<String, List<DecisionServiceVersion>> journalModulesByName = new HashMap<>();
+        for (DecisionServiceVersion mv : journalModules) {
+            journalModulesByName.computeIfAbsent(mv.moduleName, k -> new ArrayList<>()).add(mv);
         }
 
         // Validate that for each project in the journal, the Hub has exactly the same versions and ordering (no extras)
-        for (Map.Entry<String, java.util.List<ProjectVersion>> e : journalProjectsByName.entrySet()) {
+        for (Map.Entry<String, List<OPMProjectVersion>> e : journalProjectsByName.entrySet()) {
             String name = e.getKey();
-            java.util.List<ProjectVersion> journalList = e.getValue();
-            java.util.List<ProjectVersion> hubList = hub.projectsByName.get(name);
+            List<OPMProjectVersion> journalList = e.getValue();
+            List<OPMProjectVersion> hubList = hub.projectsByName.get(name);
             if (hubList == null) {
                 throw new RuntimeException("Journal refers to project '" + name + "', but it was not found on the Hub.");
             }
@@ -505,8 +563,8 @@ public class Importer {
                 throw new RuntimeException("Version count mismatch for project '" + name + "'. Hub has " + hubList.size() + " version(s) but journal lists " + journalList.size() + ".");
             }
             for (int i = 0; i < journalList.size(); i++) {
-                ProjectVersion jv = journalList.get(i);
-                ProjectVersion hv = hubList.get(i);
+                OPMProjectVersion jv = journalList.get(i);
+                OPMProjectVersion hv = hubList.get(i);
                 if (!jv.equals(hv)) {
                     throw new RuntimeException("Mismatch for project '" + name + "' at position " + (i + 1) + ". Hub has " + hv.projectName + "@" + hv.projectVersionNumber + " but journal lists " + jv.projectName + "@" + jv.projectVersionNumber + ".");
                 }
@@ -514,10 +572,10 @@ public class Importer {
         }
 
         // Validate that for each module in the journal, the Hub has exactly the same versions and ordering (no extras)
-        for (Map.Entry<String, java.util.List<ModuleVersion>> e : journalModulesByName.entrySet()) {
+        for (Map.Entry<String, List<DecisionServiceVersion>> e : journalModulesByName.entrySet()) {
             String name = e.getKey();
-            java.util.List<ModuleVersion> journalList = e.getValue();
-            java.util.List<ModuleVersion> hubList = hub.modulesByName.get(name);
+            List<DecisionServiceVersion> journalList = e.getValue();
+            List<DecisionServiceVersion> hubList = hub.modulesByName.get(name);
             if (hubList == null) {
                 throw new RuntimeException("Journal refers to module '" + name + "', but it was not found on the Hub.");
             }
@@ -525,8 +583,8 @@ public class Importer {
                 throw new RuntimeException("Version count mismatch for module '" + name + "'. Hub has " + hubList.size() + " version(s) but journal lists " + journalList.size() + ".");
             }
             for (int i = 0; i < journalList.size(); i++) {
-                ModuleVersion jv = journalList.get(i);
-                ModuleVersion hv = hubList.get(i);
+                DecisionServiceVersion jv = journalList.get(i);
+                DecisionServiceVersion hv = hubList.get(i);
                 if (!jv.equals(hv)) {
                     throw new RuntimeException("Mismatch for module '" + name + "' at position " + (i + 1) + ". Hub has " + hv.moduleName + "@" + hv.versionNumber + " but journal lists " + jv.moduleName + "@" + jv.versionNumber + ".");
                 }
@@ -539,9 +597,9 @@ public class Importer {
 
     // Container for Hub lists grouped by name
     private static class HubVersions {
-        final Map<String, java.util.List<ProjectVersion>> projectsByName;
-        final Map<String, java.util.List<ModuleVersion>> modulesByName;
-        HubVersions(Map<String, java.util.List<ProjectVersion>> projectsByName, Map<String, java.util.List<ModuleVersion>> modulesByName) {
+        final Map<String, List<OPMProjectVersion>> projectsByName;
+        final Map<String, List<DecisionServiceVersion>> modulesByName;
+        HubVersions(Map<String, List<OPMProjectVersion>> projectsByName, Map<String, List<DecisionServiceVersion>> modulesByName) {
             this.projectsByName = projectsByName;
             this.modulesByName = modulesByName;
         }
@@ -551,7 +609,7 @@ public class Importer {
     private HubVersions fetchHubVersions(String iaHostUrl, String oAuthToken) throws Exception {
         String base = iaHostUrl;
         if (base.endsWith("/")) base = base.substring(0, base.length() - 1);
-        String url = base + "/opa-hub/api/12.2.39/projects?expand=versions&links=none&fields=name,kind,workspace,versions";
+        String url = base + "/opa-hub/api/12.2.39/projects?expand=versions";
 
         Map<String, String> headers = new HashMap<>();
         headers.put(HttpHeaders.AUTHORIZATION, "Bearer " + oAuthToken);
@@ -562,8 +620,8 @@ public class Importer {
             throw new RuntimeException("Failed to fetch Hub projects for resume validation. HTTP code: " + res.statusCode + "\nResponse: " + res.body);
         }
 
-        Map<String, java.util.List<ProjectVersion>> hubProjectsByName = new HashMap<>();
-        Map<String, java.util.List<ModuleVersion>> hubModulesByName = new HashMap<>();
+        Map<String, List<OPMProjectVersion>> hubProjectsByName = new HashMap<>();
+        Map<String, List<DecisionServiceVersion>> hubModulesByName = new HashMap<>();
 
         JSONObject root = new JSONObject(res.body);
         if (root.has("items")) {
@@ -575,7 +633,7 @@ public class Importer {
                 String workspace = proj.optString("workspace", null);
 
                 // Normalize kind to our importer terminology
-                boolean isPolicyModel = "policy-model".equalsIgnoreCase(kind) || "policy-modeling".equalsIgnoreCase(kind);
+                boolean isPolicyModel = "policy-model".equalsIgnoreCase(kind);
                 boolean isDecision = "decision".equalsIgnoreCase(kind);
 
                 JSONObject versionsObj = proj.optJSONObject("versions");
@@ -585,15 +643,16 @@ public class Importer {
                 for (int v = 0; v < versionsArr.length(); v++) {
                     JSONObject ver = versionsArr.getJSONObject(v);
                     int versionNo = ver.getInt("version");
-                    String description = ver.has("description") ? ver.optString("description", null) : null;
-                    String descriptionUpdatedAt = ver.has("descriptionUpdatedAt") ? ver.optString("descriptionUpdatedAt", null) : null;
-                    String descriptionAuthor = ver.has("descriptionAuthor") ? ver.optString("descriptionAuthor", null) : null;
-                    String author = ver.has("author") ? ver.optString("author", null) : null;
-                    String createTimestamp = ver.has("createTimestamp") ? ver.optString("createTimestamp", null) : null;
+                    String description = ver.optString("description", null);
+                    String descriptionUpdatedAt = ver.optString("descriptionUpdatedAt", null);
+                    String descriptionAuthor = ver.optString("descriptionAuthor", null);
+                    String author = ver.optString("author", null);
+                    String createTimestamp = ver.optString("createTimestamp", null);
+                    String fingerprintSha256 = ver.optString("definitionHash", null);
 
                     if (isPolicyModel) {
                         // Map to ProjectVersion (fields not present on Hub remain null)
-                        ProjectVersion pv = new ProjectVersion(
+                        OPMProjectVersion pv = new OPMProjectVersion(
                                 name,
                                 versionNo,
                                 description,
@@ -603,17 +662,18 @@ public class Importer {
                                 workspace,
                                 descriptionUpdatedAt,
                                 descriptionAuthor,
-                                null,                 // fingerprint not provided by Projects API
+                                fingerprintSha256,                
                                 null,
                                 null
                         );
-                        hubProjectsByName.computeIfAbsent(name, k -> new java.util.ArrayList<>()).add(pv);
+                        hubProjectsByName.computeIfAbsent(name, k -> new ArrayList<>()).add(pv);
                     } else if (isDecision) {
                         // Map to ModuleVersion
                         String definition = ver.has("definition") ? ver.get("definition").toString() : null;
-                        ModuleVersion mv = new ModuleVersion(
+                        boolean isDraft = ver.getBoolean("isDraft");
+                        DecisionServiceVersion mv = new DecisionServiceVersion(
                                 name,
-                                versionNo,
+                                isDraft ? 0 : versionNo,
                                 createTimestamp,
                                 0,                    // moduleImported not on Projects API; set default
                                 author,
@@ -621,9 +681,9 @@ public class Importer {
                                 description,
                                 descriptionUpdatedAt,
                                 descriptionAuthor,
-                                null                  // fingerprint not provided by Projects API
+                                fingerprintSha256
                         );
-                        hubModulesByName.computeIfAbsent(name, k -> new java.util.ArrayList<>()).add(mv);
+                        hubModulesByName.computeIfAbsent(name, k -> new ArrayList<>()).add(mv);
                     }
                 }
             }
@@ -681,8 +741,8 @@ public class Importer {
     }
 
     // Helper method to read all bytes from an InputStream (replacement for StreamUtils.readAll)
-    private static byte[] readAllBytes(java.io.InputStream input) throws java.io.IOException {
-        java.io.ByteArrayOutputStream buffer = new java.io.ByteArrayOutputStream();
+    private static byte[] readAllBytes(InputStream input) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int nRead;
         byte[] data = new byte[4096];
         while ((nRead = input.read(data, 0, data.length)) != -1) {

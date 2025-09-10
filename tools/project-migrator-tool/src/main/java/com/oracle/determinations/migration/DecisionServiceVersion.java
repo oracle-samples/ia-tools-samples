@@ -3,7 +3,7 @@ package com.oracle.determinations.migration;
 import org.json.JSONObject;
 import java.util.Objects;
 
-public class ModuleVersion {
+public class DecisionServiceVersion implements ProjectVersion {
     public final String moduleName;
     public final int versionNumber;
     public final String createTimestamp;
@@ -14,8 +14,9 @@ public class ModuleVersion {
     public final String descriptionUpdated;
     public final String descriptionAuthor;
     public final String fingerprintSha256;
+    public final boolean isDraft;
 
-    public ModuleVersion(String moduleName,
+    public DecisionServiceVersion(String moduleName,
                          int versionNumber,
                          String createTimestamp,
                          int moduleImported,
@@ -35,9 +36,10 @@ public class ModuleVersion {
         this.descriptionUpdated = descriptionUpdated;
         this.descriptionAuthor = descriptionAuthor;
         this.fingerprintSha256 = fingerprintSha256;
+        this.isDraft = versionNumber == 0;
     }
 
-    public static ModuleVersion fromJson(JSONObject obj) {
+    public static DecisionServiceVersion fromJson(JSONObject obj) {
         String moduleName = obj.getString("module_name");
         int versionNumber = obj.getInt("version_number");
         String createTimestamp = obj.getString("create_timestamp");
@@ -48,7 +50,7 @@ public class ModuleVersion {
         String descriptionUpdated = obj.has("description_updated") ? obj.getString("description_updated") : null;
         String descriptionAuthor = obj.has("description_author") ? obj.getString("description_author") : null;
         String fingerprint = obj.getString("fingerprint_sha256");
-        return new ModuleVersion(moduleName, versionNumber, createTimestamp, moduleImported, userName, definition,
+        return new DecisionServiceVersion(moduleName, versionNumber, createTimestamp, moduleImported, userName, definition,
                 description, descriptionUpdated, descriptionAuthor, fingerprint);
     }
 
@@ -77,8 +79,8 @@ public class ModuleVersion {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ModuleVersion)) return false;
-        ModuleVersion that = (ModuleVersion) o;
+        if (!(o instanceof DecisionServiceVersion)) return false;
+        DecisionServiceVersion that = (DecisionServiceVersion) o;
         return versionNumber == that.versionNumber
                 && Objects.equals(moduleName, that.moduleName)
                 && Objects.equals(createTimestamp, that.createTimestamp)
@@ -86,11 +88,12 @@ public class ModuleVersion {
                 && Objects.equals(definition, that.definition)
                 && Objects.equals(description, that.description)
                 && Objects.equals(descriptionUpdated, that.descriptionUpdated)
-                && Objects.equals(descriptionAuthor, that.descriptionAuthor);
+                && Objects.equals(descriptionAuthor, that.descriptionAuthor)
+                && Objects.equals(fingerprintSha256, that.fingerprintSha256);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(moduleName, versionNumber, createTimestamp, userName, definition, description, descriptionUpdated, descriptionAuthor);
+        return Objects.hash(moduleName, versionNumber, createTimestamp, userName, definition, description, descriptionUpdated, descriptionAuthor, fingerprintSha256);
     }
 }

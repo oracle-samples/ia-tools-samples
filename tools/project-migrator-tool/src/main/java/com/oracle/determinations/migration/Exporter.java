@@ -161,7 +161,6 @@ public class Exporter {
 
                 //SNAPSHOT
                 String fingerprintSha256 = null;
-                JSONObject snapshot = new JSONObject();
                 String snapshotSql = "SELECT fingerprint_sha256, uploaded_date FROM SNAPSHOT WHERE snapshot_id = ?";
                 try (java.sql.PreparedStatement ps = connection.prepareStatement(snapshotSql)) {
                     ps.setInt(1, projectSnapshotId);
@@ -169,11 +168,10 @@ public class Exporter {
                     try (ResultSet rs = ps.executeQuery()) {
                         if (rs.next()) {
                             fingerprintSha256 = rs.getString("fingerprint_sha256");
-                            snapshot.put("fingerprint_sha256", fingerprintSha256);
                         }
                     }
                 }
-                versionJson.put("snapshot", snapshot);
+                versionJson.put("fingerprint_sha256", fingerprintSha256);
 
                 if (fingerprintSha256 != null && !exportedSnapshotIds.contains(fingerprintSha256)) {
                     exportProjectSnapshot(connection, projectSnapshotId, fingerprintSha256, zos);
@@ -277,8 +275,6 @@ public class Exporter {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 JSONObject jo = new JSONObject();
-                int moduleVersionId = rs.getInt("module_version_id");
-                int moduleId = rs.getInt("module_id");
 
                 String moduleName = rs.getString("module_name");
                 int versionNumber = rs.getInt("version_number");
@@ -289,7 +285,7 @@ public class Exporter {
                 jo.put("create_timestamp", formatTimestamp(rs.getTimestamp("create_timestamp")));
                 jo.put("user_name", rs.getString("user_name"));
                 jo.put("fingerprint_sha256", rs.getString("fingerprint_sha256"));
-                jo.put("definition", rs.getString("definition")); // Already JSON string
+                jo.put("definition", rs.getString("definition")); 
                 jo.put("module_imported", rs.getInt("module_imported"));
                 jo.put("description", rs.getString("description"));
                 jo.put("description_updated", formatTimestamp(rs.getTimestamp("description_updated")));
