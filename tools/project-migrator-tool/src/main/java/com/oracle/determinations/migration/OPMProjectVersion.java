@@ -122,4 +122,14 @@ public class OPMProjectVersion implements ProjectVersion {
     public int hashCode() {
         return Objects.hash(projectName, projectVersionNumber, description, userName, creationDate, workspace, descriptionUpdated, descriptionAuthor, fingerprintSha256);
     }
+
+    @Override
+    public int getVersion() {
+        return projectVersionNumber;
+    }
+
+    @Override
+    public String getProjectName() {
+        return projectName;
+    }
 }

@@ -96,4 +96,14 @@ public class DecisionServiceVersion implements ProjectVersion {
     public int hashCode() {
         return Objects.hash(moduleName, versionNumber, createTimestamp, userName, definition, description, descriptionUpdated, descriptionAuthor, fingerprintSha256);
     }
+
+    @Override
+    public int getVersion() {
+        return versionNumber;
+    }
+
+    @Override
+    public String getProjectName() {
+        return moduleName;
+    }
 }

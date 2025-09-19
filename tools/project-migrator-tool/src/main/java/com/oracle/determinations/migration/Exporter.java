@@ -27,6 +27,7 @@ public class Exporter {
         } else if (urlLower.startsWith("jdbc:oracle:")) {
             Class.forName("oracle.jdbc.OracleDriver");
         } else {
+            //TODO - just terminate with an error here
             System.out.println("Unrecognized JDBC URL scheme: " + dbUrl + ". Attempting to connect without explicit driver load.");
         }
         return DriverManager.getConnection(dbUrl, username, password);
@@ -201,10 +202,10 @@ public class Exporter {
 
     private String exportProjects(Connection connection) throws SQLException {
         JSONArray jsonArray = new JSONArray();
-        String sql = "SELECT project_id, project_name, project_description, last_updated,\n"
+        String sql = "SELECT project_name,\n"
                 + " (SELECT p.project_name FROM PROJECT p, PROJECT_VERSION pv WHERE PROJECT.from_project_version_id = pv.project_version_id AND p.project_id = pv.project_id) AS from_project_name,\n"
                 + " (SELECT pv.project_version FROM PROJECT_VERSION pv WHERE PROJECT.from_project_version_id = pv.project_version_id) AS from_project_version_number,\n"
-                + " latest_version, deleted_timestamp FROM PROJECT WHERE deleted_timestamp IS NULL ORDER BY project_id ASC";
+                + " FROM PROJECT WHERE deleted_timestamp IS NULL ORDER BY project_id ASC";
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         while (rs.next()) {
@@ -212,7 +213,6 @@ public class Exporter {
             String projectName = rs.getString("project_name");
             System.out.println("Exporting project: " + projectName);
             jo.put("project_name", projectName);
-            jo.put("project_description", rs.getString("project_description"));
             jo.put("from_project_name", rs.getObject("from_project_name"));
             jo.put("from_project_version_number", rs.getObject("from_project_version_number"));
             jsonArray.put(jo);

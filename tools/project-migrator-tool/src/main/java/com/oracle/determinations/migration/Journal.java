@@ -17,7 +17,11 @@ public class Journal implements AutoCloseable {
     }
 
     public synchronized void write(JSONObject obj) throws java.io.IOException {
-        writer.write(obj.toString());
+        write(obj.toString());
+    }
+
+    public synchronized void write(String str) throws java.io.IOException {
+        writer.write(str);
         writer.newLine();
         writer.flush();
         // Force data to disk to minimize loss if process terminates unexpectedly
