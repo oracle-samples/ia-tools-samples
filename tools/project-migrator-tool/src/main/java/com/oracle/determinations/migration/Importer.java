@@ -152,9 +152,9 @@ public class Importer {
                     journalIndex++;
                 }
 
-                projectVersionsToImport = projectVersionsToImport.subList(journalItemsLastIndex, projectVersionsToImport.size()); //TODO fix off by one error
+                projectVersionsToImport = projectVersionsToImport.subList(journalIndex, projectVersionsToImport.size()); //TODO fix off by one error
 
-                System.out.println("Resuming from journal at index " + journalIndex);
+                System.out.println("Resuming from journal");
             }
 
 
