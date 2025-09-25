@@ -55,24 +55,13 @@ public class DecisionServiceVersion implements ProjectVersion {
     }
 
 
-    public JSONObject toJSON() {
+    public JSONObject toJSONForJournal(int index) {
         JSONObject obj = new JSONObject();
-        obj.put("module_name", moduleName);
+        obj.put("index", index);
+        obj.put("project_name", moduleName);
         obj.put("version_number", versionNumber);
-        obj.put("create_timestamp", createTimestamp);
-        obj.put("module_imported", moduleImported);
-        obj.put("user_name", userName);
-        obj.put("definition", definition);
-        if (description != null) {
-            obj.put("description", description);
-        }
-        if (descriptionUpdated != null) {
-            obj.put("description_updated", descriptionUpdated);
-        }
-        if (descriptionAuthor != null) {
-            obj.put("description_author", descriptionAuthor);
-        }
-        obj.put("fingerprint_sha256", fingerprintSha256);
+        obj.put("type", "decision");
+        obj.put("sha256", fingerprintSha256);
         return obj;
     }
 
@@ -83,11 +72,11 @@ public class DecisionServiceVersion implements ProjectVersion {
         DecisionServiceVersion that = (DecisionServiceVersion) o;
         return versionNumber == that.versionNumber
                 && Objects.equals(moduleName, that.moduleName)
-                && Objects.equals(createTimestamp, that.createTimestamp)
+                //&& Objects.equals(createTimestamp, that.createTimestamp)
                 && Objects.equals(userName, that.userName)
                 && Objects.equals(definition, that.definition)
                 && Objects.equals(description, that.description)
-                && Objects.equals(descriptionUpdated, that.descriptionUpdated)
+                //&& Objects.equals(descriptionUpdated, that.descriptionUpdated)
                 && Objects.equals(descriptionAuthor, that.descriptionAuthor)
                 && Objects.equals(fingerprintSha256, that.fingerprintSha256);
     }
@@ -105,5 +94,10 @@ public class DecisionServiceVersion implements ProjectVersion {
     @Override
     public String getProjectName() {
         return moduleName;
+    }
+
+    @Override
+    public boolean isDraft() {
+        return isDraft;
     }
 }

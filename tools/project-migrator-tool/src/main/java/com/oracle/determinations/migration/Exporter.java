@@ -179,20 +179,6 @@ public class Exporter {
                     exportedSnapshotIds.add(fingerprintSha256);
                 }
 
-                // WORKSPACE (fka Collection)
-                String workspaceName = null;
-                String workspaceSql = "SELECT collection_name FROM COLLECTION WHERE collection_id IN (SELECT collection_id FROM PROJECT_COLL WHERE project_id = ?)";
-                try (java.sql.PreparedStatement ps = connection.prepareStatement(workspaceSql)) {
-                    ps.setInt(1, projectId);
-
-                    try (ResultSet rs = ps.executeQuery()) {
-                        if (rs.next()) {
-                            workspaceName = rs.getString("collection_name");
-                            versionJson.put("workspace", workspaceName);
-                        }
-                    }
-                }
-
                 versions.put(versionJson);
             }
         }
@@ -202,9 +188,10 @@ public class Exporter {
 
     private String exportProjects(Connection connection) throws SQLException {
         JSONArray jsonArray = new JSONArray();
-        String sql = "SELECT project_name,\n"
-                + " (SELECT p.project_name FROM PROJECT p, PROJECT_VERSION pv WHERE PROJECT.from_project_version_id = pv.project_version_id AND p.project_id = pv.project_id) AS from_project_name,\n"
-                + " (SELECT pv.project_version FROM PROJECT_VERSION pv WHERE PROJECT.from_project_version_id = pv.project_version_id) AS from_project_version_number,\n"
+        String sql = "SELECT project_name,"
+                + " (SELECT p.project_name FROM PROJECT p, PROJECT_VERSION pv WHERE PROJECT.from_project_version_id = pv.project_version_id AND p.project_id = pv.project_id) AS from_project_name,"
+                + " (SELECT pv.project_version FROM PROJECT_VERSION pv WHERE PROJECT.from_project_version_id = pv.project_version_id) AS from_project_version_number,"
+                + " (SELECT collection_name FROM COLLECTION WHERE collection_id IN (SELECT collection_id FROM PROJECT_COLL WHERE project_id = PROJECT.project_id)) as workspace"
                 + " FROM PROJECT WHERE deleted_timestamp IS NULL ORDER BY project_id ASC";
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
@@ -215,6 +202,7 @@ public class Exporter {
             jo.put("project_name", projectName);
             jo.put("from_project_name", rs.getObject("from_project_name"));
             jo.put("from_project_version_number", rs.getObject("from_project_version_number"));
+            jo.put("workspace", rs.getObject("workspace"));
             jsonArray.put(jo);
         }
         return jsonArray.toString();
@@ -278,7 +266,7 @@ public class Exporter {
 
                 String moduleName = rs.getString("module_name");
                 int versionNumber = rs.getInt("version_number");
-                System.out.println("Exporting module version: " + moduleName + " (version " + versionNumber + ")");
+                System.out.println("Exporting module version: " + moduleName + (versionNumber == 0 ? " (draft)" : " (version " + versionNumber + ")"));
 
                 jo.put("module_name", moduleName);
                 jo.put("version_number", versionNumber);

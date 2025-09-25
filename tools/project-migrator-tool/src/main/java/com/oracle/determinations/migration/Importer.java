@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.util.*;
+
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -33,10 +34,11 @@ import java.nio.file.Paths;
 
 public class Importer {
 
-    private static String opmProjectUrlPath =  "/opa-hub/api/experimental/opm_projects";
-    private static String moduleUrlPath = "/opa-hub/api/experimental/opm_projects";
-    private static String projectVersionUrlPath = "/opa-hub/api/experimental/opm_projects/versions";
-    private static String authUrlPath = "/opa-hub/api/experimental/auth";
+    private static final String opmProjectUrlPath =  "/opa-hub/api/experimental/opm_projects";
+    private static final String moduleUrlPath = "/opa-hub/api/experimental/opm_projects";
+    private static final String projectVersionsUrlPath = "/opa-hub/api/12.2.39/projects?expand=versions";
+    private static final String workspacesUrlPath = "/opa-hub/api/12.2.39/workspaces?links=none&fields=name";
+    private static final String authUrlPath = "/opa-hub/api/12.2.39/auth";
 
     private Map<String, OPMProject> opmProjectsByName;
     private Map<String, Module> modulesByName;
@@ -78,9 +80,7 @@ public class Importer {
                 throw new RuntimeException("Journal file does not match specified IA Hub");
             }
 
-            // todo - add any resume journal entries to start of new journal file, to allow another resume if this new import process also fails!
-
-            journalItemsLastIndex = resumeEntries.get(resumeEntries.size() - 1).getInt("index");
+            journalItemsLastIndex = resumeEntries.get(resumeEntries.size() - 1).getInt("index"); //TODO fix off by one error
             List<ProjectVersion> alreadyUploadedItems = payloadProjectVersions.subList(0, journalItemsLastIndex + 1);
             Map<String, List<ProjectVersion>> alreadyUploadedVersionsByProjectName = new HashMap<>();
             for (ProjectVersion projectVersion : alreadyUploadedItems) {
@@ -115,6 +115,22 @@ public class Importer {
             if (!clashingProjectNames.isEmpty()) {
                 throw new RuntimeException("Projects with the following names already exist on the IA Hub: " + String.join(",", clashingProjectNames));
             }
+
+            // Fail if there are any missing workspaces
+            Set<String> payloadWorkspacesNames = new HashSet<>();
+            for (Module m : modulesByName.values()) {
+                payloadWorkspacesNames.add(m.workspace);
+            }
+            for (OPMProject project : opmProjectsByName.values()) {
+                payloadWorkspacesNames.add(project.workspace);
+            }
+
+            Set<String> hubWorkspacesNames = fetchWorkspaceNames(iaHostUrl, oAuthToken);
+            Set<String> missingWorkspaces = new HashSet<>(payloadWorkspacesNames);
+            missingWorkspaces.removeAll(hubWorkspacesNames);
+            if (!missingWorkspaces.isEmpty()) {
+                throw  new RuntimeException("Target hub is missing workspaces: " + String.join(",", missingWorkspaces));
+            }
         }
 
         // --- Proceed to import ---
@@ -128,24 +144,34 @@ public class Importer {
 
             List<ProjectVersion> projectVersionsToImport = new ArrayList<>(payloadProjectVersions);
 
+            int journalIndex = 0;
             // Add any entries from the journal file we are using to resume so that we can resume again if the upload process is interrupted again
             if (resumeEntries != null) {
                 for (JSONObject resumeEntry : resumeEntries) {
                     journal.write(resumeEntry);
+                    journalIndex++;
                 }
 
-                projectVersionsToImport = projectVersionsToImport.subList(journalItemsLastIndex, projectVersionsToImport.size());
+                projectVersionsToImport = projectVersionsToImport.subList(journalItemsLastIndex, projectVersionsToImport.size()); //TODO fix off by one error
+
+                System.out.println("Resuming from journal at index " + journalIndex);
             }
+
 
             for (ProjectVersion projectVersion: projectVersionsToImport) {
                 if (projectVersion instanceof OPMProjectVersion) {
-                    importOPMProjectVersion((OPMProjectVersion) projectVersion, zipPayload, iaHostUrl, oAuthToken);
-                    System.out.println("Imported project version: " + projectName + " (version " + projectVersionNumber + ")");
+                    OPMProjectVersion opmProjectVersion = (OPMProjectVersion) projectVersion;
+                    importOPMProjectVersion(opmProjectVersion, zipPayload, iaHostUrl, oAuthToken);
+                    System.out.println("Imported project version: " + opmProjectVersion.projectName + " (version " + opmProjectVersion.projectVersionNumber + ")");
+                    journal.write(opmProjectVersion.toJSONForJournal(journalIndex));
                 } else {
-                    importModuleVersion((DecisionServiceVersion) projectVersion, iaHostUrl, oAuthToken, journal);
-                    System.out.println("Imported module: " + moduleName + " version: " + (versionNumber == 0 ? "draft" : versionNumber));
-                    journal.write(moduleVersion.toJSON());
+                    DecisionServiceVersion decisionServiceVersion = (DecisionServiceVersion) projectVersion;
+                    importModuleVersion(decisionServiceVersion, iaHostUrl, oAuthToken, journal);
+                    System.out.println("Imported module: " + decisionServiceVersion.moduleName + " version: " + (decisionServiceVersion.isDraft ? "draft" : decisionServiceVersion.versionNumber));
+                    journal.write(decisionServiceVersion.toJSONForJournal(journalIndex));
                 }
+
+                journalIndex++;
             }
         }
 
@@ -208,7 +234,6 @@ public class Importer {
         String userName = projectVersion.userName;
         String opaVersion = projectVersion.opaVersion;
         String creationDate = projectVersion.creationDate;
-        String workspace = projectVersion.workspace;
 
         String descriptionUpdatedDate = projectVersion.descriptionUpdated;
         String descriptionAuthor = projectVersion.descriptionAuthor;
@@ -216,6 +241,7 @@ public class Importer {
         OPMProject project = opmProjectsByName.get(projectName);
         String fromProjectName = project.fromProjectName;
         Integer fromProjectVersionNumber = project.fromProjectVersionNumber;
+        String workspace = project.workspace;
 
         // Get snapshot fingerprint
         String fingerprint = projectVersion.fingerprintSha256;
@@ -308,11 +334,7 @@ public class Importer {
         body.put("snapshot", snapshot);
 
         // Build URL
-        String url = iaHostUrl;
-        if (url.endsWith("/")) {
-            url = url.substring(0, url.length() - 1);
-        }
-        url += "/opa-hub/api/experimental/opm_projects";
+        String url = iaHostUrl + opmProjectUrlPath;
 
         Map<String, String> headers = new HashMap<>();
         headers.put(HttpHeaders.AUTHORIZATION, "Bearer " + oAuthToken);
@@ -331,8 +353,6 @@ public class Importer {
     private void importModuleVersion(DecisionServiceVersion moduleVersion, String iaHostUrl, String oAuthToken, Journal journal) throws Exception{
         String moduleName = moduleVersion.moduleName;
         Module module = modulesByName.get(moduleName);
-
-        int versionNumber = moduleVersion.versionNumber;
 
         JSONObject postBody = new JSONObject();
         postBody.put("migrator_tool", true);
@@ -363,11 +383,13 @@ public class Importer {
         }
         postBody.put("fingerprint_sha256", moduleVersion.fingerprintSha256);
 
+        String url = iaHostUrl + moduleUrlPath;
+
         Map<String, String> headers = new HashMap<>();
         headers.put(HttpHeaders.AUTHORIZATION, "Bearer " + oAuthToken);
         headers.put(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
         headers.put(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
-        HttpResult httpRes = httpRequest("POST", iaHostUrl, headers, postBody.toString());
+        HttpResult httpRes = httpRequest("POST", url, headers, postBody.toString());
         int statusCode = httpRes.statusCode;
         String responseText = httpRes.body;
 
@@ -378,12 +400,7 @@ public class Importer {
 
     private String authenticate(String iaHostUrl, String iaUsername, String iaPassword) {
         try {
-            // Format the authentication URL
-            String authUrl = iaHostUrl;
-            if (authUrl.endsWith("/")) {
-                authUrl = authUrl.substring(0, authUrl.length() - 1);
-            }
-            authUrl += authUrlPath;
+            String authUrl = iaHostUrl + authUrlPath;
 
             StringBuilder form = new StringBuilder();
             form.append("grant_type=client_credentials");
@@ -413,8 +430,8 @@ public class Importer {
         }
     }
 
-    private List<ProjectVersion> parseJournalEntries(String journalPath) {
-        List<ProjectVersion> journalEntries = new ArrayList<>();
+    private List<JSONObject> parseJournalEntries(String journalPath) {
+        List<JSONObject> journalEntries = new ArrayList<>();
 
         boolean inModuleSection = false;
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(journalPath), StandardCharsets.UTF_8))) {
@@ -437,23 +454,7 @@ public class Importer {
                     resumePayloadSha256 = obj.getString("payload_sha256");
                     resumeHubUrl = obj.getString("hub_url");
                 } else {
-                    boolean isProject = obj.has("project_name") && obj.has("project_version_number");
-                    boolean isModule = obj.has("module_name") && obj.has("version_number");
-                    if (!isProject && !isModule) {
-                        throw new RuntimeException("Invalid journal file");
-                    }
-
-                    if (isProject) {
-                        if (inModuleSection) {
-                            throw new RuntimeException("Invalid journal file");
-                        }
-                        OPMProjectVersion pv = OPMProjectVersion.fromJson(obj);
-                        journalEntries.add(pv);
-                    } else {
-                        inModuleSection = true;
-                        DecisionServiceVersion mv = DecisionServiceVersion.fromJson(obj);
-                        journalEntries.add(mv);
-                    }
+                    journalEntries.add(obj);
                 }
 
                 lineNo++;
@@ -465,11 +466,37 @@ public class Importer {
         return journalEntries;
     }
 
+    private Set<String> fetchWorkspaceNames(String iaHostUrl, String oAuthToken) throws Exception {
+        Set<String> workspaceNames = new HashSet<>();
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put(HttpHeaders.AUTHORIZATION, "Bearer " + oAuthToken);
+        headers.put(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
+        headers.put(HttpHeaders.ACCEPT_ENCODING, "gzip");
+
+        String url = iaHostUrl + workspacesUrlPath;
+
+        HttpResult res = httpRequest("GET", url, headers, null);
+        if (res.statusCode < 200 || res.statusCode >= 300) {
+            throw new RuntimeException("Failed to fetch Hub projects for resume validation. HTTP code: " + res.statusCode + "\nResponse: " + res.body);
+        }
+
+        JSONObject root = new JSONObject(res.body);
+        if (root.has("items")) {
+            JSONArray items = root.getJSONArray("items");
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject workspace = items.getJSONObject(i);
+                String name = workspace.getString("name");
+                workspaceNames.add(name);
+            }
+        }
+
+        return workspaceNames;
+    }
+
     // Fetch projects (policy-model or policy-modeling) and modules (decision) from Hub, with versions in order
     private Map<String, List<ProjectVersion>> fetchHubVersions(String iaHostUrl, String oAuthToken) throws Exception {
-        String base = iaHostUrl;
-        if (base.endsWith("/")) base = base.substring(0, base.length() - 1);
-        String url = base + "/opa-hub/api/12.2.39/projects?expand=versions";
+        String url = iaHostUrl + projectVersionsUrlPath;
 
         Map<String, String> headers = new HashMap<>();
         headers.put(HttpHeaders.AUTHORIZATION, "Bearer " + oAuthToken);
@@ -519,7 +546,6 @@ public class Importer {
                                 author,
                                 null,                 // opaVersion not provided by Projects API
                                 createTimestamp,
-                                workspace,
                                 descriptionUpdatedAt,
                                 descriptionAuthor,
                                 fingerprintSha256,                
@@ -550,13 +576,11 @@ public class Importer {
         }
 
         for (List<ProjectVersion> projectVersions : projectsByName.values()) {
-            // TODO - what about draft versions?
-            projectVersions.sort(Comparator.comparingInt(ProjectVersion::getVersion));
+            projectVersions.sort(Comparator.comparing(ProjectVersion::isDraft).thenComparingInt(ProjectVersion::getVersion));
         }
 
         return projectsByName;
     }
-
 
     // Generic HTTP utility for GET/POST requests
     private static class HttpResult {

@@ -14,7 +14,6 @@ public class OPMProjectVersion implements ProjectVersion {
     public final String userName;
     public final String opaVersion;
     public final String creationDate;
-    public final String workspace;
     public final String descriptionUpdated;
     public final String descriptionAuthor;
     public final String fingerprintSha256;
@@ -27,7 +26,6 @@ public class OPMProjectVersion implements ProjectVersion {
                           String userName,
                           String opaVersion,
                           String creationDate,
-                          String workspace,
                           String descriptionUpdated,
                           String descriptionAuthor,
                           String fingerprintSha256,
@@ -39,7 +37,6 @@ public class OPMProjectVersion implements ProjectVersion {
         this.userName = userName;
         this.opaVersion = opaVersion;
         this.creationDate = creationDate;
-        this.workspace = workspace;
         this.descriptionUpdated = descriptionUpdated;
         this.descriptionAuthor = descriptionAuthor;
         this.fingerprintSha256 = fingerprintSha256;
@@ -54,7 +51,6 @@ public class OPMProjectVersion implements ProjectVersion {
         String userName = obj.getString("user_name");
         String opaVersion = obj.getString("opa_version");
         String creationDate = obj.getString("creation_date");
-        String workspace = obj.getString("workspace");
         String descriptionUpdated = obj.has("description_updated") ? obj.getString("description_updated") : null;
         String descriptionAuthor = obj.has("description_author") ? obj.getString("description_author") : null;
         String fingerprint = obj.getString("fingerprint_sha256");
@@ -78,27 +74,18 @@ public class OPMProjectVersion implements ProjectVersion {
             }
         }
 
-        return new OPMProjectVersion(projectName, versionNumber, description, userName, opaVersion, creationDate, workspace,
+        return new OPMProjectVersion(projectName, versionNumber, description, userName, opaVersion, creationDate,
                 descriptionUpdated, descriptionAuthor, fingerprint, inclusionOverrideCounts, changes);
     }
 
 
-    public JSONObject toJSON() {
+    public JSONObject toJSONForJournal(int index) {
         JSONObject obj = new JSONObject();
+        obj.put("index", index);
         obj.put("project_name", projectName);
-        obj.put("project_version_number", projectVersionNumber);
-        obj.put("opa_version", opaVersion);
-        obj.put("description", description);
-        obj.put("user_name", userName);
-        obj.put("creation_date", creationDate);
-        obj.put("workspace", workspace);
-        obj.put("fingerprint_sha256", fingerprintSha256);
-        if (descriptionUpdated != null) {
-            obj.put("description_updated", descriptionUpdated);
-        }
-        if (descriptionAuthor != null) {
-            obj.put("description_author", descriptionAuthor);
-        }
+        obj.put("version_number", projectVersionNumber);
+        obj.put("type", "policy-model");
+        obj.put("sha256", fingerprintSha256);
         return obj;
     }
 
@@ -111,16 +98,15 @@ public class OPMProjectVersion implements ProjectVersion {
                 && Objects.equals(projectName, that.projectName)
                 && Objects.equals(description, that.description)
                 && Objects.equals(userName, that.userName)
-                && Objects.equals(creationDate, that.creationDate)
-                && Objects.equals(workspace, that.workspace)
-                && Objects.equals(descriptionUpdated, that.descriptionUpdated)
+                //&& Objects.equals(creationDate, that.creationDate) TODO fix date comparison
+                //&& Objects.equals(descriptionUpdated, that.descriptionUpdated) TODO fix date comparison
                 && Objects.equals(descriptionAuthor, that.descriptionAuthor)
                 && Objects.equals(fingerprintSha256, that.fingerprintSha256);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(projectName, projectVersionNumber, description, userName, creationDate, workspace, descriptionUpdated, descriptionAuthor, fingerprintSha256);
+        return Objects.hash(projectName, projectVersionNumber, description, userName, creationDate, descriptionUpdated, descriptionAuthor, fingerprintSha256);
     }
 
     @Override
@@ -131,5 +117,11 @@ public class OPMProjectVersion implements ProjectVersion {
     @Override
     public String getProjectName() {
         return projectName;
+    }
+
+    @Override
+    public boolean isDraft() {
+        // No drafts for OPM projects
+        return false;
     }
 }

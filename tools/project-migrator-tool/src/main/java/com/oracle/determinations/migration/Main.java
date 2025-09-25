@@ -56,6 +56,10 @@ public class Main {
                     return;
                 }
                 String iaHostUrl = args[1];
+                if (iaHostUrl.endsWith("/")) {
+                    iaHostUrl = iaHostUrl.substring(0, iaHostUrl.length() - 1);
+                }
+
                 String iaUsername = args[2];
                 String iaPassword = args[3];
                 String exportedPayloadPath = args[4];

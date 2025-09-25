@@ -4,4 +4,6 @@ public interface ProjectVersion {
 
     int getVersion();
     String getProjectName();
+
+    boolean isDraft();
 }
