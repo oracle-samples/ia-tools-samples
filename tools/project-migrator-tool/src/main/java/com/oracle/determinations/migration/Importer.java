@@ -216,12 +216,12 @@ public class Importer {
                 if (projectVersion instanceof OPMProjectVersion) {
                     OPMProjectVersion opmProjectVersion = (OPMProjectVersion) projectVersion;
                     importOPMProjectVersion(opmProjectVersion, zipPayload, iaHostUrl, oAuthToken);
-                    System.out.println("Imported project version: " + opmProjectVersion.projectName + " (version " + opmProjectVersion.projectVersionNumber + ")");
+                    System.out.println("Imported policy modeling project: " + opmProjectVersion.projectName + " (version " + opmProjectVersion.projectVersionNumber + ")");
                     journal.write(opmProjectVersion.toJSONForJournal(journalIndex));
                 } else {
                     DecisionServiceProjectVersion decisionServiceVersion = (DecisionServiceProjectVersion) projectVersion;
                     importModuleVersion(decisionServiceVersion, iaHostUrl, oAuthToken, journal);
-                    System.out.println("Imported decision service project: " + decisionServiceVersion.projectName + " version: " + (decisionServiceVersion.isDraft ? "draft" : decisionServiceVersion.versionNumber));
+                    System.out.println("Imported decision service project: " + decisionServiceVersion.projectName + " (version " + (decisionServiceVersion.isDraft ? "draft" : decisionServiceVersion.versionNumber) + ")");
                     journal.write(decisionServiceVersion.toJSONForJournal(journalIndex));
                 }
 
@@ -436,7 +436,7 @@ public class Importer {
         String responseText = httpRes.body;
 
         if (statusCode < 200 || statusCode >= 300) {
-            throw new RuntimeException("Upload failed. HTTP code: " + statusCode + "\nResponse: " + responseText);
+            throw new RuntimeException("Policy Modeling project upload failed. HTTP code: " + statusCode + "\nResponse: " + responseText);
         }
     }
 
@@ -493,7 +493,7 @@ public class Importer {
         String responseText = httpRes.body;
 
         if (statusCode < 200 || statusCode >= 300) {
-            throw new RuntimeException("Decision service project import failed. HTTP code: " + statusCode + "\nResponse: " + responseText);
+            throw new RuntimeException("Decision service project version import failed. HTTP code: " + statusCode + "\nResponse: " + responseText);
         }
     }
 
