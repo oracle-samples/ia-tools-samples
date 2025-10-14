@@ -40,20 +40,38 @@ public class Importer {
     private static final String workspacesUrlPath = "/opa-hub/api/12.2.39/workspaces?links=none&fields=name";
     private static final String authUrlPath = "/opa-hub/api/12.2.39/auth";
 
-    private Map<String, OPMProject> opmProjectsByName;
-    private Map<String, Module> modulesByName;
+    private final Map<String, OPMProject> opmProjectsByName;
+    private final Map<String, Module> modulesByName;
 
     private String resumePayloadSha256;
     private String resumeHubUrl;
 
+    // Testability seams
+    public interface HttpTransport {
+        HttpResult request(String method, String url, Map<String, String> headers, String body) throws Exception;
+    }
 
+    @FunctionalInterface
+    public interface JournalFactory {
+        Journal create(String path) throws IOException;
+    }
+
+    private final HttpTransport httpTransport;
+    private final JournalFactory journalFactory;
 
     public Importer() {
-        opmProjectsByName = new HashMap<>();
-        modulesByName = new HashMap<>();
+        this(new DefaultHttpTransport(), Journal::new);
+    }
+
+    public Importer(HttpTransport httpTransport, JournalFactory journalFactory) {
+        this.httpTransport = httpTransport;
+        this.journalFactory = journalFactory;
+        this.opmProjectsByName = new HashMap<>();
+        this.modulesByName = new HashMap<>();
     }
 
     //TODO handle oAuthToken expiry
+    //TODO fix error handling
 
     public void doImport(String iaHostUrl, String iaUsername, String iaPassword, String exportedPayloadPath, String resumeJournalPath) throws Exception {
 
@@ -80,7 +98,7 @@ public class Importer {
                 throw new RuntimeException("Journal file does not match specified IA Hub");
             }
 
-            journalItemsLastIndex = resumeEntries.get(resumeEntries.size() - 1).getInt("index"); //TODO fix off by one error
+            journalItemsLastIndex = resumeEntries.get(resumeEntries.size() - 1).getInt("index");
             List<ProjectVersion> alreadyUploadedItems = payloadProjectVersions.subList(0, journalItemsLastIndex + 1);
             Map<String, List<ProjectVersion>> alreadyUploadedVersionsByProjectName = new HashMap<>();
             for (ProjectVersion projectVersion : alreadyUploadedItems) {
@@ -134,9 +152,9 @@ public class Importer {
         }
 
         // --- Proceed to import ---
-        String journalFileName = "import-" + System.currentTimeMillis() + ".json";
+        String journalFileName = newJournalFileName();
 
-        try (Journal journal = new Journal(journalFileName)) {
+        try (Journal journal = journalFactory.create(journalFileName)) {
             JSONObject journalHeader = new JSONObject();
             journalHeader.put("payload_sha256", payloadSha256);
             journalHeader.put("hub_url", iaHostUrl);
@@ -152,7 +170,7 @@ public class Importer {
                     journalIndex++;
                 }
 
-                projectVersionsToImport = projectVersionsToImport.subList(journalIndex, projectVersionsToImport.size()); //TODO fix off by one error
+                projectVersionsToImport = projectVersionsToImport.subList(journalIndex, projectVersionsToImport.size());
 
                 System.out.println("Resuming from journal");
             }
@@ -176,6 +194,10 @@ public class Importer {
         }
 
         zipPayload.close();
+    }
+
+    protected String newJournalFileName() {
+        return "import-" + System.currentTimeMillis() + ".json";
     }
 
     private List<ProjectVersion> parsePayload(ZipFile zip) throws IOException {
@@ -340,7 +362,7 @@ public class Importer {
         headers.put(HttpHeaders.AUTHORIZATION, "Bearer " + oAuthToken);
         headers.put(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
         headers.put(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
-        HttpResult httpRes = httpRequest("POST", url, headers, body.toString());
+        HttpResult httpRes = httpTransport.request("POST", url, headers, body.toString());
         int statusCode = httpRes.statusCode;
         String responseText = httpRes.body;
 
@@ -389,7 +411,7 @@ public class Importer {
         headers.put(HttpHeaders.AUTHORIZATION, "Bearer " + oAuthToken);
         headers.put(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
         headers.put(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
-        HttpResult httpRes = httpRequest("POST", url, headers, postBody.toString());
+        HttpResult httpRes = httpTransport.request("POST", url, headers, postBody.toString());
         int statusCode = httpRes.statusCode;
         String responseText = httpRes.body;
 
@@ -399,41 +421,43 @@ public class Importer {
     }
 
     private String authenticate(String iaHostUrl, String iaUsername, String iaPassword) {
+        String authUrl = iaHostUrl + authUrlPath;
+
+        StringBuilder form = new StringBuilder();
+        form.append("grant_type=client_credentials");
+        form.append("&client_id=").append(urlEncodeUtf8(iaUsername));
+        form.append("&client_secret=").append(urlEncodeUtf8(iaPassword));
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
+        headers.put(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED.getMimeType());
+
+        HttpResult httpRes;
         try {
-            String authUrl = iaHostUrl + authUrlPath;
-
-            StringBuilder form = new StringBuilder();
-            form.append("grant_type=client_credentials");
-            form.append("&client_id=").append(URLEncoder.encode(iaUsername, "UTF-8"));
-            form.append("&client_secret=").append(URLEncoder.encode(iaPassword, "UTF-8"));
-
-            Map<String, String> headers = new HashMap<>();
-            headers.put(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
-            headers.put(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED.getMimeType());
-            HttpResult httpRes = httpRequest("POST", authUrl, headers, form.toString());
-            int statusCode = httpRes.statusCode;
-            String responseText = httpRes.body;
-
-            if (statusCode >= 200 && statusCode < 300) {
-                JSONObject tokenJson = new JSONObject(responseText);
-                String accessToken = tokenJson.optString("access_token", null);
-                if (accessToken != null && !accessToken.isEmpty()) {
-                    return accessToken;
-                } else {
-                    throw new RuntimeException("Authentication succeeded but access_token not found in response.");
-                }
-            } else {
-                throw new RuntimeException("Authentication failed. HTTP code: " + statusCode + "\nResponse: " + responseText);
-            }
+            httpRes = httpTransport.request("POST", authUrl, headers, form.toString());
         } catch (Exception ex) {
             throw new RuntimeException("Exception during OAuth authentication", ex);
+        }
+
+        int statusCode = httpRes.statusCode;
+        String responseText = httpRes.body;
+
+        if (statusCode >= 200 && statusCode < 300) {
+            JSONObject tokenJson = new JSONObject(responseText);
+            String accessToken = tokenJson.optString("access_token", null);
+            if (accessToken != null && !accessToken.isEmpty()) {
+                return accessToken;
+            } else {
+                throw new RuntimeException("Authentication succeeded but access_token not found");
+            }
+        } else {
+            throw new RuntimeException("Authentication failed. HTTP code: " + statusCode + "\nResponse: " + responseText);
         }
     }
 
     private List<JSONObject> parseJournalEntries(String journalPath) {
         List<JSONObject> journalEntries = new ArrayList<>();
 
-        boolean inModuleSection = false;
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(journalPath), StandardCharsets.UTF_8))) {
             String line;
             int lineNo = 0;
@@ -476,7 +500,7 @@ public class Importer {
 
         String url = iaHostUrl + workspacesUrlPath;
 
-        HttpResult res = httpRequest("GET", url, headers, null);
+        HttpResult res = httpTransport.request("GET", url, headers, null);
         if (res.statusCode < 200 || res.statusCode >= 300) {
             throw new RuntimeException("Failed to fetch Hub projects for resume validation. HTTP code: " + res.statusCode + "\nResponse: " + res.body);
         }
@@ -503,7 +527,7 @@ public class Importer {
         headers.put(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
         headers.put(HttpHeaders.ACCEPT_ENCODING, "gzip");
 
-        HttpResult res = httpRequest("GET", url, headers, null);
+        HttpResult res = httpTransport.request("GET", url, headers, null);
         if (res.statusCode < 200 || res.statusCode >= 300) {
             throw new RuntimeException("Failed to fetch Hub projects for resume validation. HTTP code: " + res.statusCode + "\nResponse: " + res.body);
         }
@@ -517,7 +541,6 @@ public class Importer {
                 JSONObject proj = items.getJSONObject(i);
                 String name = proj.optString("name", null);
                 String kind = proj.optString("kind", "");
-                String workspace = proj.optString("workspace", null);
 
                 // Normalize kind to our importer terminology
                 boolean isPolicyModel = "policy-model".equalsIgnoreCase(kind);
@@ -583,12 +606,19 @@ public class Importer {
     }
 
     // Generic HTTP utility for GET/POST requests
-    private static class HttpResult {
+    public static class HttpResult {
         final int statusCode;
         final String body;
         HttpResult(int statusCode, String body) {
             this.statusCode = statusCode;
             this.body = body != null ? body : "";
+        }
+    }
+
+    private static class DefaultHttpTransport implements HttpTransport {
+        @Override
+        public HttpResult request(String method, String url, Map<String, String> headers, String body) throws Exception {
+            return httpRequest(method, url, headers, body);
         }
     }
 
@@ -626,6 +656,14 @@ public class Importer {
             } else {
                 throw new IllegalArgumentException("Unsupported HTTP method: " + method);
             }
+        }
+    }
+
+    private static String urlEncodeUtf8(String s) {
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        } catch (java.io.UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
     }
 

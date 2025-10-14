@@ -27,8 +27,7 @@ public class Exporter {
         } else if (urlLower.startsWith("jdbc:oracle:")) {
             Class.forName("oracle.jdbc.OracleDriver");
         } else {
-            //TODO - just terminate with an error here
-            System.out.println("Unrecognized JDBC URL scheme: " + dbUrl + ". Attempting to connect without explicit driver load.");
+            throw new IllegalArgumentException("Unrecognized JDBC URL scheme: " + dbUrl + ". Supported schemes are jdbc:mysql: and jdbc:oracle:");
         }
         return DriverManager.getConnection(dbUrl, username, password);
     }
@@ -48,8 +47,12 @@ public class Exporter {
             addZipEntry(zos, exportedModuleVersions, "module_versions.json");
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new RuntimeException(ex.getMessage(), ex);
         }
+    }
+
+    protected String newExportZipFileName() {
+        return "export-" + System.currentTimeMillis() + ".zip";
     }
 
     private String formatTimestamp(Timestamp timestamp) {
@@ -293,7 +296,7 @@ public class Exporter {
             zos.write(data, 0, data.length);
             zos.closeEntry();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to add zip entry '" + fileName + "': " + e.getMessage(), e);
         }
     }
 
