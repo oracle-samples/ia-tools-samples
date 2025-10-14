@@ -249,8 +249,8 @@ public class ImportTest {
         FakeHttpTransport.Request post2 = reqs.get(4);
         assertEquals("POST", post1.method);
         assertEquals("POST", post2.method);
-        assertTrue(post1.url.contains("/opa-hub/api/experimental/opm_projects"));
-        assertTrue(post2.url.contains("/opa-hub/api/experimental/opm_projects"));
+        assertTrue(post1.url.contains("/opa-hub/api/experimental/migrate-opm-project-version"));
+        assertTrue(post2.url.contains("/opa-hub/api/experimental/migrate-decision-service-project-version"));
 
         // Validate posted JSON bodies
         JSONObject body1 = new JSONObject(post1.body);
@@ -484,7 +484,7 @@ public class ImportTest {
         assertEquals("POST", reqs.get(0).method);
         assertTrue(reqs.get(1).url.contains("/projects?expand=versions"));
         assertEquals("POST", reqs.get(2).method);
-        assertTrue(reqs.get(2).url.contains("/opa-hub/api/experimental/opm_projects")); // module uses same path per current code
+        assertTrue(reqs.get(2).url.contains("/opa-hub/api/experimental/migrate-decision-service-project-version")); // module uses same path per current code
 
         // Journal should contain header + prior entry + new entry
         List<String> lines = Files.readAllLines(journalOut.toPath(), StandardCharsets.UTF_8);

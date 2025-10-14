@@ -34,8 +34,8 @@ import java.nio.file.Paths;
 
 public class Importer {
 
-    private static final String opmProjectUrlPath =  "/opa-hub/api/experimental/opm_projects";
-    private static final String moduleUrlPath = "/opa-hub/api/experimental/opm_projects";
+    private static final String opmProjectUrlPath =  "/opa-hub/api/experimental/migrate-opm-project-version";
+    private static final String decisionServiceProjectUrlPath =  "/opa-hub/api/experimental/migrate-decision-service-project-version";
     private static final String projectVersionsUrlPath = "/opa-hub/api/12.2.39/projects?expand=versions";
     private static final String workspacesUrlPath = "/opa-hub/api/12.2.39/workspaces?links=none&fields=name";
     private static final String authUrlPath = "/opa-hub/api/12.2.39/auth";
@@ -69,9 +69,6 @@ public class Importer {
         this.opmProjectsByName = new HashMap<>();
         this.modulesByName = new HashMap<>();
     }
-
-    //TODO handle oAuthToken expiry
-    //TODO fix error handling
 
     public void doImport(String iaHostUrl, String iaUsername, String iaPassword, String exportedPayloadPath, String resumeJournalPath) throws Exception {
 
@@ -310,7 +307,6 @@ public class Importer {
 
         // Build request JSON
         JSONObject body = new JSONObject();
-        body.put("migrator_tool", true);
         body.put("project_name", projectName);
         body.put("project_version_number", projectVersionNumber);
         body.put("opa_version", opaVersion);
@@ -377,7 +373,7 @@ public class Importer {
         Module module = modulesByName.get(moduleName);
 
         JSONObject postBody = new JSONObject();
-        postBody.put("migrator_tool", true);
+ 
         if (module != null && module.fromModuleName != null) {
             postBody.put("from_module_name", module.fromModuleName);
             if (module.fromVersionNumber != null) {
@@ -405,7 +401,7 @@ public class Importer {
         }
         postBody.put("fingerprint_sha256", moduleVersion.fingerprintSha256);
 
-        String url = iaHostUrl + moduleUrlPath;
+        String url = iaHostUrl + decisionServiceProjectUrlPath;
 
         Map<String, String> headers = new HashMap<>();
         headers.put(HttpHeaders.AUTHORIZATION, "Bearer " + oAuthToken);
