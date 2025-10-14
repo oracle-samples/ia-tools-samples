@@ -10,7 +10,7 @@ public interface ProjectVersion {
      */
     int getVersion();
     /**
-     * Returns the project/module name.
+     * Returns the project name.
      */
     String getProjectName();
 

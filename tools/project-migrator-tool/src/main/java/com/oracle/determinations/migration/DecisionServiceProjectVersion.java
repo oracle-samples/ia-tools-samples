@@ -6,11 +6,11 @@ import java.util.Objects;
 /**
  * Represents a decision service version and related metadata.
  */
-public class DecisionServiceVersion implements ProjectVersion {
-    public final String moduleName;
+public class DecisionServiceProjectVersion implements ProjectVersion {
+    public final String projectName;
     public final int versionNumber;
     public final String createTimestamp;
-    public final int moduleImported;
+    public final int imported;
     public final String userName;
     public final String definition;
     public final String description;
@@ -20,32 +20,32 @@ public class DecisionServiceVersion implements ProjectVersion {
     public final boolean isDraft;
 
     /**
-     * Creates a new DecisionServiceVersion.
-     * @param moduleName module name.
+     * Creates a new decision service project version.
+     * @param projectName decision service project name.
      * @param versionNumber version number (0 indicates draft).
      * @param createTimestamp creation timestamp.
-     * @param moduleImported import flag/counter from source DB.
+     * @param imported import flag/counter from source DB.
      * @param userName author of the version.
-     * @param definition module definition content (JSON string).
+     * @param definition decision service project definition content (JSON string).
      * @param description optional description.
      * @param descriptionUpdated optional description last-updated timestamp.
      * @param descriptionAuthor optional description author.
      * @param fingerprintSha256 definition fingerprint hash.
      */
-    public DecisionServiceVersion(String moduleName,
+    public DecisionServiceProjectVersion(String projectName,
                          int versionNumber,
                          String createTimestamp,
-                         int moduleImported,
+                         int imported,
                          String userName,
                          String definition,
                          String description,
                          String descriptionUpdated,
                          String descriptionAuthor,
                          String fingerprintSha256) {
-        this.moduleName = moduleName;
+        this.projectName = projectName;
         this.versionNumber = versionNumber;
         this.createTimestamp = createTimestamp;
-        this.moduleImported = moduleImported;
+        this.imported = imported;
         this.userName = userName;
         this.definition = definition;
         this.description = description;
@@ -61,18 +61,18 @@ public class DecisionServiceVersion implements ProjectVersion {
      * @return parsed DecisionServiceVersion.
      * @throws org.json.JSONException if required fields are missing or invalid.
      */
-    public static DecisionServiceVersion fromJson(JSONObject obj) {
-        String moduleName = obj.getString("module_name");
+    public static DecisionServiceProjectVersion fromJson(JSONObject obj) {
+        String projectName = obj.getString("module_name");
         int versionNumber = obj.getInt("version_number");
         String createTimestamp = obj.getString("create_timestamp");
-        int moduleImported = obj.getInt("module_imported");
+        int imported = obj.getInt("module_imported");
         String userName = obj.getString("user_name");
         String definition = obj.getString("definition");
         String description = obj.has("description") ? obj.getString("description") : null;
         String descriptionUpdated = obj.has("description_updated") ? obj.getString("description_updated") : null;
         String descriptionAuthor = obj.has("description_author") ? obj.getString("description_author") : null;
         String fingerprint = obj.getString("fingerprint_sha256");
-        return new DecisionServiceVersion(moduleName, versionNumber, createTimestamp, moduleImported, userName, definition,
+        return new DecisionServiceProjectVersion(projectName, versionNumber, createTimestamp, imported, userName, definition,
                 description, descriptionUpdated, descriptionAuthor, fingerprint);
     }
 
@@ -85,7 +85,7 @@ public class DecisionServiceVersion implements ProjectVersion {
     public JSONObject toJSONForJournal(int index) {
         JSONObject obj = new JSONObject();
         obj.put("index", index);
-        obj.put("project_name", moduleName);
+        obj.put("project_name", projectName);
         obj.put("version_number", versionNumber);
         obj.put("type", "decision");
         obj.put("sha256", fingerprintSha256);
@@ -98,10 +98,10 @@ public class DecisionServiceVersion implements ProjectVersion {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DecisionServiceVersion)) return false;
-        DecisionServiceVersion that = (DecisionServiceVersion) o;
+        if (!(o instanceof DecisionServiceProjectVersion)) return false;
+        DecisionServiceProjectVersion that = (DecisionServiceProjectVersion) o;
         return versionNumber == that.versionNumber
-                && Objects.equals(moduleName, that.moduleName)
+                && Objects.equals(projectName, that.projectName)
                 //&& Objects.equals(createTimestamp, that.createTimestamp)
                 && Objects.equals(userName, that.userName)
                 && Objects.equals(definition, that.definition)
@@ -116,7 +116,7 @@ public class DecisionServiceVersion implements ProjectVersion {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(moduleName, versionNumber, createTimestamp, userName, definition, description, descriptionUpdated, descriptionAuthor, fingerprintSha256);
+        return Objects.hash(projectName, versionNumber, createTimestamp, userName, definition, description, descriptionUpdated, descriptionAuthor, fingerprintSha256);
     }
 
     /**
@@ -128,11 +128,11 @@ public class DecisionServiceVersion implements ProjectVersion {
     }
 
     /**
-     * Returns the module/project name.
+     * Returns the project name.
      */
     @Override
     public String getProjectName() {
-        return moduleName;
+        return projectName;
     }
 
     /**

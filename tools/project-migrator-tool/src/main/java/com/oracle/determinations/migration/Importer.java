@@ -33,7 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * Imports exported OPA projects and decision modules into an IA Hub with resume support.
+ * Imports exported OPA projects and decision service projects into an IA Hub with resume support.
  */
 public class Importer {
 
@@ -44,7 +44,7 @@ public class Importer {
     private static final String authUrlPath = "/opa-hub/api/12.2.39/auth";
 
     private final Map<String, OPMProject> opmProjectsByName;
-    private final Map<String, Module> modulesByName;
+    private final Map<String, DecisionServiceProject> decisionServiceProjectsByName;
 
     private String resumePayloadSha256;
     private String resumeHubUrl;
@@ -97,7 +97,7 @@ public class Importer {
         this.httpTransport = httpTransport;
         this.journalFactory = journalFactory;
         this.opmProjectsByName = new HashMap<>();
-        this.modulesByName = new HashMap<>();
+        this.decisionServiceProjectsByName = new HashMap<>();
     }
 
     /**
@@ -163,7 +163,7 @@ public class Importer {
             // Fail if there are any project name clashes
             Set<String> existingProjectNames = existingProjectVersionsByName.keySet();
             Set<String> clashingProjectNames = new HashSet<>(opmProjectsByName.keySet());
-            clashingProjectNames.addAll(modulesByName.keySet());
+            clashingProjectNames.addAll(decisionServiceProjectsByName.keySet());
             clashingProjectNames.retainAll(existingProjectNames);
 
             if (!clashingProjectNames.isEmpty()) {
@@ -172,7 +172,7 @@ public class Importer {
 
             // Fail if there are any missing workspaces
             Set<String> payloadWorkspacesNames = new HashSet<>();
-            for (Module m : modulesByName.values()) {
+            for (DecisionServiceProject m : decisionServiceProjectsByName.values()) {
                 payloadWorkspacesNames.add(m.workspace);
             }
             for (OPMProject project : opmProjectsByName.values()) {
@@ -219,9 +219,9 @@ public class Importer {
                     System.out.println("Imported project version: " + opmProjectVersion.projectName + " (version " + opmProjectVersion.projectVersionNumber + ")");
                     journal.write(opmProjectVersion.toJSONForJournal(journalIndex));
                 } else {
-                    DecisionServiceVersion decisionServiceVersion = (DecisionServiceVersion) projectVersion;
+                    DecisionServiceProjectVersion decisionServiceVersion = (DecisionServiceProjectVersion) projectVersion;
                     importModuleVersion(decisionServiceVersion, iaHostUrl, oAuthToken, journal);
-                    System.out.println("Imported module: " + decisionServiceVersion.moduleName + " version: " + (decisionServiceVersion.isDraft ? "draft" : decisionServiceVersion.versionNumber));
+                    System.out.println("Imported decision service project: " + decisionServiceVersion.projectName + " version: " + (decisionServiceVersion.isDraft ? "draft" : decisionServiceVersion.versionNumber));
                     journal.write(decisionServiceVersion.toJSONForJournal(journalIndex));
                 }
 
@@ -277,15 +277,15 @@ public class Importer {
                 JSONArray arr = new JSONArray(json);
 
                 for (int i = 0; i < arr.length(); i++) {
-                    Module module = Module.fromJson(arr.getJSONObject(i));
-                    modulesByName.put(module.moduleName, module);
+                    DecisionServiceProject module = DecisionServiceProject.fromJson(arr.getJSONObject(i));
+                    decisionServiceProjectsByName.put(module.projectName, module);
                 }
             }
             try (InputStream is = zip.getInputStream(moduleVersionsEntry)) {
                 String json = new String(readAllBytes(is), StandardCharsets.UTF_8);
                 JSONArray arr = new JSONArray(json);
                 for (int i = 0; i < arr.length(); i++) {
-                    projectVersions.add(DecisionServiceVersion.fromJson(arr.getJSONObject(i)));
+                    projectVersions.add(DecisionServiceProjectVersion.fromJson(arr.getJSONObject(i)));
                 }
             }
         }
@@ -442,32 +442,32 @@ public class Importer {
 
 
     /**
-     * Uploads a decision service (module) version to the IA Hub and records it in the journal.
-     * @param moduleVersion Module version metadata and content.
+     * Uploads a decision service project version to the IA Hub and records it in the journal.
+     * @param moduleVersion Decision service project version metadata and content.
      * @param iaHostUrl Base URL of the IA Hub.
      * @param oAuthToken OAuth bearer token.
      * @param journal Journal to write success entries to.
      * @throws Exception if the HTTP request fails or Hub returns a non-2xx status.
      */
-    private void importModuleVersion(DecisionServiceVersion moduleVersion, String iaHostUrl, String oAuthToken, Journal journal) throws Exception{
-        String moduleName = moduleVersion.moduleName;
-        Module module = modulesByName.get(moduleName);
+    private void importModuleVersion(DecisionServiceProjectVersion moduleVersion, String iaHostUrl, String oAuthToken, Journal journal) throws Exception{
+        String projectName = moduleVersion.projectName;
+        DecisionServiceProject module = decisionServiceProjectsByName.get(projectName);
 
         JSONObject postBody = new JSONObject();
  
-        if (module != null && module.fromModuleName != null) {
-            postBody.put("from_module_name", module.fromModuleName);
+        if (module != null && module.fromProjectName != null) {
+            postBody.put("from_module_name", module.fromProjectName);
             if (module.fromVersionNumber != null) {
                 postBody.put("from_version_number", module.fromVersionNumber);
             }
         }
 
-        postBody.put("module_name", moduleName);
+        postBody.put("module_name", projectName);
         if (module != null && module.workspace != null) {
             postBody.put("workspace", module.workspace);
         }
         postBody.put("create_timestamp", moduleVersion.createTimestamp);
-        postBody.put("module_imported", moduleVersion.moduleImported);
+        postBody.put("module_imported", moduleVersion.imported);
         postBody.put("user_name", moduleVersion.userName);
         postBody.put("version_number", moduleVersion.versionNumber);
         postBody.put("definition", moduleVersion.definition);
@@ -493,7 +493,7 @@ public class Importer {
         String responseText = httpRes.body;
 
         if (statusCode < 200 || statusCode >= 300) {
-            throw new RuntimeException("Module import failed. HTTP code: " + statusCode + "\nResponse: " + responseText);
+            throw new RuntimeException("Decision service project import failed. HTTP code: " + statusCode + "\nResponse: " + responseText);
         }
     }
 
@@ -616,12 +616,12 @@ public class Importer {
         return workspaceNames;
     }
 
-    // Fetch projects (policy-model or policy-modeling) and modules (decision) from Hub, with versions in order
+    // Fetch projects (policy-model) and decision service projects (decision) from Hub, with versions in order
     /**
-     * Fetches existing projects/modules and their versions from the IA Hub.
+     * Fetches existing projects and decision service projects and their versions from the IA Hub.
      * @param iaHostUrl Base URL of the IA Hub.
      * @param oAuthToken OAuth bearer token.
-     * @return map of project/module name to ordered versions.
+     * @return map of project name to ordered versions.
      * @throws Exception if the HTTP request fails or parsing fails.
      */
     private Map<String, List<ProjectVersion>> fetchHubVersions(String iaHostUrl, String oAuthToken) throws Exception {
@@ -685,7 +685,7 @@ public class Importer {
                         // Map to ModuleVersion
                         String definition = ver.has("definition") ? ver.get("definition").toString() : null;
                         boolean isDraft = ver.getBoolean("isDraft");
-                        DecisionServiceVersion mv = new DecisionServiceVersion(
+                        DecisionServiceProjectVersion mv = new DecisionServiceProjectVersion(
                                 name,
                                 isDraft ? 0 : versionNo,
                                 createTimestamp,

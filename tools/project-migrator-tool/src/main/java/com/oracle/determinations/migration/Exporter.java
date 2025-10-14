@@ -17,7 +17,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
- * Exports projects, modules, versions, and snapshots from the database into a zip.
+ * Exports projects, decision service projects, versions, and snapshots from the database into a zip.
  */
 public class Exporter {
 
@@ -58,11 +58,11 @@ public class Exporter {
             String exportedProjectVersions = exportProjectVersions(connection, zos);
             addZipEntry(zos, exportedProjectVersions, "project_versions.json");
 
-            // Export modules and module versions
-            String exportedModules = exportModules(connection);
-            addZipEntry(zos, exportedModules, "modules.json");
-            String exportedModuleVersions = exportModuleVersions(connection);
-            addZipEntry(zos, exportedModuleVersions, "module_versions.json");
+            // Export decision service projects and versions
+            String exportedDecisionServiceProjects = exportDecisionServiceProjects(connection);
+            addZipEntry(zos, exportedDecisionServiceProjects, "modules.json");
+            String exportedDecisionServiceProjectVersions = exportDecisionServiceProjectVersions(connection);
+            addZipEntry(zos, exportedDecisionServiceProjectVersions, "module_versions.json");
 
         } catch (Exception ex) {
             throw new RuntimeException(ex.getMessage(), ex);
@@ -251,14 +251,14 @@ public class Exporter {
         return jsonArray.toString();
     }
 
-    // Export all modules as modules.json
+    // Export all decision service projects as modules.json
     /**
-     * Exports modules as modules.json content.
+     * Exports decision service projects as modules.json content.
      * @param connection JDBC connection.
-     * @return JSON array string of modules.
+     * @return JSON array string of decision service projects.
      * @throws SQLException on query errors.
      */
-    private String exportModules(Connection connection) throws SQLException {
+    private String exportDecisionServiceProjects(Connection connection) throws SQLException {
         JSONArray jsonArray = new JSONArray();
         String sql = "SELECT m.module_id, m.module_name, m.module_kind," +
                 "(SELECT module_name FROM MODULE WHERE module_id = mv.module_id) AS from_module_name," +
@@ -271,7 +271,7 @@ public class Exporter {
                 JSONObject jo = new JSONObject();
                 int moduleId = rs.getInt("module_id");
                 String moduleName = rs.getString("module_name");
-                System.out.println("Exporting module: " + moduleName);
+                System.out.println("Exporting decision service project: " + moduleName);
                 jo.put("module_name", moduleName);
                 jo.put("module_kind", rs.getInt("module_kind"));
 
@@ -302,14 +302,14 @@ public class Exporter {
         return jsonArray.toString();
     }
 
-    // Export all module versions as module_versions.json
+    // Export all decision service project versions as module_versions.json
     /**
-     * Exports module versions as module_versions.json content.
+     * Exports decision service project versions as module_versions.json content.
      * @param connection JDBC connection.
-     * @return JSON array string of module versions.
+     * @return JSON array string of decision service project versions.
      * @throws SQLException on query errors.
      */
-    private String exportModuleVersions(Connection connection) throws SQLException {
+    private String exportDecisionServiceProjectVersions(Connection connection) throws SQLException {
         JSONArray jsonArray = new JSONArray();
         String sql = "SELECT mv.module_version_id, mv.module_id, m.module_name, mv.version_number, mv.format_version, mv.create_timestamp, mv.user_name, " +
                 "mv.fingerprint_sha256, mv.definition, mv.module_imported, mv.description, mv.description_updated, mv.description_author " +
@@ -321,7 +321,7 @@ public class Exporter {
 
                 String moduleName = rs.getString("module_name");
                 int versionNumber = rs.getInt("version_number");
-                System.out.println("Exporting module version: " + moduleName + (versionNumber == 0 ? " (draft)" : " (version " + versionNumber + ")"));
+                System.out.println("Exporting decision service project version: " + moduleName + (versionNumber == 0 ? " (draft)" : " (version " + versionNumber + ")"));
 
                 jo.put("module_name", moduleName);
                 jo.put("version_number", versionNumber);
