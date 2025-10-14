@@ -32,6 +32,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * Imports exported OPA projects and decision modules into an IA Hub with resume support.
+ */
 public class Importer {
 
     private static final String opmProjectUrlPath =  "/opa-hub/api/experimental/migrate-opm-project-version";
@@ -47,22 +50,49 @@ public class Importer {
     private String resumeHubUrl;
 
     // Testability seams
+    /**
+     * Abstraction over HTTP for easier testing.
+     */
     public interface HttpTransport {
+        /**
+         * Executes an HTTP request.
+         * @param method HTTP method (GET or POST).
+         * @param url Target URL.
+         * @param headers Request headers to send.
+         * @param body Optional request body for POST (UTF-8).
+         * @return HTTP result with status code and body text.
+         * @throws Exception if the transport fails or the request cannot be executed.
+         */
         HttpResult request(String method, String url, Map<String, String> headers, String body) throws Exception;
     }
 
     @FunctionalInterface
+    /**
+     * Factory for creating Journal instances.
+     */
     public interface JournalFactory {
+        /**
+         * Creates a Journal instance.
+         * @param path File path to write journal entries to.
+         * @return a Journal for the specified path.
+         * @throws IOException if the file cannot be created or opened.
+         */
         Journal create(String path) throws IOException;
     }
 
     private final HttpTransport httpTransport;
     private final JournalFactory journalFactory;
 
+    /**
+     * Creates an Importer with default HTTP transport and journal factory.
+     */
     public Importer() {
         this(new DefaultHttpTransport(), Journal::new);
     }
 
+    /**
+     * Creates an Importer with injected HTTP transport and journal factory.
+     */
     public Importer(HttpTransport httpTransport, JournalFactory journalFactory) {
         this.httpTransport = httpTransport;
         this.journalFactory = journalFactory;
@@ -70,6 +100,15 @@ public class Importer {
         this.modulesByName = new HashMap<>();
     }
 
+    /**
+     * Imports the provided payload into the target IA Hub, optionally resuming from a journal.
+     * @param iaHostUrl Base URL of the IA Hub.
+     * @param iaUsername Client ID/username for OAuth.
+     * @param iaPassword Client secret/password for OAuth.
+     * @param exportedPayloadPath Path to the exported zip payload.
+     * @param resumeJournalPath Optional path to a journal file to resume from.
+     * @throws Exception on I/O, authentication, HTTP, or validation errors.
+     */
     public void doImport(String iaHostUrl, String iaUsername, String iaPassword, String exportedPayloadPath, String resumeJournalPath) throws Exception {
 
         String payloadSha256 = DigestUtils.sha256Hex(Files.newInputStream(Paths.get(exportedPayloadPath)));
@@ -193,10 +232,19 @@ public class Importer {
         zipPayload.close();
     }
 
+    /**
+     * Generates a timestamped journal file name.
+     */
     protected String newJournalFileName() {
         return "import-" + System.currentTimeMillis() + ".json";
     }
 
+    /**
+     * Parses the payload zip into project/module version objects.
+     * @param zip The payload zip file.
+     * @return list of versions to import, in encountered order.
+     * @throws IOException if zip entries cannot be read.
+     */
     private List<ProjectVersion> parsePayload(ZipFile zip) throws IOException {
         List<ProjectVersion> projectVersions = new ArrayList<>();
 
@@ -246,6 +294,14 @@ public class Importer {
     }
 
 
+    /**
+     * Uploads an OPM project version with its snapshot to the IA Hub.
+     * @param projectVersion Project version metadata and refs.
+     * @param zip Payload zip containing the snapshot.
+     * @param iaHostUrl Base URL of the IA Hub.
+     * @param oAuthToken OAuth bearer token.
+     * @throws Exception on HTTP or serialization errors.
+     */
     private void importOPMProjectVersion(OPMProjectVersion projectVersion, ZipFile zip, String iaHostUrl, String oAuthToken) throws Exception {
         String projectName = projectVersion.projectName;
         int projectVersionNumber = projectVersion.projectVersionNumber;
@@ -286,7 +342,24 @@ public class Importer {
     }
 
     /**
-     * Upload a project version to the OPA Hub.
+     * Uploads a policy-model project version to the IA Hub.
+     * @param iaHostUrl Base URL of the IA Hub.
+     * @param oAuthToken OAuth bearer token.
+     * @param projectName Project name.
+     * @param projectVersionNumber Version number.
+     * @param description Version description.
+     * @param userName Author of the version.
+     * @param opaVersion OPA version string.
+     * @param creationDate Creation timestamp.
+     * @param workspace Target workspace name.
+     * @param descriptionUpdatedDate When the description was last updated.
+     * @param descriptionAuthor Who last updated the description.
+     * @param inclusionOverrideCounts Inclusion overrides by included project.
+     * @param changes Object-level change map.
+     * @param fromProjectName Source project name for v1 cloning (optional).
+     * @param fromProjectVersionNumber Source project version for v1 cloning (optional).
+     * @param snapshotBytes Snapshot payload bytes.
+     * @throws Exception if the HTTP request fails or Hub returns a non-2xx status.
      */
     private void uploadProjectVersion(String iaHostUrl,
                                       String oAuthToken,
@@ -368,6 +441,14 @@ public class Importer {
     }
 
 
+    /**
+     * Uploads a decision service (module) version to the IA Hub and records it in the journal.
+     * @param moduleVersion Module version metadata and content.
+     * @param iaHostUrl Base URL of the IA Hub.
+     * @param oAuthToken OAuth bearer token.
+     * @param journal Journal to write success entries to.
+     * @throws Exception if the HTTP request fails or Hub returns a non-2xx status.
+     */
     private void importModuleVersion(DecisionServiceVersion moduleVersion, String iaHostUrl, String oAuthToken, Journal journal) throws Exception{
         String moduleName = moduleVersion.moduleName;
         Module module = modulesByName.get(moduleName);
@@ -416,6 +497,14 @@ public class Importer {
         }
     }
 
+    /**
+     * Obtains an OAuth access token from the IA Hub.
+     * @param iaHostUrl Base URL of the IA Hub.
+     * @param iaUsername Client ID/username.
+     * @param iaPassword Client secret/password.
+     * @return bearer access token.
+     * @throws RuntimeException if authentication fails or response is invalid.
+     */
     private String authenticate(String iaHostUrl, String iaUsername, String iaPassword) {
         String authUrl = iaHostUrl + authUrlPath;
 
@@ -451,6 +540,12 @@ public class Importer {
         }
     }
 
+    /**
+     * Reads an import journal and returns its entries (excluding the header).
+     * @param journalPath Path to the journal file.
+     * @return list of JSON entries after the header.
+     * @throws RuntimeException if the file is invalid or unreadable.
+     */
     private List<JSONObject> parseJournalEntries(String journalPath) {
         List<JSONObject> journalEntries = new ArrayList<>();
 
@@ -486,6 +581,13 @@ public class Importer {
         return journalEntries;
     }
 
+    /**
+     * Fetches available workspace names from the IA Hub.
+     * @param iaHostUrl Base URL of the IA Hub.
+     * @param oAuthToken OAuth bearer token.
+     * @return set of workspace names.
+     * @throws Exception if the HTTP request fails or parsing fails.
+     */
     private Set<String> fetchWorkspaceNames(String iaHostUrl, String oAuthToken) throws Exception {
         Set<String> workspaceNames = new HashSet<>();
 
@@ -515,6 +617,13 @@ public class Importer {
     }
 
     // Fetch projects (policy-model or policy-modeling) and modules (decision) from Hub, with versions in order
+    /**
+     * Fetches existing projects/modules and their versions from the IA Hub.
+     * @param iaHostUrl Base URL of the IA Hub.
+     * @param oAuthToken OAuth bearer token.
+     * @return map of project/module name to ordered versions.
+     * @throws Exception if the HTTP request fails or parsing fails.
+     */
     private Map<String, List<ProjectVersion>> fetchHubVersions(String iaHostUrl, String oAuthToken) throws Exception {
         String url = iaHostUrl + projectVersionsUrlPath;
 
@@ -602,6 +711,9 @@ public class Importer {
     }
 
     // Generic HTTP utility for GET/POST requests
+    /**
+     * Simple HTTP result holder for status and body.
+     */
     public static class HttpResult {
         final int statusCode;
         final String body;
@@ -611,13 +723,28 @@ public class Importer {
         }
     }
 
+    /**
+     * Default HTTP transport using Apache HttpClient.
+     */
     private static class DefaultHttpTransport implements HttpTransport {
+        /**
+         * Delegates to the static httpRequest helper.
+         */
         @Override
         public HttpResult request(String method, String url, Map<String, String> headers, String body) throws Exception {
             return httpRequest(method, url, headers, body);
         }
     }
 
+    /**
+     * Performs a GET or POST request and returns status/body.
+     * @param method HTTP method to use.
+     * @param url Target URL.
+     * @param headers Request headers to include.
+     * @param body Optional UTF-8 body for POST.
+     * @return HTTP result containing status and body text.
+     * @throws Exception if the HTTP client fails or the request cannot be executed.
+     */
     private static HttpResult httpRequest(String method, String url, Map<String, String> headers, String body) throws Exception {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             if ("GET".equalsIgnoreCase(method)) {
@@ -655,6 +782,11 @@ public class Importer {
         }
     }
 
+    /**
+     * URL-encodes a string as UTF-8.
+     * @param s String to encode.
+     * @return encoded string.
+     */
     private static String urlEncodeUtf8(String s) {
         try {
             return URLEncoder.encode(s, "UTF-8");
@@ -664,6 +796,12 @@ public class Importer {
     }
 
     // Helper method to read all bytes from an InputStream (replacement for StreamUtils.readAll)
+    /**
+     * Reads all bytes from the given input stream.
+     * @param input Input stream to read.
+     * @return byte array of all read data.
+     * @throws IOException if an I/O error occurs.
+     */
     private static byte[] readAllBytes(InputStream input) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         int nRead;

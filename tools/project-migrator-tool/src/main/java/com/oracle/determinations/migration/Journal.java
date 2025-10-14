@@ -7,19 +7,38 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Append-only UTF-8 journal that writes one JSON object (or string) per line.
+ * Ensures data is flushed and synced to disk to minimize loss on failure.
+ */
 public class Journal implements AutoCloseable {
     private final FileOutputStream fos;
     private final BufferedWriter writer;
 
+    /**
+     * Creates a journal appending to the given file path.
+     * @param path file path to write journal entries to.
+     * @throws java.io.IOException if the file cannot be opened for append.
+     */
     public Journal(String path) throws java.io.IOException {
         this.fos = new FileOutputStream(path, true);
         this.writer = new BufferedWriter(new OutputStreamWriter(fos, StandardCharsets.UTF_8));
     }
 
+    /**
+     * Writes a JSON object as a single line entry.
+     * @param obj JSON object to write.
+     * @throws java.io.IOException if an I/O error occurs.
+     */
     public synchronized void write(JSONObject obj) throws java.io.IOException {
         write(obj.toString());
     }
 
+    /**
+     * Writes a raw string as a single line entry and fsyncs the file.
+     * @param str line to write (a newline will be appended).
+     * @throws java.io.IOException if an I/O error occurs.
+     */
     public synchronized void write(String str) throws java.io.IOException {
         writer.write(str);
         writer.newLine();
@@ -28,6 +47,10 @@ public class Journal implements AutoCloseable {
         this.fos.getFD().sync();
     }
 
+    /**
+     * Flushes, fsyncs, and closes the underlying streams.
+     * @throws java.io.IOException if closing or syncing fails.
+     */
     @Override
     public void close() throws java.io.IOException {
         try {

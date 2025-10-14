@@ -8,7 +8,15 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.zip.ZipOutputStream;
 
+/**
+ * CLI entry point for exporting from a database or importing into IA Hub.
+ */
 public class Main {
+    /**
+     * Application entry point.
+     * @param args Command-line arguments. Use:
+     *             --export <dbUrl> or --import <IAHostUrl> <exportedPayloadPath> [resumeJournalPath]
+     */
     public static void main(String[] args) {
         try {
             if (args.length < 1) {
@@ -103,6 +111,12 @@ public class Main {
     
     }
 
+    /**
+     * Prompts the user for input and returns the trimmed response.
+     * @param prompt Message to display.
+     * @return trimmed input line (empty string if null).
+     * @throws RuntimeException if reading from stdin fails.
+     */
     private static String prompt(String prompt) {
         Console console = System.console();
         if (console != null) {
@@ -119,6 +133,12 @@ public class Main {
         }
     }
 
+    /**
+     * Prompts the user for a password (masked when a console is available).
+     * Falls back to visible input if no console is available.
+     * @param prompt Message to display.
+     * @return entered password string (may be empty).
+     */
     private static String promptPassword(String prompt) {
         Console console = System.console();
         if (console != null) {
@@ -129,6 +149,9 @@ public class Main {
         return prompt(prompt);
     }
 
+    /**
+     * Prints usage information for the CLI.
+     */
     private static void printUsage() {
         System.out.println("Usage:");
         System.out.println("  java -jar project-migrator-tool.jar --export <dbUrl>");

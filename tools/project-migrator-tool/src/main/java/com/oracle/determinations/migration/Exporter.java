@@ -16,10 +16,22 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+/**
+ * Exports projects, modules, versions, and snapshots from the database into a zip.
+ */
 public class Exporter {
 
     private Set<String> exportedSnapshotIds;
 
+    /**
+     * Establishes a JDBC connection.
+     * @param dbUrl JDBC URL (supports jdbc:mysql: and jdbc:oracle:).
+     * @param username DB username.
+     * @param password DB password.
+     * @return open JDBC connection.
+     * @throws SQLException on connection errors.
+     * @throws ClassNotFoundException if the JDBC driver class is not found.
+     */
     public Connection establishConnection(String dbUrl, String username, String password) throws SQLException, ClassNotFoundException {
         String urlLower = dbUrl == null ? "" : dbUrl.toLowerCase();
         if (urlLower.startsWith("jdbc:mysql:")) {
@@ -32,6 +44,12 @@ public class Exporter {
         return DriverManager.getConnection(dbUrl, username, password);
     }
 
+    /**
+     * Performs the export and writes JSON files and snapshots to the zip.
+     * @param connection JDBC connection to read from.
+     * @param zos target zip stream to write entries into.
+     * @throws RuntimeException if any step fails (wraps underlying exceptions).
+     */
     public void doExport(Connection connection, ZipOutputStream zos) {
         exportedSnapshotIds = new HashSet<>();
         try {
@@ -51,10 +69,19 @@ public class Exporter {
         }
     }
 
+    /**
+     * Generates a timestamped export zip filename.
+     * @return file name for the export zip.
+     */
     protected String newExportZipFileName() {
         return "export-" + System.currentTimeMillis() + ".zip";
     }
 
+    /**
+     * Formats a SQL timestamp to ISO-8601 with zone offset.
+     * @param timestamp SQL timestamp (nullable).
+     * @return formatted timestamp or null.
+     */
     private String formatTimestamp(Timestamp timestamp) {
         if (timestamp == null) {
             return null;
@@ -66,6 +93,13 @@ public class Exporter {
     }
 
     // Returns project versions JSON, each with three child arrays for inclusions, changes, and decision refs
+    /**
+     * Exports project versions with inclusions, changes, and decision refs.
+     * @param connection JDBC connection.
+     * @param zos zip output stream (used to add snapshot binaries).
+     * @return JSON array string of project versions.
+     * @throws Exception on SQL or zip I/O errors.
+     */
     private String exportProjectVersions(Connection connection, ZipOutputStream zos) throws Exception {
         JSONArray versions = new JSONArray();
         String versionSql = "SELECT pv.project_version_id, p.project_id, p.project_name, pv.project_version, pv.project_snapshot_id, pv.version_uuid, pv.activatable, pv.user_name,\n"
@@ -189,6 +223,12 @@ public class Exporter {
     }
 
 
+    /**
+     * Exports all projects as projects.json content.
+     * @param connection JDBC connection.
+     * @return JSON array string of projects.
+     * @throws SQLException on query errors.
+     */
     private String exportProjects(Connection connection) throws SQLException {
         JSONArray jsonArray = new JSONArray();
         String sql = "SELECT project_name,"
@@ -212,6 +252,12 @@ public class Exporter {
     }
 
     // Export all modules as modules.json
+    /**
+     * Exports modules as modules.json content.
+     * @param connection JDBC connection.
+     * @return JSON array string of modules.
+     * @throws SQLException on query errors.
+     */
     private String exportModules(Connection connection) throws SQLException {
         JSONArray jsonArray = new JSONArray();
         String sql = "SELECT m.module_id, m.module_name, m.module_kind," +
@@ -257,6 +303,12 @@ public class Exporter {
     }
 
     // Export all module versions as module_versions.json
+    /**
+     * Exports module versions as module_versions.json content.
+     * @param connection JDBC connection.
+     * @return JSON array string of module versions.
+     * @throws SQLException on query errors.
+     */
     private String exportModuleVersions(Connection connection) throws SQLException {
         JSONArray jsonArray = new JSONArray();
         String sql = "SELECT mv.module_version_id, mv.module_id, m.module_name, mv.version_number, mv.format_version, mv.create_timestamp, mv.user_name, " +
@@ -288,6 +340,13 @@ public class Exporter {
         return jsonArray.toString();
     }
 
+    /**
+     * Adds a UTF-8 text file entry with content to the zip archive.
+     * @param zos target zip stream.
+     * @param content file contents (UTF-8).
+     * @param fileName entry name.
+     * @throws RuntimeException if the entry cannot be written.
+     */
     private void addZipEntry(ZipOutputStream zos, String content, String fileName) {
         try {
             ZipEntry entry = new ZipEntry(fileName);
@@ -301,6 +360,14 @@ public class Exporter {
     }
 
     // Exports a project snapshot by fetching and decoding chunk slices, then writing to zip with given fingerprint as filename
+    /**
+     * Writes the decoded snapshot content to the zip using the fingerprint as the filename.
+     * @param connection JDBC connection.
+     * @param snapshotId snapshot identifier.
+     * @param sha256Fingerprint filename to use in the zip.
+     * @param zos target zip stream.
+     * @throws Exception on SQL or zip I/O errors.
+     */
     private void exportProjectSnapshot(Connection connection, int snapshotId, String sha256Fingerprint, ZipOutputStream zos) throws Exception {
         String sql = "SELECT chunk_slice FROM SNAPSHOT_CHUNK WHERE snapshot_id = ? ORDER BY chunk_sequence ASC";
         StringBuilder b64Concat = new StringBuilder();

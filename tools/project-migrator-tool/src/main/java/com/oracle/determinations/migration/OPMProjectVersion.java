@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Represents an OPM project version with metadata, inclusion overrides, and changes.
+ */
 public class OPMProjectVersion implements ProjectVersion {
     public final String projectName;
     public final int projectVersionNumber;
@@ -20,6 +23,20 @@ public class OPMProjectVersion implements ProjectVersion {
     public final Map<String, Integer> inclusionOverrideCounts;
     public final Map<String, String> changes;
 
+    /**
+     * Constructs an OPMProjectVersion.
+     * @param projectName Project name.
+     * @param projectVersionNumber Version number.
+     * @param description Version description.
+     * @param userName Author of the version.
+     * @param opaVersion OPA version string.
+     * @param creationDate Creation timestamp.
+     * @param descriptionUpdated When the description was last updated.
+     * @param descriptionAuthor Who last updated the description.
+     * @param fingerprintSha256 Snapshot fingerprint hash.
+     * @param inclusionOverrideCounts Inclusion override counts by included project.
+     * @param changes Object-level change map for the version.
+     */
     public OPMProjectVersion(String projectName,
                           int projectVersionNumber,
                           String description,
@@ -44,6 +61,12 @@ public class OPMProjectVersion implements ProjectVersion {
         this.changes = changes != null ? changes : new HashMap<>();
     }
 
+    /**
+     * Builds an OPMProjectVersion from JSON.
+     * @param obj JSON with keys: project_name, project_version_number, description, user_name, opa_version, creation_date, optional description_updated, description_author, fingerprint_sha256, project_version_inclusions, project_version_changes.
+     * @return parsed OPMProjectVersion.
+     * @throws org.json.JSONException if required fields are missing or invalid.
+     */
     public static OPMProjectVersion fromJson(JSONObject obj) {
         String projectName = obj.getString("project_name");
         int versionNumber = obj.getInt("project_version_number");
@@ -79,6 +102,11 @@ public class OPMProjectVersion implements ProjectVersion {
     }
 
 
+    /**
+     * Serializes fields needed for the import journal.
+     * @param index sequential index for the journal entry.
+     * @return JSON entry for the journal.
+     */
     public JSONObject toJSONForJournal(int index) {
         JSONObject obj = new JSONObject();
         obj.put("index", index);
@@ -89,6 +117,9 @@ public class OPMProjectVersion implements ProjectVersion {
         return obj;
     }
 
+    /**
+     * Value equality based on key fields.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -104,21 +135,33 @@ public class OPMProjectVersion implements ProjectVersion {
                 && Objects.equals(fingerprintSha256, that.fingerprintSha256);
     }
 
+    /**
+     * Hash code consistent with equals.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(projectName, projectVersionNumber, description, userName, creationDate, descriptionUpdated, descriptionAuthor, fingerprintSha256);
     }
 
+    /**
+     * Returns the version number.
+     */
     @Override
     public int getVersion() {
         return projectVersionNumber;
     }
 
+    /**
+     * Returns the project name.
+     */
     @Override
     public String getProjectName() {
         return projectName;
     }
 
+    /**
+     * OPM projects do not support draft versions.
+     */
     @Override
     public boolean isDraft() {
         // No drafts for OPM projects

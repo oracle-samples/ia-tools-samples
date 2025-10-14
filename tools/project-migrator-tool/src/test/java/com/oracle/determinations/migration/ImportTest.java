@@ -17,16 +17,32 @@ import java.util.zip.ZipOutputStream;
 
 import static org.junit.Assert.*;
 
+/**
+ * Unit tests for the Importer, covering happy path, validation, auth, and resume logic.
+ */
 public class ImportTest {
 
     @Rule
     public TemporaryFolder tmp = new TemporaryFolder();
 
     // Test helper: records requests and replays queued responses
+    /**
+     * Fake HTTP transport for tests: records requests and returns queued responses.
+     */
     static class FakeHttpTransport implements Importer.HttpTransport {
+        /**
+         * Captured HTTP request details for assertions.
+         */
         static class Request {
             final String method, url, body;
             final Map<String, String> headers;
+            /**
+             * Constructs a captured request.
+             * @param method HTTP method.
+             * @param url Target URL.
+             * @param headers Request headers (copied).
+             * @param body Request body string (may be null).
+             */
             Request(String method, String url, Map<String, String> headers, String body) {
                 this.method = method;
                 this.url = url;
@@ -34,9 +50,17 @@ public class ImportTest {
                 this.body = body;
             }
         }
+        /**
+         * Pre-canned HTTP response to be dequeued by the fake transport.
+         */
         static class Response {
             final int status;
             final String body;
+            /**
+             * Constructs a fake response.
+             * @param status HTTP status code.
+             * @param body Response body.
+             */
             Response(int status, String body) {
                 this.status = status;
                 this.body = body;
@@ -46,15 +70,32 @@ public class ImportTest {
         final List<Request> requests = new ArrayList<>();
         final Deque<Response> responses = new ArrayDeque<>();
 
+        /**
+         * Enqueues a fake response to return for the next request.
+         * @param status HTTP status code.
+         * @param body Body text to return.
+         */
         void addResponse(int status, String body) {
             responses.addLast(new Response(status, body));
         }
 
+        /**
+         * Returns all captured requests in order.
+         * @return list of recorded requests.
+         */
         List<Request> getRequests() {
             return requests;
         }
 
         @Override
+        /**
+         * Records the request and returns the next queued response or a default 200 {}.
+         * @param method HTTP method.
+         * @param url Target URL.
+         * @param headers Headers to send.
+         * @param body Optional body for POST.
+         * @return result containing status code and body.
+         */
         public Importer.HttpResult request(String method, String url, Map<String, String> headers, String body) {
             requests.add(new Request(method, url, headers, body));
             Response r = responses.isEmpty() ? new Response(200, "{}") : responses.removeFirst();
@@ -63,13 +104,26 @@ public class ImportTest {
     }
 
     // Override to control journal filename deterministically
+    /**
+     * Importer variant that writes to a deterministic journal path for tests.
+     */
     static class TestImporter extends Importer {
         private final String journalPath;
+        /**
+         * Creates a test importer with injected seams and fixed journal path.
+         * @param httpTransport fake HTTP transport.
+         * @param journalFactory journal factory.
+         * @param journalPath output path for the journal file.
+         */
         public TestImporter(HttpTransport httpTransport, JournalFactory journalFactory, String journalPath) {
             super(httpTransport, journalFactory);
             this.journalPath = journalPath;
         }
         @Override
+        /**
+         * Uses a predictable journal file name in tests.
+         * @return configured journal path.
+         */
         protected String newJournalFileName() {
             return journalPath;
         }
@@ -77,6 +131,13 @@ public class ImportTest {
 
     // Utilities
 
+    /**
+     * Writes UTF-8 text content to a temp file.
+     * @param name filename within the temp folder.
+     * @param content string content to write.
+     * @return the created File.
+     * @throws Exception on I/O error.
+     */
     private File writeTextFile(String name, String content) throws Exception {
         File f = tmp.newFile(name);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(f))) {
@@ -85,6 +146,14 @@ public class ImportTest {
         return f;
     }
 
+    /**
+     * Builds a zip with text and binary entries.
+     * @param name zip filename.
+     * @param entries map of entryName -> text content (UTF-8).
+     * @param binaryEntries map of entryName -> raw bytes.
+     * @return the created zip File.
+     * @throws Exception on I/O error.
+     */
     private File buildZip(String name, Map<String, String> entries, Map<String, byte[]> binaryEntries) throws Exception {
         File zip = tmp.newFile(name);
         try (ZipOutputStream zos = new ZipOutputStream(Files.newOutputStream(zip.toPath()))) {
@@ -107,12 +176,24 @@ public class ImportTest {
         return zip;
     }
 
+    /**
+     * Creates a projects API response body with provided items array.
+     * @param items array of project items.
+     * @return JSON string.
+     */
     private String hubProjectsResponse(JSONArray items) {
         JSONObject root = new JSONObject();
         root.put("items", items);
         return root.toString();
     }
 
+    /**
+     * Builds a project item with versions.
+     * @param name project/module name.
+     * @param kind policy-model or decision.
+     * @param versionItems versions array.
+     * @return JSON object.
+     */
     private JSONObject hubProjectItem(String name, String kind, JSONArray versionItems) {
         JSONObject proj = new JSONObject();
         proj.put("name", name);
@@ -123,6 +204,15 @@ public class ImportTest {
         return proj;
     }
 
+    /**
+     * Builds a policy-model version object for the Hub response.
+     * @param version version number.
+     * @param author author name.
+     * @param description version description.
+     * @param createTimestamp timestamp string.
+     * @param defHash definition hash.
+     * @return JSON version object.
+     */
     private JSONObject hubPolicyModelVersion(int version, String author, String description, String createTimestamp, String defHash) {
         JSONObject v = new JSONObject();
         v.put("version", version);
@@ -134,6 +224,16 @@ public class ImportTest {
         return v;
     }
 
+    /**
+     * Builds a decision version object for the Hub response.
+     * @param version version number.
+     * @param isDraft whether this version is a draft.
+     * @param author author name.
+     * @param description version description.
+     * @param createTimestamp timestamp string.
+     * @param defHash definition hash.
+     * @return JSON version object.
+     */
     private JSONObject hubDecisionVersion(int version, boolean isDraft, String author, String description, String createTimestamp, String defHash) {
         JSONObject v = new JSONObject();
         v.put("version", version);
@@ -146,6 +246,11 @@ public class ImportTest {
         return v;
     }
 
+    /**
+     * Creates a workspaces API response body with given workspace names.
+     * @param names workspace names.
+     * @return JSON string.
+     */
     private String workspacesResponse(String... names) {
         JSONArray items = new JSONArray();
         for (String n : names) {
@@ -158,6 +263,15 @@ public class ImportTest {
         return root.toString();
     }
 
+    /**
+     * Builds minimal payload entries for a mixed policy-model and decision module.
+     * @param projectName name of the policy-model project.
+     * @param workspace1 workspace for the project.
+     * @param moduleName name of the decision module.
+     * @param workspace2 workspace for the module.
+     * @param fingerprint snapshot fingerprint entry name.
+     * @return map of entry name to JSON string.
+     */
     private Map<String, String> payloadEntriesForMixed(String projectName, String workspace1, String moduleName, String workspace2, String fingerprint) {
         // projects.json
         JSONArray projects = new JSONArray();
@@ -206,6 +320,10 @@ public class ImportTest {
     }
 
     @Test
+    /**
+     * Verifies a mixed payload imports successfully and writes expected journal entries.
+     * @throws Exception on unexpected failure.
+     */
     public void testImportsMixedPayloadSuccessfully() throws Exception {
         String projectName = "PolicyA";
         String moduleName = "DecisionA";
@@ -278,6 +396,10 @@ public class ImportTest {
     }
 
     @Test
+    /**
+     * Fails when project/module names already exist on the Hub.
+     * @throws Exception on unexpected failure.
+     */
     public void testFailsOnProjectNameClashes() throws Exception {
         String projectName = "ExistingProject";
         String moduleName = "ExistingModule";
@@ -313,6 +435,10 @@ public class ImportTest {
     }
 
     @Test
+    /**
+     * Fails when required workspaces are not present on the Hub.
+     * @throws Exception on unexpected failure.
+     */
     public void testFailsOnMissingWorkspaces() throws Exception {
         String projectName = "P1";
         String moduleName = "M1";
@@ -344,6 +470,10 @@ public class ImportTest {
     }
 
     @Test
+    /**
+     * Resume should fail if journal payload hash does not match the payload.
+     * @throws Exception on unexpected failure.
+     */
     public void testResumeJournalPayloadShaMismatch() throws Exception {
         // Minimal payload: one project with fingerprint
         String fingerprint = "f1";
@@ -376,6 +506,10 @@ public class ImportTest {
     }
 
     @Test
+    /**
+     * Resume should fail if journal hub URL does not match the target IA host.
+     * @throws Exception on unexpected failure.
+     */
     public void testResumeJournalHubUrlMismatch() throws Exception {
         String fingerprint = "f2";
         Map<String, String> entries = payloadEntriesForMixed("P1", "WS", "M1", "WS", fingerprint);
@@ -403,6 +537,10 @@ public class ImportTest {
     }
 
     @Test
+    /**
+     * Auth 200 response without access_token should be treated as an error.
+     * @throws Exception on unexpected failure.
+     */
     public void testAuthSuccessMissingAccessToken() throws Exception {
         String fingerprint = "f3";
         Map<String, String> entries = payloadEntriesForMixed("P1", "WS", "M1", "WS", fingerprint);
@@ -424,6 +562,10 @@ public class ImportTest {
     }
 
     @Test
+    /**
+     * Non-2xx auth responses should cause an authentication error.
+     * @throws Exception on unexpected failure.
+     */
     public void testAuthNon2xxFailure() throws Exception {
         String fingerprint = "f4";
         Map<String, String> entries = payloadEntriesForMixed("P1", "WS", "M1", "WS", fingerprint);
@@ -446,6 +588,10 @@ public class ImportTest {
     }
 
     @Test
+    /**
+     * Resuming should replay prior entries and continue with remaining items.
+     * @throws Exception on unexpected failure.
+     */
     public void testResumeReplaysEntriesAndContinues() throws Exception {
         String projectName = "P1";
         String moduleName = "M1";
@@ -496,6 +642,12 @@ public class ImportTest {
     }
 
     // Helper: compute sha256 of a file via Java (matches main code semantics)
+    /**
+     * Computes SHA-256 of a file for tests.
+     * @param file target file.
+     * @return lowercase hex digest.
+     * @throws Exception if reading the file or digesting fails.
+     */
     private String sha256OfFile(File file) throws Exception {
         byte[] bytes = Files.readAllBytes(file.toPath());
         // Lightweight inline SHA-256 to avoid adding dependencies in test; not strictly needed for speed

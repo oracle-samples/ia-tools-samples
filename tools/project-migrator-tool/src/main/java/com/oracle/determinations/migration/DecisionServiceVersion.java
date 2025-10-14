@@ -3,6 +3,9 @@ package com.oracle.determinations.migration;
 import org.json.JSONObject;
 import java.util.Objects;
 
+/**
+ * Represents a decision service version and related metadata.
+ */
 public class DecisionServiceVersion implements ProjectVersion {
     public final String moduleName;
     public final int versionNumber;
@@ -16,6 +19,19 @@ public class DecisionServiceVersion implements ProjectVersion {
     public final String fingerprintSha256;
     public final boolean isDraft;
 
+    /**
+     * Creates a new DecisionServiceVersion.
+     * @param moduleName module name.
+     * @param versionNumber version number (0 indicates draft).
+     * @param createTimestamp creation timestamp.
+     * @param moduleImported import flag/counter from source DB.
+     * @param userName author of the version.
+     * @param definition module definition content (JSON string).
+     * @param description optional description.
+     * @param descriptionUpdated optional description last-updated timestamp.
+     * @param descriptionAuthor optional description author.
+     * @param fingerprintSha256 definition fingerprint hash.
+     */
     public DecisionServiceVersion(String moduleName,
                          int versionNumber,
                          String createTimestamp,
@@ -39,6 +55,12 @@ public class DecisionServiceVersion implements ProjectVersion {
         this.isDraft = versionNumber == 0;
     }
 
+    /**
+     * Builds an instance from a JSON object.
+     * @param obj JSON with keys: module_name, version_number, create_timestamp, module_imported, user_name, definition; optional description, description_updated, description_author, fingerprint_sha256.
+     * @return parsed DecisionServiceVersion.
+     * @throws org.json.JSONException if required fields are missing or invalid.
+     */
     public static DecisionServiceVersion fromJson(JSONObject obj) {
         String moduleName = obj.getString("module_name");
         int versionNumber = obj.getInt("version_number");
@@ -55,6 +77,11 @@ public class DecisionServiceVersion implements ProjectVersion {
     }
 
 
+    /**
+     * Serializes a minimal JSON entry for the import/export journal.
+     * @param index sequential index for the journal entry.
+     * @return JSON object for the journal.
+     */
     public JSONObject toJSONForJournal(int index) {
         JSONObject obj = new JSONObject();
         obj.put("index", index);
@@ -65,6 +92,9 @@ public class DecisionServiceVersion implements ProjectVersion {
         return obj;
     }
 
+    /**
+     * Value equality based on key fields.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,21 +111,33 @@ public class DecisionServiceVersion implements ProjectVersion {
                 && Objects.equals(fingerprintSha256, that.fingerprintSha256);
     }
 
+    /**
+     * Hash code consistent with equals.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(moduleName, versionNumber, createTimestamp, userName, definition, description, descriptionUpdated, descriptionAuthor, fingerprintSha256);
     }
 
+    /**
+     * Returns the version number.
+     */
     @Override
     public int getVersion() {
         return versionNumber;
     }
 
+    /**
+     * Returns the module/project name.
+     */
     @Override
     public String getProjectName() {
         return moduleName;
     }
 
+    /**
+     * Indicates whether this version is a draft.
+     */
     @Override
     public boolean isDraft() {
         return isDraft;
