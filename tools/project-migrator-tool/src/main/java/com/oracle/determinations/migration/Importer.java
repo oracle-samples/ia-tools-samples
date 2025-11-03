@@ -332,13 +332,12 @@ public class Importer {
             snapshotBytes = readAllBytes(is);
         }
 
-        // inclusion override counts and project changes
-        Map<String, Integer> inclusionOverrideCounts = projectVersion.inclusionOverrideCounts;
+        // project changes
         Map<String, String> changes = projectVersion.changes;
 
         // Call uploadProjectVersion with status messages
         uploadProjectVersion(iaHostUrl, oAuthToken, projectName, projectVersionNumber, versionDescription, userName, opaVersion, creationDate,
-                workspace, descriptionUpdatedDate, descriptionAuthor, inclusionOverrideCounts, changes, fromProjectName, fromProjectVersionNumber, snapshotBytes);
+                workspace, descriptionUpdatedDate, descriptionAuthor, changes, fromProjectName, fromProjectVersionNumber, snapshotBytes);
     }
 
     /**
@@ -354,7 +353,6 @@ public class Importer {
      * @param workspace Target workspace name.
      * @param descriptionUpdatedDate When the description was last updated.
      * @param descriptionAuthor Who last updated the description.
-     * @param inclusionOverrideCounts Inclusion overrides by included project.
      * @param changes Object-level change map.
      * @param fromProjectName Source project name for v1 cloning (optional).
      * @param fromProjectVersionNumber Source project version for v1 cloning (optional).
@@ -372,7 +370,6 @@ public class Importer {
                                       String workspace,
                                       String descriptionUpdatedDate,
                                       String descriptionAuthor,
-                                      Map<String, Integer> inclusionOverrideCounts,
                                       Map<String, String> changes,
                                       String fromProjectName,
                                       Integer fromProjectVersionNumber,
@@ -397,15 +394,6 @@ public class Importer {
                     body.put("from_project_version_number", fromProjectVersionNumber);
                 }
             }
-        }
-
-        if (!inclusionOverrideCounts.isEmpty()) {
-            JSONObject inclusionOverrideCountsObj = new JSONObject();
-            for (String includedProjectName : inclusionOverrideCounts.keySet()) {
-                int inclusionOverrideCount = inclusionOverrideCounts.get(includedProjectName);
-                inclusionOverrideCountsObj.put(includedProjectName, inclusionOverrideCount);
-            }
-            body.put("inclusion_override_counts", inclusionOverrideCountsObj);
         }
 
         if (!changes.isEmpty()) {
@@ -677,7 +665,6 @@ public class Importer {
                                 descriptionUpdatedAt,
                                 descriptionAuthor,
                                 fingerprintSha256,                
-                                null,
                                 null
                         );
                         projectsByName.computeIfAbsent(name, k -> new ArrayList<>()).add(pv);

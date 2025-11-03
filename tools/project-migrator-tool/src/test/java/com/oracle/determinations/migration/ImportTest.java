@@ -132,21 +132,6 @@ public class ImportTest {
     // Utilities
 
     /**
-     * Writes UTF-8 text content to a temp file.
-     * @param name filename within the temp folder.
-     * @param content string content to write.
-     * @return the created File.
-     * @throws Exception on I/O error.
-     */
-    private File writeTextFile(String name, String content) throws Exception {
-        File f = tmp.newFile(name);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(f))) {
-            bw.write(content);
-        }
-        return f;
-    }
-
-    /**
      * Builds a zip with text and binary entries.
      * @param name zip filename.
      * @param entries map of entryName -> text content (UTF-8).

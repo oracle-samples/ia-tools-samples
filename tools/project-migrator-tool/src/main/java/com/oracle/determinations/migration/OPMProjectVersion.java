@@ -20,7 +20,6 @@ public class OPMProjectVersion implements ProjectVersion {
     public final String descriptionUpdated;
     public final String descriptionAuthor;
     public final String fingerprintSha256;
-    public final Map<String, Integer> inclusionOverrideCounts;
     public final Map<String, String> changes;
 
     /**
@@ -34,7 +33,6 @@ public class OPMProjectVersion implements ProjectVersion {
      * @param descriptionUpdated When the description was last updated.
      * @param descriptionAuthor Who last updated the description.
      * @param fingerprintSha256 Snapshot fingerprint hash.
-     * @param inclusionOverrideCounts Inclusion override counts by included project.
      * @param changes Object-level change map for the version.
      */
     public OPMProjectVersion(String projectName,
@@ -46,7 +44,6 @@ public class OPMProjectVersion implements ProjectVersion {
                           String descriptionUpdated,
                           String descriptionAuthor,
                           String fingerprintSha256,
-                          Map<String, Integer> inclusionOverrideCounts,
                           Map<String, String> changes) {
         this.projectName = projectName;
         this.projectVersionNumber = projectVersionNumber;
@@ -57,7 +54,6 @@ public class OPMProjectVersion implements ProjectVersion {
         this.descriptionUpdated = descriptionUpdated;
         this.descriptionAuthor = descriptionAuthor;
         this.fingerprintSha256 = fingerprintSha256;
-        this.inclusionOverrideCounts = inclusionOverrideCounts != null ? inclusionOverrideCounts : new HashMap<>();
         this.changes = changes != null ? changes : new HashMap<>();
     }
 
@@ -78,16 +74,6 @@ public class OPMProjectVersion implements ProjectVersion {
         String descriptionAuthor = obj.has("description_author") ? obj.getString("description_author") : null;
         String fingerprint = obj.getString("fingerprint_sha256");
 
-
-        Map<String, Integer> inclusionOverrideCounts = new HashMap<>();
-        if (obj.has("project_version_inclusions")) {
-            JSONArray incArr = obj.getJSONArray("project_version_inclusions");
-            for (int j = 0; j < incArr.length(); j++) {
-                JSONObject inc = incArr.getJSONObject(j);
-                inclusionOverrideCounts.put(inc.getString("included_project_name"), inc.getInt("inclusion_override_count"));
-            }
-        }
-
         Map<String, String> changes = new HashMap<>();
         if (obj.has("project_version_changes")) {
             JSONArray chArr = obj.getJSONArray("project_version_changes");
@@ -98,7 +84,7 @@ public class OPMProjectVersion implements ProjectVersion {
         }
 
         return new OPMProjectVersion(projectName, versionNumber, description, userName, opaVersion, creationDate,
-                descriptionUpdated, descriptionAuthor, fingerprint, inclusionOverrideCounts, changes);
+                descriptionUpdated, descriptionAuthor, fingerprint, changes);
     }
 
 

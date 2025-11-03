@@ -112,7 +112,6 @@ public class Exporter {
             while (versionRs.next()) {
                 JSONObject versionJson = new JSONObject();
                 int projectVersionId = versionRs.getInt(1);
-                int projectId = versionRs.getInt(2);
                 int projectSnapshotId = versionRs.getInt(5);
 
                 String projectName = versionRs.getString(3);
@@ -132,8 +131,7 @@ public class Exporter {
                 // CHILD ARRAY 1: PROJECT_VERSION_INCLUSION
                 JSONArray inclusions = new JSONArray();
                 String inclSql = "SELECT (SELECT p.project_name FROM PROJECT p, PROJECT_VERSION pv WHERE PROJECT_VERSION_INCLUSION.included_version_id = pv.project_version_id AND p.project_id = pv.project_id) AS included_project_name,\n" +
-                        "(SELECT project_version FROM PROJECT_VERSION pv WHERE PROJECT_VERSION_INCLUSION.included_version_id = pv.project_version_id) AS included_project_version_number,\n" +
-                        "inclusion_override_count \n" +
+                        "(SELECT project_version FROM PROJECT_VERSION pv WHERE PROJECT_VERSION_INCLUSION.included_version_id = pv.project_version_id) AS included_project_version_number \n" +
                         "FROM PROJECT_VERSION_INCLUSION WHERE project_version_id = ?";
                 try (java.sql.PreparedStatement ps = connection.prepareStatement(inclSql)) {
                     ps.setInt(1, projectVersionId);
@@ -142,7 +140,6 @@ public class Exporter {
                             JSONObject incl = new JSONObject();
                             incl.put("included_project_name", rs.getString("included_project_name"));
                             incl.put("included_project_version_number", rs.getString("included_project_version_number"));
-                            incl.put("inclusion_override_count", rs.getInt("inclusion_override_count"));
                             inclusions.put(incl);
                         }
                     }
