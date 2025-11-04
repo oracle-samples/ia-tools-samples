@@ -102,11 +102,10 @@ public class DecisionServiceProjectVersion implements ProjectVersion {
         DecisionServiceProjectVersion that = (DecisionServiceProjectVersion) o;
         return versionNumber == that.versionNumber
                 && Objects.equals(projectName, that.projectName)
-                //&& Objects.equals(createTimestamp, that.createTimestamp)
+                && DateTimeUtil.sameInstant(createTimestamp, that.createTimestamp)
                 && Objects.equals(userName, that.userName)
-                && Objects.equals(definition, that.definition)
                 && Objects.equals(description, that.description)
-                //&& Objects.equals(descriptionUpdated, that.descriptionUpdated)
+                && DateTimeUtil.sameInstant(descriptionUpdated, that.descriptionUpdated)
                 && Objects.equals(descriptionAuthor, that.descriptionAuthor)
                 && Objects.equals(fingerprintSha256, that.fingerprintSha256);
     }
@@ -116,7 +115,11 @@ public class DecisionServiceProjectVersion implements ProjectVersion {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(projectName, versionNumber, createTimestamp, userName, definition, description, descriptionUpdated, descriptionAuthor, fingerprintSha256);
+        return Objects.hash(projectName, versionNumber,
+                DateTimeUtil.instantOrNull(createTimestamp),
+                userName, definition, description,
+                DateTimeUtil.instantOrNull(descriptionUpdated),
+                descriptionAuthor, fingerprintSha256);
     }
 
     /**

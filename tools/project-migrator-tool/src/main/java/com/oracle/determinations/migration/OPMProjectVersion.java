@@ -115,8 +115,8 @@ public class OPMProjectVersion implements ProjectVersion {
                 && Objects.equals(projectName, that.projectName)
                 && Objects.equals(description, that.description)
                 && Objects.equals(userName, that.userName)
-                //&& Objects.equals(creationDate, that.creationDate) TODO fix date comparison
-                //&& Objects.equals(descriptionUpdated, that.descriptionUpdated) TODO fix date comparison
+                && DateTimeUtil.sameInstant(creationDate, that.creationDate)
+                && DateTimeUtil.sameInstant(descriptionUpdated, that.descriptionUpdated)
                 && Objects.equals(descriptionAuthor, that.descriptionAuthor)
                 && Objects.equals(fingerprintSha256, that.fingerprintSha256);
     }
@@ -126,7 +126,10 @@ public class OPMProjectVersion implements ProjectVersion {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(projectName, projectVersionNumber, description, userName, creationDate, descriptionUpdated, descriptionAuthor, fingerprintSha256);
+        return Objects.hash(projectName, projectVersionNumber, description, userName,
+                DateTimeUtil.instantOrNull(creationDate),
+                DateTimeUtil.instantOrNull(descriptionUpdated),
+                descriptionAuthor, fingerprintSha256);
     }
 
     /**
