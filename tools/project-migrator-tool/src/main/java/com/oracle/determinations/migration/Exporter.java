@@ -6,6 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.Base64;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -22,6 +25,18 @@ import java.util.zip.ZipOutputStream;
 public class Exporter {
 
     private Set<String> exportedSnapshotIds;
+
+    private final ZoneId zoneId;
+    private final Calendar tzCalendar;
+
+    public Exporter() {
+        this(ZoneId.systemDefault());
+    }
+
+    public Exporter(ZoneId zoneId) {
+        this.zoneId = (zoneId != null) ? zoneId : ZoneId.systemDefault();
+        this.tzCalendar = Calendar.getInstance(TimeZone.getTimeZone(this.zoneId));
+    }
 
     /**
      * Establishes a JDBC connection.
@@ -87,7 +102,7 @@ public class Exporter {
             return null;
         }
         Instant instant = timestamp.toInstant();
-        ZoneId zoneId = ZoneId.systemDefault();
+        ZoneId zoneId = this.zoneId;
         ZonedDateTime zdt = ZonedDateTime.ofInstant(instant, zoneId);
         return zdt.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
@@ -124,8 +139,8 @@ public class Exporter {
                 versionJson.put("user_name", versionRs.getString(8));
                 versionJson.put("opa_version", versionRs.getString(9));
                 versionJson.put("description", versionRs.getString(10));
-                versionJson.put("creation_date", formatTimestamp(versionRs.getTimestamp(11)));
-                versionJson.put("description_updated", formatTimestamp(versionRs.getTimestamp(14)));
+                versionJson.put("creation_date", formatTimestamp(versionRs.getTimestamp(11, tzCalendar)));
+                versionJson.put("description_updated", formatTimestamp(versionRs.getTimestamp(14, tzCalendar)));
                 versionJson.put("description_author", versionRs.getString(15));
 
                 // CHILD ARRAY 1: PROJECT_VERSION_INCLUSION
@@ -322,13 +337,13 @@ public class Exporter {
 
                 jo.put("module_name", moduleName);
                 jo.put("version_number", versionNumber);
-                jo.put("create_timestamp", formatTimestamp(rs.getTimestamp("create_timestamp")));
+                jo.put("create_timestamp", formatTimestamp(rs.getTimestamp("create_timestamp", tzCalendar)));
                 jo.put("user_name", rs.getString("user_name"));
                 jo.put("fingerprint_sha256", rs.getString("fingerprint_sha256"));
                 jo.put("definition", rs.getString("definition")); 
                 jo.put("module_imported", rs.getInt("module_imported"));
                 jo.put("description", rs.getString("description"));
-                jo.put("description_updated", formatTimestamp(rs.getTimestamp("description_updated")));
+                jo.put("description_updated", formatTimestamp(rs.getTimestamp("description_updated", tzCalendar)));
                 jo.put("description_author", rs.getString("description_author"));
 
                 jsonArray.put(jo);

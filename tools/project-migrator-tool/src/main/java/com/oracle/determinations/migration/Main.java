@@ -7,6 +7,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.zip.ZipOutputStream;
+import java.time.ZoneId;
+import java.time.DateTimeException;
 
 /**
  * CLI entry point for exporting from a database or importing into IA Hub.
@@ -28,21 +30,35 @@ public class Main {
 
         switch (mode) {
             case "--export":
-                // Expect: --export <dbUrl>; db credentials read from stdin
-                if (args.length != 2) {
+                // Expect: --export <dbUrl> [timeZoneId]; db credentials read from stdin
+                if (args.length != 2 && args.length != 3) {
                     printUsage();
                     return;
                 }
                 String dbUrl = args[1];
+                ZoneId exportZoneId = null;
+                if (args.length == 3) {
+                    try {
+                        exportZoneId = ZoneId.of(args[2]);
+                    } catch (DateTimeException dte) {
+                        System.err.println("Invalid time zone ID: " + args[2] + ". See ZoneId IDs like 'UTC', 'Europe/London', 'America/New_York', '+10:00'.");
+                        System.exit(1);
+                    }
+                }
                 String username = prompt("Database username: ");
                 String password = promptPassword("Database password: ");
 
                 System.out.println("Export Mode Selected.");
                 System.out.println("Database URL: " + dbUrl);
                 System.out.println("Database username: " + username);
+                if (exportZoneId != null) {
+                    System.out.println("Export time zone: " + exportZoneId);
+                } else {
+                    System.out.println("Export time zone: (system default) " + ZoneId.systemDefault());
+                }
 
                 try {
-                    Exporter exporter = new Exporter();
+                    Exporter exporter = (exportZoneId != null) ? new Exporter(exportZoneId) : new Exporter();
                     String exportZip = exporter.newExportZipFileName();
                     try (java.sql.Connection conn = exporter.establishConnection(dbUrl, username, password)) {
                         try (
@@ -154,7 +170,8 @@ public class Main {
      */
     private static void printUsage() {
         System.out.println("Usage:");
-        System.out.println("  java -jar project-migrator-tool.jar --export <dbUrl>");
+        System.out.println("  java -jar project-migrator-tool.jar --export <dbUrl> [timeZoneId]");
+        System.out.println("      - Optional timeZoneId sets the time zone for interpreting and formatting DB timestamps (e.g., 'UTC', 'Europe/London', '+10:00'). Defaults to system time zone. See Java 8 Javadoc ZoneId.of(String): https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html#of-java.lang.String-");
         System.out.println("      - Prompts for the database username and password via stdin.");
         System.out.println();
         System.out.println("  java -jar project-migrator-tool.jar --import <IAHostUrl> <exportedPayloadPath> [resumeJournalPath]");
