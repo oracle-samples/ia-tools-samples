@@ -60,12 +60,8 @@ Parameters:
 
 Output:
 A journal file in JSON format, with filename `import-<timestamp>.json`. In the event of a failure part way through the import process, the journal file can be used to resume the process. To resume, pass the path to this file as the "resumeJournalPath" parameter.
+
 ## Troubleshooting
-
-- JDBC driver not found:
-  - Error: “JDBC Driver not found for URL: …”
-  - The fat jar includes MySQL and Oracle drivers. Ensure you are running the built fat jar from `build/libs/` and that the JDBC URL scheme is correct.
-
 - Database connection failed:
   - Error: “Failed to connect to the database: …”
   - Verify network, credentials, and JDBC URL.
