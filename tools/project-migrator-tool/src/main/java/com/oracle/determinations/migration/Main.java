@@ -17,7 +17,7 @@ public class Main {
     /**
      * Application entry point.
      * @param args Command-line arguments. Use:
-     *             --export <dbUrl> or --import <IAHostUrl> <exportedPayloadPath> [resumeJournalPath]
+     *             --export <dbUrl> [timeZoneId] or --import <IAHostUrl> <exportedPayloadPath> [resumeJournalPath]
      */
     public static void main(String[] args) {
         try {
