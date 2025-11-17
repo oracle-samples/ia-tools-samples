@@ -31,14 +31,14 @@ gradlew.bat clean build
 
 The JAR will be created under `build/libs/`. It is named after the project directory:
 ```
-build/libs/project-migrator-tool.jar
+build/libs/project-history-migrator-tool.jar
 ```
 
 ## Usage
 ### Export mode
 Usage:
 ```bash
-java -jar project-migrator-tool.jar --export <dbUrl> [timeZoneId]
+java -jar project-history-migrator-tool.jar --export <dbUrl> [timeZoneId]
 ```
 Parameters:
 - `dbUrl`: JDBC URL that references the MySQL or Oracle database associated with your self-managed Intelligent Advisor installation. Examples `jdbc:mysql://hostname:3306/schema_name`, `jdbc:oracle:thin:@//hostname:1521/PDBNAME`
@@ -50,7 +50,7 @@ A zip archive containing the exported data, with filename `export-<timestamp>.zi
 ### Import mode (with resume)
 Usage:
 ```bash
-java -jar project-migrator-tool.jar --import <IAHostUrl> <exportedPayloadPath> [resumeJournalPath]
+java -jar project-history-migrator-tool.jar --import <IAHostUrl> <exportedPayloadPath> [resumeJournalPath]
 ```
 
 Parameters:

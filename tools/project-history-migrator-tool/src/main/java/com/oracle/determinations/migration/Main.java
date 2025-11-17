@@ -170,11 +170,11 @@ public class Main {
      */
     private static void printUsage() {
         System.out.println("Usage:");
-        System.out.println("  java -jar project-migrator-tool.jar --export <dbUrl> [timeZoneId]");
+        System.out.println("  java -jar project-history-migrator-tool.jar --export <dbUrl> [timeZoneId]");
         System.out.println("      - Optional timeZoneId sets the time zone for interpreting and formatting DB timestamps (e.g., 'UTC', 'Europe/London', '+10:00'). Defaults to system time zone. See Java 8 Javadoc ZoneId.of(String): https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html#of-java.lang.String-");
         System.out.println("      - Prompts for the database username and password via stdin.");
         System.out.println();
-        System.out.println("  java -jar project-migrator-tool.jar --import <IAHostUrl> <exportedPayloadPath> [resumeJournalPath]");
+        System.out.println("  java -jar project-history-migrator-tool.jar --import <IAHostUrl> <exportedPayloadPath> [resumeJournalPath]");
         System.out.println("      - Prompts for the API client identifier and secret via stdin.");
         System.out.println("      - Imports the exported.zip payload into the given Intelligent Advisor server.");
         System.out.println("      - If resumeJournalPath is provided, validates journal entries against the payload and resumes by skipping versions already imported.");
