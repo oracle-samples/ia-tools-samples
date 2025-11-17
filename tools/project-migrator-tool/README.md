@@ -63,30 +63,30 @@ A journal file in JSON format, with filename `import-<timestamp>.json`. In the e
 
 ## Troubleshooting
 - Database connection failed:
-  - Error: “Failed to connect to the database: …”
+  - Error: "Failed to connect to the database: ..."
   - Verify network, credentials, and JDBC URL.
 
 - Name clashes on IA Hub:
-  - Error: “Projects with the following names already exist on the IA Hub: …”
+  - Error: "Projects with the following names already exist on the IA Hub: ..."
   - Rename or remove conflicting projects on the Hub, or import into a different environment/workspace.
 
 - Missing workspaces:
-  - Error: “Target hub is missing workspaces: …”
+  - Error: "Target hub is missing workspaces: ..."
   - Create the required workspaces on the IA Hub, then retry.
 
 - OAuth errors:
-  - Error: “Authentication failed. HTTP code: <code>”
-  - Or: “Authentication succeeded but access_token not found”
+  - Error: "Authentication failed. HTTP code: <code>"
+  - Or: "Authentication succeeded but access_token not found"
   - Verify client id/secret and the Hub URL.
 
 - HTTP upload failures:
   - Error includes the HTTP code and response body. Check that your client has sufficient permissions.
 
 - Snapshot not found in zip:
-  - Error: “Snapshot file not found in zip: <fingerprint>”
+  - Error: "Snapshot file not found in zip: <fingerprint>"
   - Ensure the payload zip was produced by this tool and not modified.
 
 - Resume validation errors:
-  - “Journal file does not match payload”
-  - “Journal file does not match specified IA Hub”
+  - "Journal file does not match payload"
+  - "Journal file does not match specified IA Hub"
   - Ensure the correct journal file is provided for the payload and target Hub.
