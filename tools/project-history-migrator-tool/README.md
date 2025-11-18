@@ -3,7 +3,7 @@ This is a CLI utility that allows the migration of the full project version hist
 
 ## Prerequisites
 ### System requirements
-- The tool must be run on a machine that has the Java 8 Runtime Environment (JRE) installed
+- The tool must be run on a machine that has the Java 8 Runtime Environment (JRE) or newer installed
 - For running in export mode - network access (JDBC) to the database associated with your self-managed Intelligent Advisor installation is required
 - For running in import mode - network access (HTTP) to the Intelligent Advisor cloud instance is required 
 
@@ -12,11 +12,10 @@ Before beginning the migration process for the project history, the following st
 - Migrate users to the cloud instance using the [Users REST API](https://docs.oracle.com/en/cloud/saas/b2c-service/opawx/using-users-rest-api.html), or by creating manually
 - Migrate workspaces to the cloud instance using the [Workspaces REST API](https://docs.oracle.com/en/cloud/saas/b2c-service/opawx/using-workspaces-rest-api.html), or by creating manually
 - Migrate connections to the cloud instance using the [Connections REST API](https://docs.oracle.com/en/cloud/saas/b2c-service/opawx/using-connections-rest-api.html), or by creating manually
-- TODO authorization provider?
 - On the cloud instance, create an API client to use for importing project history. This API client must have both the **manager** and **author** roles for **all workspaces**
 
 ## Pre-built binary
-TODO
+TODO - when QA is complete a built version of the tool will be uploaded to GitHub and linked here.
 
 ## Build from source
 The tool can be built from source using the Gradle wrapper:
