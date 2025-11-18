@@ -12,6 +12,7 @@ Before beginning the migration process for the project history, the following st
 - Migrate users to the cloud instance using the [Users REST API](https://docs.oracle.com/en/cloud/saas/b2c-service/opawx/using-users-rest-api.html), or by creating manually
 - Migrate workspaces to the cloud instance using the [Workspaces REST API](https://docs.oracle.com/en/cloud/saas/b2c-service/opawx/using-workspaces-rest-api.html), or by creating manually
 - Migrate connections to the cloud instance using the [Connections REST API](https://docs.oracle.com/en/cloud/saas/b2c-service/opawx/using-connections-rest-api.html), or by creating manually
+- On the cloud instance, create deployments for any decision service projects that are used as references in other projects
 - On the cloud instance, create an API client to use for importing project history. This API client must have both the **manager** and **author** roles for **all workspaces**
 
 ## Pre-built binary
