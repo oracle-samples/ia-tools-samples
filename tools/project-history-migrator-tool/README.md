@@ -15,10 +15,7 @@ Before beginning the migration process for the project history, the following st
 - On the cloud instance, create deployments for any decision service projects that are used as references in other projects
 - On the cloud instance, create an API client to use for importing project history. This API client must have both the **manager** and **author** roles for **all workspaces**
 
-## Pre-built binary
-TODO - when QA is complete a built version of the tool will be uploaded to GitHub and linked here.
-
-## Build from source
+## Building the tool
 The tool can be built from source using the Gradle wrapper:
 
 ```bash
