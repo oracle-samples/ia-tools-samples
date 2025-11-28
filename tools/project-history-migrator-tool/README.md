@@ -1,5 +1,5 @@
 # Project History Migrator Tool
-This is a CLI utility that allows the migration of the full project version history from a self-managed instance of Intelligent Advisor to a cloud instance. The tool migrates the project version history for both Policy Modeling projects and Decision Service projects.
+This is a CLI utility that allows the migration of projects along with their full version history from a self-managed instance of Intelligent Advisor to a cloud instance. The tool migrates both Policy Modeling projects and Decision Service projects.
 
 ## Prerequisites
 ### System requirements
