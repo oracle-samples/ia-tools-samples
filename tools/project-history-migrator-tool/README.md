@@ -72,7 +72,7 @@ A journal file in JSON format, with filename `import-<timestamp>.json`. In the e
   - Create the required workspaces on the IA Hub, then retry.
 
 - OAuth errors:
-  - Error: "Authentication failed. HTTP code: <code>"
+  - Error: "Authentication failed. HTTP code: \<code\>"
   - Or: "Authentication succeeded but access_token not found"
   - Verify client id/secret and the Hub URL.
 
@@ -80,7 +80,7 @@ A journal file in JSON format, with filename `import-<timestamp>.json`. In the e
   - Error includes the HTTP code and response body. Check that your client has sufficient permissions.
 
 - Snapshot not found in zip:
-  - Error: "Snapshot file not found in zip: <fingerprint>"
+  - Error: "Snapshot file not found in zip: \<fingerprint\>"
   - Ensure the payload zip was produced by this tool and not modified.
 
 - Resume validation errors:
